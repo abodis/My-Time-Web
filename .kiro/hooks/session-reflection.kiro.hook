@@ -1,0 +1,12 @@
+{
+  "name": "Session Reflection",
+  "version": "1.0.0",
+  "description": "Capture learnings at end of sessions",
+  "when": {
+    "type": "agentStop"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Before ending, briefly assess:\n1. Mistakes, corrections, or misunderstandings?\n2. User had to clarify or correct?\n3. Inefficiencies or repeated attempts?\n4. New patterns or constraints discovered?\n\nIf YES: propose steering update:\n📝 LEARNING: [description]\nFile: .kiro/steering/[path]\nAction: ADD | MODIFY\nContent: [exact text]\n\nIf NO: \"No steering updates needed.\""
+  }
+}
