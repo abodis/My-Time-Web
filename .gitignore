@@ -25,3 +25,6 @@ npm-debug.log*
 
 # Testing
 coverage/
+
+# Local test screenshots (Playwright visual checks)
+test-screenshots/

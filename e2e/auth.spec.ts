@@ -13,6 +13,6 @@ test("authenticated user sees app shell", async ({ page }) => {
   })
   await page.goto("/")
 
-  // App shell should render with sidebar or topbar
+  // App shell should render with pill nav
   await expect(page.locator("[data-testid='app-shell']")).toBeVisible()
 })

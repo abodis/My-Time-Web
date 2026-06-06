@@ -14,6 +14,28 @@
   --color-text-inverse: #ffffff;
 
   --font-sans: "Inter", system-ui, sans-serif;
+  --font-timer: "Rajdhani", sans-serif;
+  --font-block: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* Container widths — generates w-container-* utilities */
+  --width-container-xs: 360px;
+  --width-container-sm: 720px;
+  --width-container-md: 960px;
+  --width-container-lg: 1200px;
+  --width-container-xl: 1440px;
+
+  /* Gutter sizes — generates gap-gutter-* utilities */
+  --spacing-gutter-xs: 12px;
+  --spacing-gutter-sm: 16px;
+  --spacing-gutter-md: 20px;
+  --spacing-gutter-lg: 24px;
+
+  /* Custom breakpoints — generates mobile:, tablet:, desktop:, wide:, ultrawide: variants */
+  --breakpoint-mobile: 360px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
+  --breakpoint-wide: 1440px;
+  --breakpoint-ultrawide: 1920px;
 }
 
 @layer base {
@@ -50,4 +72,10 @@
     @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))];
     font-family: var(--font-sans);
   }
+}
+
+@utility dot-pattern {
+  background-color: #f6f6f6;
+  background-image: radial-gradient(circle, #e2e2e2 1px, transparent 1px);
+  background-size: 20px 20px;
 }

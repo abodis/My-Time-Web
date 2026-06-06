@@ -1,17 +1,19 @@
 import { Outlet } from "react-router-dom"
-import Sidebar from "./sidebar"
-import Topbar from "./topbar"
+import { GridContainer } from "./grid-container"
+import { PillNav } from "./pill-nav"
 
 export default function AppShell() {
   return (
-    <div className="flex h-screen bg-surface-muted">
-      <Sidebar />
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <Topbar />
-        <main className="flex-1 overflow-y-auto p-6">
+    <div className="dot-pattern min-h-screen">
+      <div className="sticky top-0 z-50 wide:static wide:z-auto">
+        <PillNav />
+      </div>
+
+      <GridContainer>
+        <main className="col-span-12 wide:col-start-4 wide:col-span-9 pt-4 wide:pt-0">
           <Outlet />
         </main>
-      </div>
+      </GridContainer>
     </div>
   )
 }

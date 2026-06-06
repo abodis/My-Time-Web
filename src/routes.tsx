@@ -7,7 +7,8 @@ import RegisterPage from "@/pages/auth/register"
 import ConfirmPage from "@/pages/auth/confirm"
 import ForgotPasswordPage from "@/pages/auth/forgot-password"
 import ResetPasswordPage from "@/pages/auth/reset-password"
-import Dashboard from "@/pages/app/dashboard"
+import TrackerPage from "@/pages/app/tracker"
+import EntriesPage from "@/pages/app/entries"
 
 export const router = createBrowserRouter([
   {
@@ -26,7 +27,8 @@ export const router = createBrowserRouter([
       {
         element: <AppShell />,
         children: [
-          { path: "/", element: <Dashboard /> },
+          { path: "/", element: <TrackerPage /> },
+          { path: "/entries", element: <EntriesPage /> },
         ],
       },
     ],
