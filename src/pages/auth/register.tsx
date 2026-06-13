@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod/v4"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AuthLayout } from "@/components/auth/auth-layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -23,6 +23,7 @@ const registerSchema = z.object({
 type RegisterFormValues = z.infer<typeof registerSchema>
 
 export default function RegisterPage() {
+  const navigate = useNavigate()
   const register = useRegister()
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
@@ -30,7 +31,7 @@ export default function RegisterPage() {
   })
 
   function onSubmit(data: RegisterFormValues) {
-    register.mutate(data)
+    register.mutate(data, { onSuccess: () => navigate("/confirm") })
   }
 
   return (

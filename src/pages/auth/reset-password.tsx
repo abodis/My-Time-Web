@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod/v4"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AuthLayout } from "@/components/auth/auth-layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -24,6 +24,7 @@ const resetPasswordSchema = z.object({
 type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>
 
 export default function ResetPasswordPage() {
+  const navigate = useNavigate()
   const resetPassword = useResetPassword()
   const form = useForm<ResetPasswordFormValues>({
     resolver: zodResolver(resetPasswordSchema),
@@ -31,7 +32,7 @@ export default function ResetPasswordPage() {
   })
 
   function onSubmit(data: ResetPasswordFormValues) {
-    resetPassword.mutate(data)
+    resetPassword.mutate(data, { onSuccess: () => navigate("/login") })
   }
 
   return (

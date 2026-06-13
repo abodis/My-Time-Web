@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod/v4"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AuthLayout } from "@/components/auth/auth-layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -23,6 +23,7 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>
 
 export default function LoginPage() {
+  const navigate = useNavigate()
   const login = useLogin()
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -30,7 +31,7 @@ export default function LoginPage() {
   })
 
   function onSubmit(data: LoginFormValues) {
-    login.mutate(data)
+    login.mutate(data, { onSuccess: () => navigate("/") })
   }
 
   return (

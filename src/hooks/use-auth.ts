@@ -1,5 +1,4 @@
 import { useMutation } from "@tanstack/react-query"
-import { useNavigate } from "react-router-dom"
 import { client } from "@/api/client"
 import { setTokens } from "@/lib/auth"
 
@@ -11,8 +10,6 @@ function extractErrorMessage(error: unknown): string {
 }
 
 export function useLogin() {
-  const navigate = useNavigate()
-
   return useMutation({
     mutationFn: async (data: { email: string; password: string }) => {
       const { data: result, error } = await client.POST("/auth/login", {
@@ -29,14 +26,11 @@ export function useLogin() {
           refreshToken: data.refreshToken,
         })
       }
-      navigate("/")
     },
   })
 }
 
 export function useRegister() {
-  const navigate = useNavigate()
-
   return useMutation({
     mutationFn: async (data: { email: string; password: string }) => {
       const { data: result, error } = await client.POST("/auth/register", {
@@ -45,15 +39,10 @@ export function useRegister() {
       if (error) throw error
       return result
     },
-    onSuccess() {
-      navigate("/confirm")
-    },
   })
 }
 
 export function useConfirm() {
-  const navigate = useNavigate()
-
   return useMutation({
     mutationFn: async (data: { email: string; code: string }) => {
       const { data: result, error } = await client.POST("/auth/confirm", {
@@ -62,15 +51,10 @@ export function useConfirm() {
       if (error) throw error
       return result
     },
-    onSuccess() {
-      navigate("/login")
-    },
   })
 }
 
 export function useForgotPassword() {
-  const navigate = useNavigate()
-
   return useMutation({
     mutationFn: async (data: { email: string }) => {
       const { data: result, error } = await client.POST("/auth/forgot-password", {
@@ -79,15 +63,10 @@ export function useForgotPassword() {
       if (error) throw error
       return result
     },
-    onSuccess() {
-      navigate("/reset-password")
-    },
   })
 }
 
 export function useResetPassword() {
-  const navigate = useNavigate()
-
   return useMutation({
     mutationFn: async (data: { email: string; code: string; newPassword: string }) => {
       const { data: result, error } = await client.POST("/auth/reset-password", {
@@ -95,9 +74,6 @@ export function useResetPassword() {
       })
       if (error) throw error
       return result
-    },
-    onSuccess() {
-      navigate("/login")
     },
   })
 }

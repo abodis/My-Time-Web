@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod/v4"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AuthLayout } from "@/components/auth/auth-layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -22,6 +22,7 @@ const forgotPasswordSchema = z.object({
 type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>
 
 export default function ForgotPasswordPage() {
+  const navigate = useNavigate()
   const forgotPassword = useForgotPassword()
   const form = useForm<ForgotPasswordFormValues>({
     resolver: zodResolver(forgotPasswordSchema),
@@ -29,7 +30,7 @@ export default function ForgotPasswordPage() {
   })
 
   function onSubmit(data: ForgotPasswordFormValues) {
-    forgotPassword.mutate(data)
+    forgotPassword.mutate(data, { onSuccess: () => navigate("/reset-password") })
   }
 
   return (

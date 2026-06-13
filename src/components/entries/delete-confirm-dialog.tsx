@@ -1,5 +1,13 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { useDeleteEntry } from "@/hooks/use-entries"
 import type { components } from "@/api/schema"
 
@@ -23,9 +31,8 @@ export default function DeleteConfirmDialog({ entry, open, onClose }: DeleteConf
   const deleteEntry = useDeleteEntry()
   const [error, setError] = useState<string | null>(null)
 
-  if (!open || !entry) return null
-
   const handleConfirm = () => {
+    if (!entry) return
     setError(null)
     deleteEntry.mutate(entry.id, {
       onSuccess: () => {
@@ -43,38 +50,31 @@ export default function DeleteConfirmDialog({ entry, open, onClose }: DeleteConf
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/50"
-        onClick={handleCancel}
-        aria-hidden="true"
-      />
+    <Dialog open={open && !!entry} onOpenChange={(isOpen) => { if (!isOpen) handleCancel() }}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle>Delete Entry</DialogTitle>
+          <DialogDescription>
+            Are you sure you want to delete this entry?
+          </DialogDescription>
+        </DialogHeader>
 
-      {/* Dialog */}
-      <div className="relative z-10 w-full max-w-md rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-6 shadow-lg">
-        <h2 className="text-lg font-semibold text-[hsl(var(--card-foreground))]">
-          Delete Entry
-        </h2>
-
-        <p className="mt-2 text-sm text-[hsl(var(--muted-foreground))]">
-          Are you sure you want to delete this entry?
-        </p>
-
-        <div className="mt-3 rounded-md bg-[hsl(var(--muted))] p-3">
-          <p className="text-sm font-medium text-[hsl(var(--card-foreground))]">
-            {entry.activityName ?? "Unknown Activity"}
-          </p>
-          <p className="text-xs text-[hsl(var(--muted-foreground))]">
-            {formatDateTime(entry.startTime)}
-          </p>
-        </div>
-
-        {error && (
-          <p className="mt-3 text-sm text-[hsl(var(--destructive))]">{error}</p>
+        {entry && (
+          <div className="rounded-md bg-[hsl(var(--muted))] p-3">
+            <p className="text-sm font-medium text-[hsl(var(--card-foreground))]">
+              {entry.activityName ?? "Unknown Activity"}
+            </p>
+            <p className="text-xs text-[hsl(var(--muted-foreground))]">
+              {formatDateTime(entry.startTime)}
+            </p>
+          </div>
         )}
 
-        <div className="mt-6 flex justify-end gap-3">
+        {error && (
+          <p className="text-sm text-[hsl(var(--destructive))]">{error}</p>
+        )}
+
+        <DialogFooter>
           <Button variant="outline" onClick={handleCancel} disabled={deleteEntry.isPending}>
             Cancel
           </Button>
@@ -85,8 +85,8 @@ export default function DeleteConfirmDialog({ entry, open, onClose }: DeleteConf
           >
             {deleteEntry.isPending ? "Deleting..." : "Delete"}
           </Button>
-        </div>
-      </div>
-    </div>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }

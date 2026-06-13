@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod/v4"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AuthLayout } from "@/components/auth/auth-layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -23,6 +23,7 @@ const confirmSchema = z.object({
 type ConfirmFormValues = z.infer<typeof confirmSchema>
 
 export default function ConfirmPage() {
+  const navigate = useNavigate()
   const confirm = useConfirm()
   const form = useForm<ConfirmFormValues>({
     resolver: zodResolver(confirmSchema),
@@ -30,7 +31,7 @@ export default function ConfirmPage() {
   })
 
   function onSubmit(data: ConfirmFormValues) {
-    confirm.mutate(data)
+    confirm.mutate(data, { onSuccess: () => navigate("/login") })
   }
 
   return (

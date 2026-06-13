@@ -1,10 +1,17 @@
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
+import { z } from "zod/v4"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog"
 import { useCreateEntry, useUpdateEntry } from "@/hooks/use-entries"
 import { useProjects, useActivities } from "@/hooks/use-projects"
 import type { components } from "@/api/schema"
@@ -101,19 +108,14 @@ export default function EntryModal({ mode, entry, open, onClose }: EntryModalPro
 
   const apiError = createEntry.error ?? updateEntry.error
 
-  if (!open) return null
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div
-        className="absolute inset-0 bg-black/50"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-      <div className="relative z-10 w-full max-w-md rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] p-6 shadow-lg">
-        <h2 className="text-lg font-semibold text-[hsl(var(--foreground))] mb-4">
-          {mode === "create" ? "Add Entry" : "Edit Entry"}
-        </h2>
+    <Dialog open={open} onOpenChange={(isOpen) => { if (!isOpen) onClose() }}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle>
+            {mode === "create" ? "Add Entry" : "Edit Entry"}
+          </DialogTitle>
+        </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
@@ -169,17 +171,17 @@ export default function EntryModal({ mode, entry, open, onClose }: EntryModalPro
             </p>
           )}
 
-          <div className="flex justify-end gap-2 pt-2">
+          <DialogFooter className="pt-2">
             <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Saving..." : mode === "create" ? "Create" : "Save"}
             </Button>
-          </div>
+          </DialogFooter>
         </form>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   )
 }
 
