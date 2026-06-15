@@ -3,15 +3,20 @@ import { render, screen, fireEvent } from "@testing-library/react"
 import "@testing-library/jest-dom/vitest"
 import { ErrorBoundary } from "../error-boundary"
 
-// Suppress React error boundary console output during tests
+// Suppress React error boundary console output during tests.
+// React 18 in jsdom logs errors via both console.error AND window error events.
 let consoleErrorSpy: ReturnType<typeof vi.spyOn>
+const originalOnError = window.onerror
 
 beforeEach(() => {
   consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => { })
+  window.onerror = () => true
+  window.addEventListener("error", (e) => e.preventDefault(), { once: false })
 })
 
 afterEach(() => {
   consoleErrorSpy.mockRestore()
+  window.onerror = originalOnError
 })
 
 // Module-level flag for controlling throw behavior

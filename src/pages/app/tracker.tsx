@@ -54,7 +54,7 @@ export default function TrackerPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6 p-6">
+    <div className="flex flex-col gap-6 p-6 wide:pt-0">
       <ActivityGrid>
         {allActivities.map((activity, index) => {
           const isRunning = timerIsRunning && timerActivityId === activity.id

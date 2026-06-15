@@ -67,7 +67,7 @@ export default function EntriesPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6 p-6 h-full">
+    <div className="flex flex-col gap-6 p-6 wide:pt-0 h-full">
       <EntriesToolbar
         dateRange={dateRange}
         onDateRangeChange={setDateRange}
@@ -75,17 +75,21 @@ export default function EntriesPage() {
       />
 
       {isLoading ? (
-        <div className="flex items-center justify-center py-16 text-[hsl(var(--muted-foreground))]">
-          <p className="text-sm">Loading entries...</p>
+        <div className="rounded-2xl bg-white shadow-lg p-6">
+          <div className="flex items-center justify-center py-16 text-[hsl(var(--muted-foreground))]">
+            <p className="text-sm">Loading entries...</p>
+          </div>
         </div>
       ) : (
-        <EntryList
-          entries={sorted}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          notesEntryId={notesEntryId}
-          onToggleNotes={handleToggleNotes}
-        />
+        <div className="rounded-2xl bg-white shadow-lg p-6">
+          <EntryList
+            entries={sorted}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            notesEntryId={notesEntryId}
+            onToggleNotes={handleToggleNotes}
+          />
+        </div>
       )}
 
       <DeleteConfirmDialog

@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Post-Task QA & UX Review",
+  "description": "After agent execution completes, runs e2e tests and performs a visual UX review of affected pages using browser automation",
+  "version": "1",
+  "when": {
+    "type": "agentStop"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Tasks have completed. Perform a post-implementation QA review:\n\n## 1. Run E2E Tests\nRun `npx playwright test` (cwd: project root). Report pass/fail results. If failures, summarize which tests failed and the root cause.\n\n## 2. Visual UX Review\nUsing the nova-act browser automation power, navigate to the pages/features that were just modified. For each page:\n- Verify the page loads without errors (check console for warnings/errors)\n- Check layout consistency: alignment, spacing, responsive behavior\n- Check information hierarchy: headings, labels, data display clarity\n- Check interactive elements: buttons visible and labeled, forms accessible\n- Check empty states and loading states if applicable\n\n## 3. Report\nProvide a structured summary:\n- **Tests:** pass/fail count and any failures\n- **UX Issues:** list any layout inconsistencies, unclear information display, or accessibility gaps\n- **Recommendations:** actionable suggestions for UX improvements (keep concise, max 3-5 items)\n\nIf everything looks good, say so briefly. Only flag real issues, not nitpicks."
+  }
+}

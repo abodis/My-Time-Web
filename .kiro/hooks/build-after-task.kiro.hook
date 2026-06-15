@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Build Verification",
+  "description": "Runs npm run build after each spec task completes to verify no type/compilation errors were introduced.",
+  "version": "1",
+  "when": {
+    "type": "postTaskExecution"
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "npm run build 2>&1 | tail -30",
+    "timeout": 60
+  }
+}

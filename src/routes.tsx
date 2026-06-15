@@ -2,6 +2,7 @@ import { Suspense } from "react"
 import { createBrowserRouter } from "react-router-dom"
 import ProtectedRoute from "@/components/auth/protected-route"
 import PublicOnlyRoute from "@/components/auth/public-only-route"
+import { RoleGuard } from "@/components/auth/role-guard"
 import AppShell from "@/components/layout/app-shell"
 import { lazyWithRetry } from "@/lib/lazy-with-retry"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
@@ -17,6 +18,9 @@ const ResetPasswordPage = lazyWithRetry(
 )
 const TrackerPage = lazyWithRetry(() => import("@/pages/app/tracker"))
 const EntriesPage = lazyWithRetry(() => import("@/pages/app/entries"))
+const ProjectsListPage = lazyWithRetry(() => import("@/pages/app/projects-list"))
+const ProjectFormPage = lazyWithRetry(() => import("@/pages/app/project-form"))
+const TeamListPage = lazyWithRetry(() => import("@/pages/app/team-list"))
 
 export const router = createBrowserRouter([
   {
@@ -84,6 +88,40 @@ export const router = createBrowserRouter([
               <Suspense fallback={<LoadingSpinner />}>
                 <EntriesPage />
               </Suspense>
+            ),
+          },
+          {
+            path: "/projects",
+            element: (
+              <Suspense fallback={<LoadingSpinner />}>
+                <ProjectsListPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: "/projects/new",
+            element: (
+              <Suspense fallback={<LoadingSpinner />}>
+                <ProjectFormPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: "/projects/:id/edit",
+            element: (
+              <Suspense fallback={<LoadingSpinner />}>
+                <ProjectFormPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: "/team",
+            element: (
+              <RoleGuard allowedRoles={["admin", "manager"]}>
+                <Suspense fallback={<LoadingSpinner />}>
+                  <TeamListPage />
+                </Suspense>
+              </RoleGuard>
             ),
           },
         ],

@@ -29,6 +29,25 @@ description: "React and component patterns for the frontend"
 - Never hand-write fetch calls or type API responses.
 - Query keys: `[resource, ...params]` — e.g., `['entries', { from, to }]`.
 - Mutations invalidate relevant query keys on success.
+- For optional boolean query params (like `includeArchived`): pass `true` when on, `undefined` when off. Don't send `false` — let the API use its default.
+- Use `placeholderData: (prev) => prev` when query keys change to avoid flash of empty state.
+
+## CSS Variable Colors (Tailwind 4)
+- NEVER use bare `bg-primary`, `text-primary`, `ring-primary` etc. — they don't resolve to `:root` CSS variables in this Tailwind 4 setup.
+- ALWAYS use bracket syntax: `bg-[hsl(var(--primary))]`, `text-[hsl(var(--destructive))]`, `ring-[hsl(var(--ring))]`.
+- This matches how all existing shadcn components reference theme colors.
+- For opacity: `bg-[hsl(var(--primary))]/90`.
+- Exception: custom `@theme` colors like `bg-brand`, `text-text-muted`, `bg-surface-muted` work fine — they're defined as `--color-*` tokens.
+
+## Color System
+- `--primary` (green `#16a34a`, HSL `142.1 76.2% 36.3%`) = action buttons, switches, confirmations.
+- `--color-brand` (blue `#2563eb`) = nav active highlight, brand accent. Separate from primary.
+- `--destructive` (red) = error states, destructive actions.
+- Never use raw color classes (`bg-green-600`, `bg-blue-500`) for themed elements — always go through CSS variables.
+
+## Imports
+- Always import from `react-router-dom`, never bare `react-router`.
+- Always import from `zod/v4`, never bare `zod`.
 
 ## Auth Pattern
 - Tokens stored: access + id in memory (Zustand), refresh in localStorage.
@@ -47,6 +66,29 @@ description: "React and component patterns for the frontend"
 - Global error boundary at app root for crashes.
 - 401 → auto-refresh → retry once → logout if still failing.
 - 409 on timer start → show "timer already running" state, not error toast.
+
+## Layout & Alignment
+
+### Content-Nav Alignment
+- AppShell main content uses `wide:pt-6` to align with PillNav's `top-6` fixed position.
+- ALL page wrappers must use `p-6 wide:pt-0` — the shell handles top alignment on wide, pages only provide mobile top padding.
+- This applies to every page (tracker, entries, projects, etc.), not just management pages.
+
+### Universal Card Styling
+- All content cards: `rounded-2xl bg-white shadow-lg` — same elevation as nav card.
+- Never use `shadow-sm` or `shadow-md` for content cards. `shadow-lg` is the single elevation level.
+- Consistent internal padding: `p-6`.
+
+### Spacing Principles
+- When stacking related elements with different logical groupings, use explicit margins (`mt-4`, `mt-1`) not `space-y-*`. This gives precise control over visual hierarchy.
+- Tightly related items (title + subtitle): `mt-1` (4px gap).
+- Loosely related items (back link → title): `mt-4` (16px gap).
+- Sections: `gap-6` between distinct content blocks.
+
+## Dropdowns & Popovers
+- Any dropdown that opens on click MUST close on outside click.
+- Pattern: `useRef` on container + `useEffect` with `document.addEventListener("mousedown", ...)` when open.
+- Clean up listener on close or unmount.
 
 ## Visual Verification
 - For any UI styling change, verify with a Playwright screenshot before claiming it's done — do not edit CSS blind.

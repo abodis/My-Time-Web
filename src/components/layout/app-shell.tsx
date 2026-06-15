@@ -10,7 +10,7 @@ export default function AppShell() {
       </div>
 
       <GridContainer>
-        <main className="col-span-12 wide:col-start-4 wide:col-span-9 pt-4 wide:pt-0">
+        <main className="col-span-12 wide:col-start-4 wide:col-span-9 pt-4 wide:pt-6">
           <Outlet />
         </main>
       </GridContainer>

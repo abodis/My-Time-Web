@@ -1,13 +1,31 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { LogOut } from 'lucide-react'
-import { NAV_ITEMS } from '@/components/layout/nav-items'
+import { NAV_ITEMS, type NavItem } from '@/components/layout/nav-items'
 import { useProfile } from '@/hooks/use-profile'
 import { clearAuth } from '@/lib/auth'
 import { getGravatarUrl } from '@/lib/gravatar'
 
+const ROLE_HIERARCHY = ['user', 'manager', 'admin'] as const
+
+function isRoleAtLeast(userRole: string, minRole: string): boolean {
+  const userIndex = ROLE_HIERARCHY.indexOf(userRole as (typeof ROLE_HIERARCHY)[number])
+  const minIndex = ROLE_HIERARCHY.indexOf(minRole as (typeof ROLE_HIERARCHY)[number])
+  return userIndex >= minIndex
+}
+
+function filterNavItems(items: NavItem[], userRole: string | undefined): NavItem[] {
+  return items.filter((item) => {
+    if (!item.minRole) return true
+    if (!userRole) return false
+    return isRoleAtLeast(userRole, item.minRole)
+  })
+}
+
 export function PillNav(): JSX.Element {
   const navigate = useNavigate()
   const { data: profile } = useProfile()
+
+  const visibleItems = filterNavItems(NAV_ITEMS, profile?.role)
 
   function handleLogout() {
     clearAuth()
@@ -23,7 +41,7 @@ export function PillNav(): JSX.Element {
         className="hidden wide:flex fixed top-6 -translate-x-1/2 wide:left-[calc((100vw-1200px)/2+150px)] ultrawide:left-[calc((100vw-1440px)/2+180px)] z-50 w-[252px] flex-col gap-1 rounded-2xl bg-white p-3 shadow-lg"
         aria-label="Main navigation"
       >
-        {NAV_ITEMS.map((item) => (
+        {visibleItems.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
@@ -79,7 +97,7 @@ export function PillNav(): JSX.Element {
       >
         {/* Left side: nav items */}
         <div className="flex items-center gap-1">
-          {NAV_ITEMS.map((item) => (
+          {visibleItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
@@ -87,7 +105,8 @@ export function PillNav(): JSX.Element {
               tabIndex={item.disabled ? -1 : undefined}
               className={({ isActive }) =>
                 [
-                  'flex items-center justify-center rounded-xl min-w-[44px] min-h-[44px] p-2 transition-colors',
+                  'items-center justify-center rounded-xl min-w-[44px] min-h-[44px] p-2 transition-colors',
+                  item.desktopOnly ? 'hidden desktop:flex' : 'flex',
                   item.disabled && 'opacity-60 pointer-events-none',
                   isActive && !item.disabled && 'bg-brand/10 text-brand',
                   !isActive && !item.disabled && 'text-text-muted hover:bg-surface-muted',

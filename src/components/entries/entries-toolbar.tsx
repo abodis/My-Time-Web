@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import { Plus } from "lucide-react"
 
 type DateRange = "today" | "week"
 
@@ -15,8 +16,8 @@ export default function EntriesToolbar({ dateRange, onDateRangeChange, onAddEntr
         <button
           onClick={() => onDateRangeChange("today")}
           className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${dateRange === "today"
-              ? "bg-[hsl(var(--background))] text-[hsl(var(--foreground))] shadow-sm"
-              : "text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))]"
+            ? "bg-[hsl(var(--background))] text-[hsl(var(--foreground))] shadow-sm"
+            : "text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))]"
             }`}
         >
           Today
@@ -24,15 +25,18 @@ export default function EntriesToolbar({ dateRange, onDateRangeChange, onAddEntr
         <button
           onClick={() => onDateRangeChange("week")}
           className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${dateRange === "week"
-              ? "bg-[hsl(var(--background))] text-[hsl(var(--foreground))] shadow-sm"
-              : "text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))]"
+            ? "bg-[hsl(var(--background))] text-[hsl(var(--foreground))] shadow-sm"
+            : "text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))]"
             }`}
         >
           This Week
         </button>
       </div>
 
-      <Button onClick={onAddEntry}>Add Entry</Button>
+      <Button onClick={onAddEntry} className="rounded-full gap-1">
+        <Plus className="h-4 w-4" />
+        Add Entry
+      </Button>
     </div>
   )
 }
