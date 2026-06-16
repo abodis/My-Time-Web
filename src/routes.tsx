@@ -16,11 +16,13 @@ const ForgotPasswordPage = lazyWithRetry(
 const ResetPasswordPage = lazyWithRetry(
   () => import("@/pages/auth/reset-password"),
 )
+const SelectAccountPage = lazyWithRetry(() => import("@/pages/app/select-account"))
 const TrackerPage = lazyWithRetry(() => import("@/pages/app/tracker"))
 const EntriesPage = lazyWithRetry(() => import("@/pages/app/entries"))
 const ProjectsListPage = lazyWithRetry(() => import("@/pages/app/projects-list"))
 const ProjectFormPage = lazyWithRetry(() => import("@/pages/app/project-form"))
 const TeamListPage = lazyWithRetry(() => import("@/pages/app/team-list"))
+const ReportsPage = lazyWithRetry(() => import("@/pages/app/reports"))
 
 export const router = createBrowserRouter([
   {
@@ -72,6 +74,14 @@ export const router = createBrowserRouter([
     element: <ProtectedRoute />,
     children: [
       {
+        path: "/select-account",
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <SelectAccountPage />
+          </Suspense>
+        ),
+      },
+      {
         element: <AppShell />,
         children: [
           {
@@ -122,6 +132,14 @@ export const router = createBrowserRouter([
                   <TeamListPage />
                 </Suspense>
               </RoleGuard>
+            ),
+          },
+          {
+            path: "/reports",
+            element: (
+              <Suspense fallback={<LoadingSpinner />}>
+                <ReportsPage />
+              </Suspense>
             ),
           },
         ],

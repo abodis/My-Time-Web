@@ -60,3 +60,4 @@ src/
 4. API client generated — run `npm run api:generate` when openapi.json changes
 5. Roles — API has 3 roles: user → manager → admin (hierarchical). No "owner" role exists. Admin is the highest privilege level.
 6. Currency — single currency per account (AccountResponse.currency). rateCurrency on tags/entries is denormalized, not independent.
+7. API date format — API rejects milliseconds in ISO timestamps. Use `YYYY-MM-DDTHH:mm:ssZ` format, never raw `toISOString()` (which includes `.SSS`). Strip with `.replace(/\.\d{3}Z$/, "Z")`.

@@ -4,6 +4,9 @@ import { NAV_ITEMS, type NavItem } from '@/components/layout/nav-items'
 import { useProfile } from '@/hooks/use-profile'
 import { clearAuth } from '@/lib/auth'
 import { getGravatarUrl } from '@/lib/gravatar'
+import { useAccountStore } from '@/stores/account-store'
+import { queryClient } from '@/lib/query-client'
+import { AccountSwitcher } from '@/components/layout/account-switcher'
 
 const ROLE_HIERARCHY = ['user', 'manager', 'admin'] as const
 
@@ -29,6 +32,8 @@ export function PillNav(): JSX.Element {
 
   function handleLogout() {
     clearAuth()
+    useAccountStore.getState().clearAccountState()
+    queryClient.clear()
     navigate('/login')
   }
 
@@ -80,6 +85,9 @@ export function PillNav(): JSX.Element {
           </div>
         )}
 
+        {/* Account switcher */}
+        <AccountSwitcher />
+
         {/* Logout button */}
         <button
           onClick={handleLogout}
@@ -123,6 +131,7 @@ export function PillNav(): JSX.Element {
 
         {/* Right side: user area */}
         <div className="flex items-center gap-2">
+          <AccountSwitcher />
           {gravatarUrl && (
             <img src={gravatarUrl} alt="" className="h-8 w-8 rounded-full" />
           )}

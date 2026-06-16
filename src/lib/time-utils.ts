@@ -53,3 +53,49 @@ export function getEndOfWeek(date: Date = new Date()): string {
   d.setHours(23, 59, 59, 999)
   return d.toISOString()
 }
+
+/**
+ * Get start of the month (1st day, midnight local time) as ISO string.
+ */
+export function getStartOfMonth(date: Date = new Date()): string {
+  const d = new Date(date.getFullYear(), date.getMonth(), 1)
+  d.setHours(0, 0, 0, 0)
+  return d.toISOString()
+}
+
+/**
+ * Get end of the month (last day, 23:59:59.999 local time) as ISO string.
+ */
+export function getEndOfMonth(date: Date = new Date()): string {
+  const d = new Date(date.getFullYear(), date.getMonth() + 1, 0)
+  d.setHours(23, 59, 59, 999)
+  return d.toISOString()
+}
+
+export type PeriodPreset = "this-week" | "this-month" | "last-month"
+
+/**
+ * Strip milliseconds from an ISO string.
+ * Converts "2024-06-15T00:00:00.000Z" → "2024-06-15T00:00:00Z"
+ */
+function stripMs(iso: string): string {
+  return iso.replace(/\.\d{3}Z$/, "Z")
+}
+
+/**
+ * Get a date range (from/to ISO strings) for a given period preset.
+ * Output format: YYYY-MM-DDTHH:mm:ssZ (no milliseconds, as required by API).
+ */
+export function getDateRange(preset: PeriodPreset): { from: string; to: string } {
+  const now = new Date()
+  switch (preset) {
+    case "this-week":
+      return { from: stripMs(getStartOfWeek(now)), to: stripMs(getEndOfWeek(now)) }
+    case "this-month":
+      return { from: stripMs(getStartOfMonth(now)), to: stripMs(getEndOfMonth(now)) }
+    case "last-month": {
+      const prev = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+      return { from: stripMs(getStartOfMonth(prev)), to: stripMs(getEndOfMonth(prev)) }
+    }
+  }
+}

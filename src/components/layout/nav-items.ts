@@ -17,5 +17,5 @@ export const NAV_ITEMS: NavItem[] = [
   { label: 'Entries', icon: ListChecks, to: '/entries', disabled: false },
   { label: 'Projects', icon: FolderKanban, to: '/projects', disabled: false, desktopOnly: true },
   { label: 'Team', icon: Users, to: '/team', minRole: 'manager', desktopOnly: true },
-  { label: 'Reports', icon: BarChart3, to: '/reports', disabled: true, desktopOnly: true },
+  { label: 'Reports', icon: BarChart3, to: '/reports', disabled: false, desktopOnly: true },
 ]

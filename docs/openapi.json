@@ -3753,6 +3753,340 @@
         }
       }
     },
+    "/account/invitations": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "List pending invitations (admin only)",
+        "operationId": "account_invitations_list_account_invitations_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/InvitationResponse"
+                  },
+                  "type": "array",
+                  "title": "Response Account Invitations List Account Invitations Get"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/account/invitations/{invitationId}": {
+      "delete": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Revoke an invitation (admin only)",
+        "operationId": "account_invitations_revoke_account_invitations__invitationId__delete",
+        "parameters": [
+          {
+            "name": "invitationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Invitationid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/account/invitations/{invitationId}/resend": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Resend invitation email (admin only)",
+        "operationId": "account_invitations_resend_account_invitations__invitationId__resend_post",
+        "parameters": [
+          {
+            "name": "invitationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Invitationid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "List accounts user belongs to",
+        "operationId": "accounts_list_accounts_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AccountListItem"
+                  },
+                  "type": "array",
+                  "title": "Response Accounts List Accounts Get"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/settings": {
       "get": {
         "tags": [
@@ -4223,10 +4557,419 @@
           }
         }
       }
+    },
+    "/reports/project-budget": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Project budget vs consumed hours report (manager+)",
+        "operationId": "reports_project_budget_reports_project_budget_get",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "ISO 8601 start date",
+              "title": "From"
+            },
+            "description": "ISO 8601 start date"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "ISO 8601 end date",
+              "title": "To"
+            },
+            "description": "ISO 8601 end date"
+          },
+          {
+            "name": "projectId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by project UUID",
+              "title": "Projectid"
+            },
+            "description": "Filter by project UUID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectBudgetResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/financial": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Financial report with billable/cost/margin (admin only)",
+        "operationId": "reports_financial_reports_financial_get",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "ISO 8601 start date",
+              "title": "From"
+            },
+            "description": "ISO 8601 start date"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "ISO 8601 end date",
+              "title": "To"
+            },
+            "description": "ISO 8601 end date"
+          },
+          {
+            "name": "projectId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by project UUID",
+              "title": "Projectid"
+            },
+            "description": "Filter by project UUID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FinancialResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/personal-time": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Personal time grouped by tag or activity",
+        "operationId": "reports_personal_time_reports_personal_time_get",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "ISO 8601 start date",
+              "title": "From"
+            },
+            "description": "ISO 8601 start date"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "ISO 8601 end date",
+              "title": "To"
+            },
+            "description": "ISO 8601 end date"
+          },
+          {
+            "name": "groupBy",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Group by 'tag' or 'activity'",
+              "title": "Groupby"
+            },
+            "description": "Group by 'tag' or 'activity'"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "View another user's data (manager+ only)",
+              "title": "Userid"
+            },
+            "description": "View another user's data (manager+ only)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonalTimeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "AccountListItem": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role"
+          },
+          "isOwner": {
+            "type": "boolean",
+            "title": "Isowner"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "role",
+          "isOwner"
+        ],
+        "title": "AccountListItem",
+        "description": "GET /accounts list item."
+      },
       "AccountResponse": {
         "properties": {
           "id": {
@@ -4871,6 +5614,153 @@
         "title": "ErrorResponse",
         "description": "Standard error response shape."
       },
+      "FinancialProjectItem": {
+        "properties": {
+          "projectId": {
+            "type": "string",
+            "title": "Projectid"
+          },
+          "projectName": {
+            "type": "string",
+            "title": "Projectname"
+          },
+          "budgetHours": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budgethours"
+          },
+          "consumedHours": {
+            "type": "number",
+            "title": "Consumedhours"
+          },
+          "billableTotal": {
+            "type": "number",
+            "title": "Billabletotal"
+          },
+          "costTotal": {
+            "type": "number",
+            "title": "Costtotal"
+          },
+          "margin": {
+            "type": "number",
+            "title": "Margin"
+          },
+          "tags": {
+            "items": {
+              "$ref": "#/components/schemas/FinancialTagItem"
+            },
+            "type": "array",
+            "title": "Tags"
+          }
+        },
+        "type": "object",
+        "required": [
+          "projectId",
+          "projectName",
+          "consumedHours",
+          "billableTotal",
+          "costTotal",
+          "margin",
+          "tags"
+        ],
+        "title": "FinancialProjectItem",
+        "description": "Project-level item in financial report."
+      },
+      "FinancialResponse": {
+        "properties": {
+          "currency": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Currency"
+          },
+          "projects": {
+            "items": {
+              "$ref": "#/components/schemas/FinancialProjectItem"
+            },
+            "type": "array",
+            "title": "Projects"
+          }
+        },
+        "type": "object",
+        "required": [
+          "projects"
+        ],
+        "title": "FinancialResponse",
+        "description": "GET /reports/financial response."
+      },
+      "FinancialTagItem": {
+        "properties": {
+          "tagId": {
+            "type": "string",
+            "title": "Tagid"
+          },
+          "tagName": {
+            "type": "string",
+            "title": "Tagname"
+          },
+          "tagColor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tagcolor"
+          },
+          "budgetHours": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budgethours"
+          },
+          "consumedHours": {
+            "type": "number",
+            "title": "Consumedhours"
+          },
+          "billableTotal": {
+            "type": "number",
+            "title": "Billabletotal"
+          },
+          "costTotal": {
+            "type": "number",
+            "title": "Costtotal"
+          },
+          "margin": {
+            "type": "number",
+            "title": "Margin"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tagId",
+          "tagName",
+          "consumedHours",
+          "billableTotal",
+          "costTotal",
+          "margin"
+        ],
+        "title": "FinancialTagItem",
+        "description": "Tag-level item in financial report."
+      },
       "ForgotPasswordRequest": {
         "properties": {
           "email": {
@@ -4897,6 +5787,57 @@
         },
         "type": "object",
         "title": "HTTPValidationError"
+      },
+      "InvitationResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role"
+          },
+          "invitedBy": {
+            "type": "string",
+            "title": "Invitedby"
+          },
+          "createdAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Createdat"
+          },
+          "expiresAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expiresat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "email",
+          "role",
+          "invitedBy"
+        ],
+        "title": "InvitationResponse",
+        "description": "GET /account/invitations list item."
       },
       "LoginRequest": {
         "properties": {
@@ -5172,6 +6113,68 @@
         "title": "NoteResponse",
         "description": "GET/POST /entries/{id}/notes response."
       },
+      "PersonalTimeGroupItem": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "color": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Color"
+          },
+          "hours": {
+            "type": "number",
+            "title": "Hours"
+          },
+          "entryCount": {
+            "type": "integer",
+            "title": "Entrycount"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "hours",
+          "entryCount"
+        ],
+        "title": "PersonalTimeGroupItem",
+        "description": "Group item in personal-time report."
+      },
+      "PersonalTimeResponse": {
+        "properties": {
+          "totalHours": {
+            "type": "number",
+            "title": "Totalhours"
+          },
+          "groups": {
+            "items": {
+              "$ref": "#/components/schemas/PersonalTimeGroupItem"
+            },
+            "type": "array",
+            "title": "Groups"
+          }
+        },
+        "type": "object",
+        "required": [
+          "totalHours",
+          "groups"
+        ],
+        "title": "PersonalTimeResponse",
+        "description": "GET /reports/personal-time response."
+      },
       "ProfileResponse": {
         "properties": {
           "id": {
@@ -5294,6 +6297,112 @@
         "type": "object",
         "title": "ProfileUpdateRequest",
         "description": "PUT /account/profile request body."
+      },
+      "ProjectBudgetItem": {
+        "properties": {
+          "projectId": {
+            "type": "string",
+            "title": "Projectid"
+          },
+          "projectName": {
+            "type": "string",
+            "title": "Projectname"
+          },
+          "budgetHours": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budgethours"
+          },
+          "consumedHours": {
+            "type": "number",
+            "title": "Consumedhours"
+          },
+          "tags": {
+            "items": {
+              "$ref": "#/components/schemas/ProjectBudgetTagItem"
+            },
+            "type": "array",
+            "title": "Tags"
+          }
+        },
+        "type": "object",
+        "required": [
+          "projectId",
+          "projectName",
+          "consumedHours",
+          "tags"
+        ],
+        "title": "ProjectBudgetItem",
+        "description": "Project-level item in project-budget report."
+      },
+      "ProjectBudgetResponse": {
+        "properties": {
+          "projects": {
+            "items": {
+              "$ref": "#/components/schemas/ProjectBudgetItem"
+            },
+            "type": "array",
+            "title": "Projects"
+          }
+        },
+        "type": "object",
+        "required": [
+          "projects"
+        ],
+        "title": "ProjectBudgetResponse",
+        "description": "GET /reports/project-budget response."
+      },
+      "ProjectBudgetTagItem": {
+        "properties": {
+          "tagId": {
+            "type": "string",
+            "title": "Tagid"
+          },
+          "tagName": {
+            "type": "string",
+            "title": "Tagname"
+          },
+          "tagColor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tagcolor"
+          },
+          "budgetHours": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budgethours"
+          },
+          "consumedHours": {
+            "type": "number",
+            "title": "Consumedhours"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tagId",
+          "tagName",
+          "consumedHours"
+        ],
+        "title": "ProjectBudgetTagItem",
+        "description": "Tag-level budget vs consumed item in project-budget report."
       },
       "ProjectCreateRequest": {
         "properties": {

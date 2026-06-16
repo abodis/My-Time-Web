@@ -89,6 +89,8 @@ description: "React and component patterns for the frontend"
 - Any dropdown that opens on click MUST close on outside click.
 - Pattern: `useRef` on container + `useEffect` with `document.addEventListener("mousedown", ...)` when open.
 - Clean up listener on close or unmount.
+- For multi-step popovers (e.g., date range pickers requiring two clicks), use `<Popover modal>` to prevent Radix from closing on intermediate interactions.
+- react-day-picker v9 range mode: `onSelect` fires on EVERY click with `{ from, to }` — on first click both are the same date. Only treat as complete range when `from.getTime() !== to.getTime()`.
 
 ## Visual Verification
 - For any UI styling change, verify with a Playwright screenshot before claiming it's done — do not edit CSS blind.

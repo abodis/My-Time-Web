@@ -31,7 +31,7 @@ export default function LoginPage() {
   })
 
   function onSubmit(data: LoginFormValues) {
-    login.mutate(data, { onSuccess: () => navigate("/") })
+    login.mutate(data, { onSuccess: () => navigate("/select-account") })
   }
 
   return (
