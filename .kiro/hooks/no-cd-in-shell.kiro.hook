@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "No cd in shell commands",
+  "description": "Intercepts shell tool usage to ensure agents use the cwd parameter instead of cd or && chains, which trigger unnecessary approval prompts",
+  "version": "1",
+  "when": {
+    "type": "preToolUse",
+    "toolTypes": [
+      "shell"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Check if the command about to be executed contains \"cd \" at the start or uses \"&&\", \"||\", or \";\" to chain commands. If it does, STOP and rewrite the command to use the cwd parameter instead. The workspace root is /Users/abodis/Projects/My-Time-Web. For example, instead of \"cd /Users/abodis/Projects/My-Time-Web/infra && cdk synth\", use command=\"cdk synth\" with cwd=\"/Users/abodis/Projects/My-Time-Web/infra\"."
+  }
+}
