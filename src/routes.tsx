@@ -23,6 +23,7 @@ const ProjectsListPage = lazyWithRetry(() => import("@/pages/app/projects-list")
 const ProjectFormPage = lazyWithRetry(() => import("@/pages/app/project-form"))
 const TeamListPage = lazyWithRetry(() => import("@/pages/app/team-list"))
 const ReportsPage = lazyWithRetry(() => import("@/pages/app/reports"))
+const TagsListPage = lazyWithRetry(() => import("@/pages/app/tags-list"))
 
 export const router = createBrowserRouter([
   {
@@ -139,6 +140,14 @@ export const router = createBrowserRouter([
             element: (
               <Suspense fallback={<LoadingSpinner />}>
                 <ReportsPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: "/tags",
+            element: (
+              <Suspense fallback={<LoadingSpinner />}>
+                <TagsListPage />
               </Suspense>
             ),
           },

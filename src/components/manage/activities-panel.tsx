@@ -2,6 +2,8 @@ import { useState } from "react"
 import { useActivities } from "@/hooks/use-projects"
 import { useCreateActivity, useUpdateActivity, useDeleteActivity } from "@/hooks/use-activities"
 import { useTags } from "@/hooks/use-tags"
+import { usePalette } from "@/hooks/use-palette"
+import { resolveTagColor } from "@/lib/color-utils"
 import { Input } from "@/components/ui/input"
 
 interface ActivitiesPanelProps {
@@ -11,6 +13,7 @@ interface ActivitiesPanelProps {
 export function ActivitiesPanel({ projectId }: ActivitiesPanelProps) {
   const { data: activities, isLoading } = useActivities(projectId)
   const { data: tags } = useTags()
+  const { data: palette } = usePalette()
   const createActivity = useCreateActivity()
   const updateActivity = useUpdateActivity()
   const deleteActivity = useDeleteActivity()
@@ -313,7 +316,7 @@ export function ActivitiesPanel({ projectId }: ActivitiesPanelProps) {
                     <span className="flex items-center gap-2">
                       <span
                         className="inline-block h-3 w-3 rounded-full"
-                        style={{ backgroundColor: tag?.color ?? "#94a3b8" }}
+                        style={{ backgroundColor: resolveTagColor(palette, tag?.color ?? null).normal }}
                       />
                       <span>{tag?.name ?? "Unknown"}</span>
                     </span>

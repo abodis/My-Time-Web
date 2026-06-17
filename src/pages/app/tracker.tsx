@@ -4,7 +4,8 @@ import { useTrackerData } from '@/hooks/use-tracker-data'
 import { useTimerTick } from '@/hooks/use-timer-tick'
 import { useBlockClick } from '@/hooks/use-block-click'
 import { useTimerStore } from '@/stores/timer-store'
-import { getBlockColor } from '@/lib/tag-colors'
+import { usePalette } from '@/hooks/use-palette'
+import { resolveColor } from '@/lib/color-utils'
 import { Button } from '@/components/ui/button'
 
 export default function TrackerPage() {
@@ -13,6 +14,7 @@ export default function TrackerPage() {
     isError,
     allActivities,
     tagMap,
+    tagColorMap,
     activityElapsedMap,
     currentTimer,
     refetchProjects,
@@ -20,6 +22,7 @@ export default function TrackerPage() {
 
   const timerControls = useTimerTick(currentTimer)
   const { handleBlockClick, loadingActivityId } = useBlockClick(timerControls)
+  const { data: palette } = usePalette()
 
   // Read reactive state with selectors
   const timerIsRunning = useTimerStore((s) => s.isRunning)
@@ -56,15 +59,16 @@ export default function TrackerPage() {
   return (
     <div className="flex flex-col gap-6 p-6 wide:pt-0">
       <ActivityGrid>
-        {allActivities.map((activity, index) => {
+        {allActivities.map((activity) => {
           const isRunning = timerIsRunning && timerActivityId === activity.id
           const accumulated = activityElapsedMap.get(activity.id) ?? 0
           const elapsed = isRunning ? timerElapsed + accumulated : accumulated
+          const tagColor = tagColorMap.get(activity.tagId) ?? null
           return (
             <ActivityBlock
               key={activity.id}
               tagName={tagMap.get(activity.tagId) ?? 'Unknown'}
-              color={getBlockColor(index)}
+              color={resolveColor(palette, undefined, tagColor)}
               projectName={activity.projectName}
               activityName={activity.name}
               elapsed={elapsed}

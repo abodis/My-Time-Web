@@ -1,10 +1,10 @@
-import { type BlockColor } from '@/lib/tag-colors'
+import { type ResolvedColor } from '@/lib/color-utils'
 import { formatElapsed } from '@/lib/time-utils'
 import { cn } from '@/lib/utils'
 
 export interface ActivityBlockProps {
   tagName: string
-  color: BlockColor
+  color: ResolvedColor
   projectName: string
   activityName: string
   elapsed: number

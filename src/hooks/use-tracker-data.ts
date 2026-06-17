@@ -66,6 +66,7 @@ export interface TrackerData {
   isError: boolean
   allActivities: FlatActivity[]
   tagMap: Map<string, string>
+  tagColorMap: Map<string, string | null>
   activityElapsedMap: Map<string, number>
   currentTimer: EntryResponse | null | undefined
   refetchProjects: () => void
@@ -124,6 +125,14 @@ export function useTrackerData(): TrackerData {
     return map
   }, [tags])
 
+  const tagColorMap = useMemo(() => {
+    const map = new Map<string, string | null>()
+    for (const tag of tags ?? []) {
+      map.set(tag.id, tag.color ?? null)
+    }
+    return map
+  }, [tags])
+
   const activityElapsedMap = useMemo(
     () => computeElapsedMap(todayEntries ?? []),
     [todayEntries],
@@ -134,6 +143,7 @@ export function useTrackerData(): TrackerData {
     isError,
     allActivities,
     tagMap,
+    tagColorMap,
     activityElapsedMap,
     currentTimer,
     refetchProjects,

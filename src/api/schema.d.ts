@@ -547,6 +547,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/palette": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get color palette */
+        get: operations["palette_get_palette_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/settings": {
         parameters: {
             query?: never;
@@ -717,7 +734,7 @@ export interface components {
         ActivityColorsPatchRequest: {
             /** Colors */
             colors: {
-                [key: string]: string;
+                [key: string]: components["schemas"]["ColorToken"];
             };
         };
         /**
@@ -1318,7 +1335,7 @@ export interface components {
         SettingsPatchRequest: {
             /** Activitycolors */
             activityColors?: {
-                [key: string]: string;
+                [key: string]: components["schemas"]["ColorToken"];
             } | null;
             /** Avatar */
             avatar?: string | null;
@@ -1379,7 +1396,7 @@ export interface components {
             /** Name */
             name: string;
             /** Color */
-            color?: string | null;
+            color?: components["schemas"]["ColorToken"] | null;
             /** Defaultrate */
             defaultRate?: number | null;
             /** Ratecurrency */
@@ -1397,7 +1414,7 @@ export interface components {
             /** Name */
             name: string;
             /** Color */
-            color?: string | null;
+            color?: components["schemas"]["ColorToken"] | null;
             /** Defaultrate */
             defaultRate?: number | null;
             /** Ratecurrency */
@@ -1415,7 +1432,7 @@ export interface components {
             /** Name */
             name?: string | null;
             /** Color */
-            color?: string | null;
+            color?: components["schemas"]["ColorToken"] | null;
             /** Defaultrate */
             defaultRate?: number | null;
             /** Ratecurrency */
@@ -1447,6 +1464,12 @@ export interface components {
             /** Context */
             ctx?: Record<string, never>;
         };
+        /**
+         * ColorToken
+         * @description A color token name from the allowed palette
+         * @enum {string}
+         */
+        ColorToken: "blue" | "green" | "orange" | "purple" | "red" | "teal" | "yellow";
     };
     responses: never;
     parameters: never;
@@ -4747,6 +4770,70 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    palette_get_palette_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        blue?: {
+                            dark?: string;
+                            normal?: string;
+                            light?: string;
+                        };
+                        green?: {
+                            dark?: string;
+                            normal?: string;
+                            light?: string;
+                        };
+                        red?: {
+                            dark?: string;
+                            normal?: string;
+                            light?: string;
+                        };
+                        yellow?: {
+                            dark?: string;
+                            normal?: string;
+                            light?: string;
+                        };
+                        orange?: {
+                            dark?: string;
+                            normal?: string;
+                            light?: string;
+                        };
+                        teal?: {
+                            dark?: string;
+                            normal?: string;
+                            light?: string;
+                        };
+                        purple?: {
+                            dark?: string;
+                            normal?: string;
+                            light?: string;
+                        };
+                        grey?: {
+                            darkest?: string;
+                            dark?: string;
+                            normal?: string;
+                            light?: string;
+                            lighter?: string;
+                            lightest?: string;
+                        };
+                    };
                 };
             };
         };

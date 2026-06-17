@@ -4087,6 +4087,152 @@
         }
       }
     },
+    "/palette": {
+      "get": {
+        "tags": [
+          "Palette"
+        ],
+        "summary": "Get color palette",
+        "operationId": "palette_get_palette_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Color palette mapping each token to hex shade variants",
+                  "properties": {
+                    "blue": {
+                      "type": "object",
+                      "properties": {
+                        "dark": {
+                          "type": "string"
+                        },
+                        "normal": {
+                          "type": "string"
+                        },
+                        "light": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "green": {
+                      "type": "object",
+                      "properties": {
+                        "dark": {
+                          "type": "string"
+                        },
+                        "normal": {
+                          "type": "string"
+                        },
+                        "light": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "red": {
+                      "type": "object",
+                      "properties": {
+                        "dark": {
+                          "type": "string"
+                        },
+                        "normal": {
+                          "type": "string"
+                        },
+                        "light": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "yellow": {
+                      "type": "object",
+                      "properties": {
+                        "dark": {
+                          "type": "string"
+                        },
+                        "normal": {
+                          "type": "string"
+                        },
+                        "light": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "orange": {
+                      "type": "object",
+                      "properties": {
+                        "dark": {
+                          "type": "string"
+                        },
+                        "normal": {
+                          "type": "string"
+                        },
+                        "light": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "teal": {
+                      "type": "object",
+                      "properties": {
+                        "dark": {
+                          "type": "string"
+                        },
+                        "normal": {
+                          "type": "string"
+                        },
+                        "light": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "purple": {
+                      "type": "object",
+                      "properties": {
+                        "dark": {
+                          "type": "string"
+                        },
+                        "normal": {
+                          "type": "string"
+                        },
+                        "light": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "grey": {
+                      "type": "object",
+                      "properties": {
+                        "darkest": {
+                          "type": "string"
+                        },
+                        "dark": {
+                          "type": "string"
+                        },
+                        "normal": {
+                          "type": "string"
+                        },
+                        "light": {
+                          "type": "string"
+                        },
+                        "lighter": {
+                          "type": "string"
+                        },
+                        "lightest": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
     "/settings": {
       "get": {
         "tags": [
@@ -5042,7 +5188,7 @@
         "properties": {
           "colors": {
             "additionalProperties": {
-              "type": "string"
+              "$ref": "#/components/schemas/ColorToken"
             },
             "type": "object",
             "minProperties": 1,
@@ -6736,7 +6882,7 @@
             "anyOf": [
               {
                 "additionalProperties": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/ColorToken"
                 },
                 "type": "object"
               },
@@ -6896,7 +7042,7 @@
           "color": {
             "anyOf": [
               {
-                "type": "string"
+                "$ref": "#/components/schemas/ColorToken"
               },
               {
                 "type": "null"
@@ -6954,7 +7100,7 @@
           "color": {
             "anyOf": [
               {
-                "type": "string"
+                "$ref": "#/components/schemas/ColorToken"
               },
               {
                 "type": "null"
@@ -7028,7 +7174,7 @@
           "color": {
             "anyOf": [
               {
-                "type": "string"
+                "$ref": "#/components/schemas/ColorToken"
               },
               {
                 "type": "null"
@@ -7132,6 +7278,20 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "ColorToken": {
+        "type": "string",
+        "enum": [
+          "blue",
+          "green",
+          "orange",
+          "purple",
+          "red",
+          "teal",
+          "yellow"
+        ],
+        "title": "ColorToken",
+        "description": "A color token name from the allowed palette"
       }
     },
     "securitySchemes": {
