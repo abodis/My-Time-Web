@@ -2018,6 +2018,300 @@
         }
       }
     },
+    "/activities": {
+      "get": {
+        "tags": [
+          "Activities"
+        ],
+        "summary": "List all assigned activities with enrichment",
+        "operationId": "activities_list_all_activities_get",
+        "parameters": [
+          {
+            "name": "includeDone",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Include done activities (default false)",
+              "title": "Includedone"
+            },
+            "description": "Include done activities (default false)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnrichedActivitiesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/activities/reorder": {
+      "patch": {
+        "tags": [
+          "Activities"
+        ],
+        "summary": "Batch update sort order of activities",
+        "operationId": "activities_reorder_activities_reorder_patch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReorderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/activities/{id}/done": {
+      "patch": {
+        "tags": [
+          "Activities"
+        ],
+        "summary": "Mark or unmark an activity as done",
+        "operationId": "activities_toggle_done_activities__id__done_patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActivityDoneRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityDoneResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Timer running or conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/projects/{id}/budgets": {
       "post": {
         "tags": [
@@ -4099,138 +4393,11 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "object",
-                  "description": "Color palette mapping each token to hex shade variants",
-                  "properties": {
-                    "blue": {
-                      "type": "object",
-                      "properties": {
-                        "dark": {
-                          "type": "string"
-                        },
-                        "normal": {
-                          "type": "string"
-                        },
-                        "light": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "green": {
-                      "type": "object",
-                      "properties": {
-                        "dark": {
-                          "type": "string"
-                        },
-                        "normal": {
-                          "type": "string"
-                        },
-                        "light": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "red": {
-                      "type": "object",
-                      "properties": {
-                        "dark": {
-                          "type": "string"
-                        },
-                        "normal": {
-                          "type": "string"
-                        },
-                        "light": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "yellow": {
-                      "type": "object",
-                      "properties": {
-                        "dark": {
-                          "type": "string"
-                        },
-                        "normal": {
-                          "type": "string"
-                        },
-                        "light": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "orange": {
-                      "type": "object",
-                      "properties": {
-                        "dark": {
-                          "type": "string"
-                        },
-                        "normal": {
-                          "type": "string"
-                        },
-                        "light": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "teal": {
-                      "type": "object",
-                      "properties": {
-                        "dark": {
-                          "type": "string"
-                        },
-                        "normal": {
-                          "type": "string"
-                        },
-                        "light": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "purple": {
-                      "type": "object",
-                      "properties": {
-                        "dark": {
-                          "type": "string"
-                        },
-                        "normal": {
-                          "type": "string"
-                        },
-                        "light": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "grey": {
-                      "type": "object",
-                      "properties": {
-                        "darkest": {
-                          "type": "string"
-                        },
-                        "dark": {
-                          "type": "string"
-                        },
-                        "normal": {
-                          "type": "string"
-                        },
-                        "light": {
-                          "type": "string"
-                        },
-                        "lighter": {
-                          "type": "string"
-                        },
-                        "lightest": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
+                "schema": {}
               }
             }
           }
-        },
-        "security": []
+        }
       }
     },
     "/settings": {
@@ -5188,7 +5355,7 @@
         "properties": {
           "colors": {
             "additionalProperties": {
-              "$ref": "#/components/schemas/ColorToken"
+              "type": "string"
             },
             "type": "object",
             "minProperties": 1,
@@ -5235,6 +5402,50 @@
         ],
         "title": "ActivityCreateRequest",
         "description": "POST /projects/{id}/activities request body."
+      },
+      "ActivityDoneRequest": {
+        "properties": {
+          "isDone": {
+            "type": "boolean",
+            "title": "Isdone"
+          }
+        },
+        "type": "object",
+        "required": [
+          "isDone"
+        ],
+        "title": "ActivityDoneRequest",
+        "description": "PATCH /activities/{id}/done request body."
+      },
+      "ActivityDoneResponse": {
+        "properties": {
+          "activityId": {
+            "type": "string",
+            "title": "Activityid"
+          },
+          "isDone": {
+            "type": "boolean",
+            "title": "Isdone"
+          },
+          "doneAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Doneat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "activityId",
+          "isDone"
+        ],
+        "title": "ActivityDoneResponse",
+        "description": "PATCH /activities/{id}/done response."
       },
       "ActivityResponse": {
         "properties": {
@@ -5470,6 +5681,141 @@
         ],
         "title": "ConfirmRequest",
         "description": "POST /auth/confirm request body."
+      },
+      "EnrichedActivitiesResponse": {
+        "properties": {
+          "activities": {
+            "items": {
+              "$ref": "#/components/schemas/EnrichedActivityItem"
+            },
+            "type": "array",
+            "title": "Activities"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/EnrichedActivityMeta"
+          }
+        },
+        "type": "object",
+        "required": [
+          "activities",
+          "meta"
+        ],
+        "title": "EnrichedActivitiesResponse",
+        "description": "GET /activities response with activities list and metadata."
+      },
+      "EnrichedActivityItem": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "projectId": {
+            "type": "string",
+            "title": "Projectid"
+          },
+          "projectName": {
+            "type": "string",
+            "title": "Projectname"
+          },
+          "tagId": {
+            "type": "string",
+            "title": "Tagid"
+          },
+          "tagName": {
+            "type": "string",
+            "title": "Tagname"
+          },
+          "tagColor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tagcolor"
+          },
+          "rateOverride": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rateoverride"
+          },
+          "runningEntry": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runningentry"
+          },
+          "isDone": {
+            "type": "boolean",
+            "title": "Isdone",
+            "default": false
+          },
+          "sortOrder": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sortorder"
+          },
+          "doneAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Doneat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "projectId",
+          "projectName",
+          "tagId",
+          "tagName"
+        ],
+        "title": "EnrichedActivityItem",
+        "description": "Single item in GET /activities enriched response."
+      },
+      "EnrichedActivityMeta": {
+        "properties": {
+          "doneCount": {
+            "type": "integer",
+            "title": "Donecount"
+          }
+        },
+        "type": "object",
+        "required": [
+          "doneCount"
+        ],
+        "title": "EnrichedActivityMeta",
+        "description": "Metadata for GET /activities enriched response."
       },
       "EntryCreateRequest": {
         "properties": {
@@ -6852,6 +7198,57 @@
         "title": "RegisterRequest",
         "description": "POST /auth/register request body."
       },
+      "ReorderItem": {
+        "properties": {
+          "activityId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Activityid"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "maximum": 999999999.0,
+            "minimum": 0.0,
+            "title": "Sortorder"
+          }
+        },
+        "type": "object",
+        "required": [
+          "activityId",
+          "sortOrder"
+        ],
+        "title": "ReorderItem",
+        "description": "Single item in a reorder payload."
+      },
+      "ReorderRequest": {
+        "properties": {
+          "order": {
+            "items": {
+              "$ref": "#/components/schemas/ReorderItem"
+            },
+            "type": "array",
+            "maxItems": 200,
+            "title": "Order"
+          }
+        },
+        "type": "object",
+        "title": "ReorderRequest",
+        "description": "PATCH /activities/reorder request body."
+      },
+      "ReorderResponse": {
+        "properties": {
+          "updated": {
+            "type": "integer",
+            "title": "Updated"
+          }
+        },
+        "type": "object",
+        "required": [
+          "updated"
+        ],
+        "title": "ReorderResponse",
+        "description": "PATCH /activities/reorder response."
+      },
       "ResetPasswordRequest": {
         "properties": {
           "email": {
@@ -6882,7 +7279,7 @@
             "anyOf": [
               {
                 "additionalProperties": {
-                  "$ref": "#/components/schemas/ColorToken"
+                  "type": "string"
                 },
                 "type": "object"
               },
@@ -7042,7 +7439,7 @@
           "color": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/ColorToken"
+                "type": "string"
               },
               {
                 "type": "null"
@@ -7100,7 +7497,7 @@
           "color": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/ColorToken"
+                "type": "string"
               },
               {
                 "type": "null"
@@ -7174,7 +7571,7 @@
           "color": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/ColorToken"
+                "type": "string"
               },
               {
                 "type": "null"
@@ -7278,20 +7675,6 @@
           "type"
         ],
         "title": "ValidationError"
-      },
-      "ColorToken": {
-        "type": "string",
-        "enum": [
-          "blue",
-          "green",
-          "orange",
-          "purple",
-          "red",
-          "teal",
-          "yellow"
-        ],
-        "title": "ColorToken",
-        "description": "A color token name from the allowed palette"
       }
     },
     "securitySchemes": {

@@ -300,6 +300,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/activities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List all assigned activities with enrichment */
+        get: operations["activities_list_all_activities_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/activities/reorder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Batch update sort order of activities */
+        patch: operations["activities_reorder_activities_reorder_patch"];
+        trace?: never;
+    };
+    "/activities/{id}/done": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Mark or unmark an activity as done */
+        patch: operations["activities_toggle_done_activities__id__done_patch"];
+        trace?: never;
+    };
     "/projects/{id}/budgets": {
         parameters: {
             query?: never;
@@ -734,7 +785,7 @@ export interface components {
         ActivityColorsPatchRequest: {
             /** Colors */
             colors: {
-                [key: string]: components["schemas"]["ColorToken"];
+                [key: string]: string;
             };
         };
         /**
@@ -751,6 +802,26 @@ export interface components {
             tagId: string;
             /** Rateoverride */
             rateOverride?: number | null;
+        };
+        /**
+         * ActivityDoneRequest
+         * @description PATCH /activities/{id}/done request body.
+         */
+        ActivityDoneRequest: {
+            /** Isdone */
+            isDone: boolean;
+        };
+        /**
+         * ActivityDoneResponse
+         * @description PATCH /activities/{id}/done response.
+         */
+        ActivityDoneResponse: {
+            /** Activityid */
+            activityId: string;
+            /** Isdone */
+            isDone: boolean;
+            /** Doneat */
+            doneAt?: string | null;
         };
         /**
          * ActivityResponse
@@ -851,6 +922,58 @@ export interface components {
             email: string;
             /** Code */
             code: string;
+        };
+        /**
+         * EnrichedActivitiesResponse
+         * @description GET /activities response with activities list and metadata.
+         */
+        EnrichedActivitiesResponse: {
+            /** Activities */
+            activities: components["schemas"]["EnrichedActivityItem"][];
+            meta: components["schemas"]["EnrichedActivityMeta"];
+        };
+        /**
+         * EnrichedActivityItem
+         * @description Single item in GET /activities enriched response.
+         */
+        EnrichedActivityItem: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /** Projectid */
+            projectId: string;
+            /** Projectname */
+            projectName: string;
+            /** Tagid */
+            tagId: string;
+            /** Tagname */
+            tagName: string;
+            /** Tagcolor */
+            tagColor?: string | null;
+            /** Rateoverride */
+            rateOverride?: number | null;
+            /** Runningentry */
+            runningEntry?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Isdone
+             * @default false
+             */
+            isDone: boolean;
+            /** Sortorder */
+            sortOrder?: number | null;
+            /** Doneat */
+            doneAt?: string | null;
+        };
+        /**
+         * EnrichedActivityMeta
+         * @description Metadata for GET /activities enriched response.
+         */
+        EnrichedActivityMeta: {
+            /** Donecount */
+            doneCount: number;
         };
         /**
          * EntryCreateRequest
@@ -1317,6 +1440,35 @@ export interface components {
             password: string;
         };
         /**
+         * ReorderItem
+         * @description Single item in a reorder payload.
+         */
+        ReorderItem: {
+            /**
+             * Activityid
+             * Format: uuid
+             */
+            activityId: string;
+            /** Sortorder */
+            sortOrder: number;
+        };
+        /**
+         * ReorderRequest
+         * @description PATCH /activities/reorder request body.
+         */
+        ReorderRequest: {
+            /** Order */
+            order?: components["schemas"]["ReorderItem"][];
+        };
+        /**
+         * ReorderResponse
+         * @description PATCH /activities/reorder response.
+         */
+        ReorderResponse: {
+            /** Updated */
+            updated: number;
+        };
+        /**
          * ResetPasswordRequest
          * @description POST /auth/reset-password request body.
          */
@@ -1335,7 +1487,7 @@ export interface components {
         SettingsPatchRequest: {
             /** Activitycolors */
             activityColors?: {
-                [key: string]: components["schemas"]["ColorToken"];
+                [key: string]: string;
             } | null;
             /** Avatar */
             avatar?: string | null;
@@ -1396,7 +1548,7 @@ export interface components {
             /** Name */
             name: string;
             /** Color */
-            color?: components["schemas"]["ColorToken"] | null;
+            color?: string | null;
             /** Defaultrate */
             defaultRate?: number | null;
             /** Ratecurrency */
@@ -1414,7 +1566,7 @@ export interface components {
             /** Name */
             name: string;
             /** Color */
-            color?: components["schemas"]["ColorToken"] | null;
+            color?: string | null;
             /** Defaultrate */
             defaultRate?: number | null;
             /** Ratecurrency */
@@ -1432,7 +1584,7 @@ export interface components {
             /** Name */
             name?: string | null;
             /** Color */
-            color?: components["schemas"]["ColorToken"] | null;
+            color?: string | null;
             /** Defaultrate */
             defaultRate?: number | null;
             /** Ratecurrency */
@@ -1464,12 +1616,6 @@ export interface components {
             /** Context */
             ctx?: Record<string, never>;
         };
-        /**
-         * ColorToken
-         * @description A color token name from the allowed palette
-         * @enum {string}
-         */
-        ColorToken: "blue" | "green" | "orange" | "purple" | "red" | "teal" | "yellow";
     };
     responses: never;
     parameters: never;
@@ -3042,6 +3188,241 @@ export interface operations {
                 };
             };
             /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    activities_list_all_activities_get: {
+        parameters: {
+            query?: {
+                /** @description Include done activities (default false) */
+                includeDone?: boolean | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnrichedActivitiesResponse"];
+                };
+            };
+            /** @description Validation error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    activities_reorder_activities_reorder_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReorderRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReorderResponse"];
+                };
+            };
+            /** @description Validation error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    activities_toggle_done_activities__id__done_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ActivityDoneRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActivityDoneResponse"];
+                };
+            };
+            /** @description Validation error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Timer running or conflict */
             409: {
                 headers: {
                     [name: string]: unknown;
@@ -4789,51 +5170,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        blue?: {
-                            dark?: string;
-                            normal?: string;
-                            light?: string;
-                        };
-                        green?: {
-                            dark?: string;
-                            normal?: string;
-                            light?: string;
-                        };
-                        red?: {
-                            dark?: string;
-                            normal?: string;
-                            light?: string;
-                        };
-                        yellow?: {
-                            dark?: string;
-                            normal?: string;
-                            light?: string;
-                        };
-                        orange?: {
-                            dark?: string;
-                            normal?: string;
-                            light?: string;
-                        };
-                        teal?: {
-                            dark?: string;
-                            normal?: string;
-                            light?: string;
-                        };
-                        purple?: {
-                            dark?: string;
-                            normal?: string;
-                            light?: string;
-                        };
-                        grey?: {
-                            darkest?: string;
-                            dark?: string;
-                            normal?: string;
-                            light?: string;
-                            lighter?: string;
-                            lightest?: string;
-                        };
-                    };
+                    "application/json": unknown;
                 };
             };
         };

@@ -111,3 +111,25 @@ description: "React and component patterns for the frontend"
 - To center a fixed element within a horizontal zone: set `left` to the zone's midpoint, then apply `-translate-x-1/2`.
 - Formula: `left: calc(zoneStart + zoneWidth/2)` + `transform: translateX(-50%)`
 - Always verify positioning with Playwright measurements (`getBoundingClientRect`) before iterating on calc formulas.
+
+## CSS 3D Flip Card Layout
+- Front face must be `relative` (not `absolute inset-0`) so it defines the container's intrinsic height.
+- Only the back face uses `absolute inset-0` to overlay.
+- Both faces need `backface-visibility: hidden`.
+- If both faces are absolute, the container collapses to 0 height since nothing provides intrinsic dimensions.
+
+## Activity Color Overrides
+- Per-activity color overrides are stored in `GET /settings/activity-colors` (returns `Record<activityId, colorToken>`).
+- They are NOT part of the `EnrichedActivityItem` response.
+- When resolving card colors, pass the override as the second param: `resolveColor(palette, activityColorOverrides?.[activity.id], tagColor)`.
+- After `PATCH /settings/activity-colors`, invalidate `["settings", "activity-colors"]` to trigger re-render.
+
+### Optimistic Updates with getQueriesData
+- `getQueriesData({ queryKey: ["resource"] })` matches ALL queries starting with that prefix (e.g. `["activities"]` matches both `["activities", { includeDone }]` and `["activities", projectId]`).
+- Always guard the data shape before accessing nested properties: `if (!data || !data.activities || !data.meta) return`.
+- If `onMutate` throws, TanStack Query silently skips `mutationFn` — no API call is made and no error is logged to console.
+
+## Drag-and-Drop State Sync
+- When syncing local `items` state with query data via render-time comparisons (`if (items !== queryIds) setItems(queryIds)`), always guard with `!isDragActive`.
+- Without this guard, `onDragOver` → `setItems(move(...))` triggers a re-render where the sync block immediately resets items to the original order, making `handleDragEnd` compute an empty payload (no change detected → no API call).
+- Pattern: `if (!isDragActive && items !== queryIds) setItems(queryIds)`

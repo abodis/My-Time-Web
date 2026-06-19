@@ -1,9 +1,33 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { client } from "@/api/client"
 import type { components } from "@/api/schema"
 
 type ActivityCreateRequest = components["schemas"]["ActivityCreateRequest"]
 type ActivityUpdateRequest = components["schemas"]["ActivityUpdateRequest"]
+
+export function useActivities({ includeDone }: { includeDone?: boolean } = {}) {
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ["activities", { includeDone }],
+    queryFn: async () => {
+      const { data, error } = await client.GET("/activities", {
+        params: {
+          query: { includeDone: includeDone ? true : undefined },
+        },
+      })
+      if (error) throw error
+      return data
+    },
+    placeholderData: (prev) => prev,
+  })
+
+  return {
+    activities: data?.activities ?? [],
+    doneCount: data?.meta.doneCount ?? 0,
+    isLoading,
+    isError,
+    refetch,
+  }
+}
 
 export function useCreateActivity() {
   const queryClient = useQueryClient()

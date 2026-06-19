@@ -1,18 +1,15 @@
 import { ActivityGrid } from '@/components/tracker/activity-grid'
-import { ActivityBlock } from '@/components/tracker/activity-block'
 import { useTrackerData } from '@/hooks/use-tracker-data'
 import { useTimerTick } from '@/hooks/use-timer-tick'
 import { useBlockClick } from '@/hooks/use-block-click'
 import { useTimerStore } from '@/stores/timer-store'
 import { usePalette } from '@/hooks/use-palette'
-import { resolveColor } from '@/lib/color-utils'
 import { Button } from '@/components/ui/button'
 
 export default function TrackerPage() {
   const {
     isLoading,
     isError,
-    allActivities,
     tagMap,
     tagColorMap,
     activityElapsedMap,
@@ -48,37 +45,19 @@ export default function TrackerPage() {
     )
   }
 
-  if (allActivities.length === 0) {
-    return (
-      <div className="flex h-64 items-center justify-center">
-        <p className="text-[hsl(var(--muted-foreground))]">No activities available.</p>
-      </div>
-    )
-  }
-
   return (
     <div className="flex flex-col gap-6 p-6 wide:pt-0">
-      <ActivityGrid>
-        {allActivities.map((activity) => {
-          const isRunning = timerIsRunning && timerActivityId === activity.id
-          const accumulated = activityElapsedMap.get(activity.id) ?? 0
-          const elapsed = isRunning ? timerElapsed + accumulated : accumulated
-          const tagColor = tagColorMap.get(activity.tagId) ?? null
-          return (
-            <ActivityBlock
-              key={activity.id}
-              tagName={tagMap.get(activity.tagId) ?? 'Unknown'}
-              color={resolveColor(palette, undefined, tagColor)}
-              projectName={activity.projectName}
-              activityName={activity.name}
-              elapsed={elapsed}
-              isRunning={isRunning}
-              isLoading={loadingActivityId === activity.id}
-              onClick={() => handleBlockClick(activity.id)}
-            />
-          )
-        })}
-      </ActivityGrid>
+      <ActivityGrid
+        onTimerClick={handleBlockClick}
+        timerActivityId={timerActivityId}
+        timerIsRunning={timerIsRunning}
+        timerElapsed={timerElapsed}
+        activityElapsedMap={activityElapsedMap}
+        palette={palette}
+        tagMap={tagMap}
+        tagColorMap={tagColorMap}
+        loadingActivityId={loadingActivityId}
+      />
     </div>
   )
 }

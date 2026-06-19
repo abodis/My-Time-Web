@@ -1,24 +1,12 @@
 import { useMemo } from "react"
-import { useQueries } from "@tanstack/react-query"
 import { useProjects } from "@/hooks/use-projects"
 import { useTags } from "@/hooks/use-tags"
 import { useCurrentTimer } from "@/hooks/use-timer"
 import { useEntries } from "@/hooks/use-entries"
 import { getStartOfDay, getEndOfDay } from "@/lib/time-utils"
-import { client } from "@/api/client"
 import type { components } from "@/api/schema"
 
 type EntryResponse = components["schemas"]["EntryResponse"]
-type ActivityResponse = components["schemas"]["ActivityResponse"]
-type ProjectResponse = components["schemas"]["ProjectResponse"]
-
-export interface FlatActivity {
-  id: string
-  name: string
-  tagId: string
-  projectId: string
-  projectName: string
-}
 
 /**
  * Pure function: computes accumulated elapsed milliseconds per activity
@@ -35,36 +23,9 @@ export function computeElapsedMap(entries: EntryResponse[]): Map<string, number>
   return map
 }
 
-/**
- * Pure function: flattens per-project activity arrays into a single list
- * with project name attached to each activity.
- */
-export function flattenActivities(
-  projects: ProjectResponse[],
-  activityResults: Array<ActivityResponse[] | undefined>,
-): FlatActivity[] {
-  const result: FlatActivity[] = []
-  for (let i = 0; i < projects.length; i++) {
-    const activities = activityResults[i]
-    if (activities) {
-      for (const activity of activities) {
-        result.push({
-          id: activity.id,
-          name: activity.name,
-          tagId: activity.tagId,
-          projectId: activity.projectId,
-          projectName: projects[i].name,
-        })
-      }
-    }
-  }
-  return result
-}
-
 export interface TrackerData {
   isLoading: boolean
   isError: boolean
-  allActivities: FlatActivity[]
   tagMap: Map<string, string>
   tagColorMap: Map<string, string | null>
   activityElapsedMap: Map<string, number>
@@ -74,7 +35,6 @@ export interface TrackerData {
 
 export function useTrackerData(): TrackerData {
   const {
-    data: projects,
     isLoading: projectsLoading,
     isError: projectsError,
     refetch: refetchProjects,
@@ -86,36 +46,8 @@ export function useTrackerData(): TrackerData {
     to: getEndOfDay(),
   })
 
-  // Fetch activities for each non-archived project
-  const nonArchivedProjects = useMemo(
-    () => (projects ?? []).filter((p) => !p.isArchived),
-    [projects],
-  )
-
-  const activityQueries = useQueries({
-    queries: nonArchivedProjects.map((project) => ({
-      queryKey: ["activities", project.id],
-      queryFn: async () => {
-        const { data, error } = await client.GET("/projects/{id}/activities", {
-          params: { path: { id: project.id } },
-        })
-        if (error) throw error
-        return data
-      },
-      enabled: !!project.id,
-    })),
-  })
-
-  const activitiesLoading = activityQueries.some((q) => q.isLoading)
-  const activitiesError = activityQueries.some((q) => q.isError)
-
-  const isLoading = projectsLoading || tagsLoading || timerLoading || activitiesLoading
-  const isError = projectsError || tagsError || activitiesError
-
-  const allActivities = useMemo(
-    () => flattenActivities(nonArchivedProjects, activityQueries.map((q) => q.data)),
-    [nonArchivedProjects, activityQueries],
-  )
+  const isLoading = projectsLoading || tagsLoading || timerLoading
+  const isError = projectsError || tagsError
 
   const tagMap = useMemo(() => {
     const map = new Map<string, string>()
@@ -141,7 +73,6 @@ export function useTrackerData(): TrackerData {
   return {
     isLoading,
     isError,
-    allActivities,
     tagMap,
     tagColorMap,
     activityElapsedMap,
