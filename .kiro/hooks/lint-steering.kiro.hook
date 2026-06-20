@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Lint Steering",
+  "description": "Health-check: flag steering rules that conflict with recent decisions, decisions.md entries not reflected in steering, and steering sections referencing removed code or dead patterns.",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Perform a steering lint. Read all files in .kiro/steering/ and .kiro/steering/decisions.md. Then:\\n1. Flag steering rules that conflict with recent decisions in decisions.md\\n2. Flag decisions.md entries that haven't been reflected in steering\\n3. Flag steering sections that reference removed code, dead patterns, or outdated file paths\\n4. Check for contradictions between steering files\\n\\nReport findings grouped by category. If clean, say 'Steering is consistent.'"
+  }
+}

@@ -43,8 +43,12 @@ The API returns a color **name** (e.g., "blue", "teal", "purple"). The web app m
 ## Usage Rules
 
 - Activity blocks use the **light** variant as background, **dark** variant for text/badge, **default** for accents
-- Colors are set per-activity by the user (future API: activity-level color field). Default color configurable in user preferences (future API).
-- **Phase 1**: API has no color fields yet. Assign colors from the palette based on activity index (deterministic per-session, cycles through the 8 colors). No hashing by tag name.
-- When API adds color support, the app will read the color name from the activity response and map it to these hex values.
-- If color is null/unknown, fall back to `grey-light` background
+- Colors resolved at runtime via `resolveColor(palette, override, tagColor)` from `src/lib/color-utils.ts`
+- Override source: `GET /settings/activity-colors` (per-activity user preference)
+- Tag color source: `tagColor` field on `EnrichedActivityItem` response
+- Priority: override → tagColor → "grey" fallback
+- Runtime source of truth: `GET /palette` (cached with `staleTime: Infinity`)
+- If palette unavailable, all shades fall back to `#B2B2B2`
+- If color is null/unknown, fall back to grey
 - Never use arbitrary colors outside this palette for time blocks
+- The hex values in this file are reference only — the app fetches them from the API at runtime
