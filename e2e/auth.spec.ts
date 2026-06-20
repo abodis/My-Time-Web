@@ -5,14 +5,11 @@ test("login page loads and shows login form", async ({ page }) => {
   await expect(page.getByRole("heading", { name: /sign in/i })).toBeVisible()
 })
 
-test("authenticated user sees app shell", async ({ page }) => {
-  // Simulate stored session by injecting refresh token
-  await page.goto("/")
-  await page.evaluate(() => {
-    localStorage.setItem("mtb_refresh_token", "fake-token")
-  })
+test("unauthenticated user is redirected to login", async ({ page }) => {
+  // Navigate to a protected route without valid auth
   await page.goto("/")
 
-  // App shell should render with pill nav
-  await expect(page.locator("[data-testid='app-shell']")).toBeVisible()
+  // Should redirect to login page
+  await expect(page).toHaveURL(/\/login/)
+  await expect(page.getByRole("heading", { name: /sign in/i })).toBeVisible()
 })

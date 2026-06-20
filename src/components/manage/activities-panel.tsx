@@ -3,8 +3,11 @@ import { useActivities } from "@/hooks/use-projects"
 import { useCreateActivity, useUpdateActivity, useDeleteActivity } from "@/hooks/use-activities"
 import { useTags } from "@/hooks/use-tags"
 import { usePalette } from "@/hooks/use-palette"
+import { useProfile } from "@/hooks/use-profile"
 import { resolveTagColor } from "@/lib/color-utils"
 import { Input } from "@/components/ui/input"
+import { AssignmentIndicator } from "@/components/manage/assignment-indicator"
+import { AssignmentPopover } from "@/components/manage/assignment-popover"
 
 interface ActivitiesPanelProps {
   projectId: string
@@ -14,9 +17,14 @@ export function ActivitiesPanel({ projectId }: ActivitiesPanelProps) {
   const { data: activities, isLoading } = useActivities(projectId)
   const { data: tags } = useTags()
   const { data: palette } = usePalette()
+  const { data: profile, isLoading: profileLoading } = useProfile()
   const createActivity = useCreateActivity()
   const updateActivity = useUpdateActivity()
   const deleteActivity = useDeleteActivity()
+
+  const [openPopoverId, setOpenPopoverId] = useState<string | null>(null)
+
+  const showAssignedColumn = !profileLoading && (profile?.role === "manager" || profile?.role === "admin")
 
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editFields, setEditFields] = useState<{ name: string; tagId: string; rateOverride: string }>({
@@ -229,6 +237,9 @@ export function ActivitiesPanel({ projectId }: ActivitiesPanelProps) {
               <th className="text-left text-xs font-medium uppercase text-text-muted px-3 py-2">Name</th>
               <th className="text-left text-xs font-medium uppercase text-text-muted px-3 py-2">Tag</th>
               <th className="text-left text-xs font-medium uppercase text-text-muted px-3 py-2">Rate Override</th>
+              {showAssignedColumn && (
+                <th className="text-left text-xs font-medium uppercase text-text-muted px-3 py-2">Assigned</th>
+              )}
               <th className="w-20 px-3 py-2" />
             </tr>
           </thead>
@@ -284,6 +295,9 @@ export function ActivitiesPanel({ projectId }: ActivitiesPanelProps) {
                         <p className="mt-1 text-xs text-[hsl(var(--destructive))]">{validationErrors["edit-rate"]}</p>
                       )}
                     </td>
+                    {showAssignedColumn && (
+                      <td className="px-3 py-2 text-sm text-text-muted">—</td>
+                    )}
                     <td className="px-3 py-2">
                       <div className="flex items-center gap-1">
                         <button
@@ -324,6 +338,19 @@ export function ActivitiesPanel({ projectId }: ActivitiesPanelProps) {
                   <td className="px-3 py-3">
                     {activity.rateOverride != null ? `$${activity.rateOverride}` : "—"}
                   </td>
+                  {showAssignedColumn && (
+                    <td className="px-3 py-3">
+                      <AssignmentIndicator
+                        activityId={activity.id}
+                        onClick={() => setOpenPopoverId(activity.id)}
+                      />
+                      <AssignmentPopover
+                        activityId={activity.id}
+                        open={openPopoverId === activity.id}
+                        onOpenChange={(open) => setOpenPopoverId(open ? activity.id : null)}
+                      />
+                    </td>
+                  )}
                   <td className="px-3 py-3">
                     <div className="flex items-center gap-1">
                       <button

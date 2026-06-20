@@ -28,3 +28,6 @@ coverage/
 
 # Local test screenshots (Playwright visual checks)
 test-screenshots/
+
+# Playwright MCP artifacts
+.playwright-mcp/
