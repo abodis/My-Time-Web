@@ -2,6 +2,8 @@ import { useMemo, useState } from "react"
 import { Pencil, Trash2 } from "lucide-react"
 import { useTags } from "@/hooks/use-tags"
 import { usePalette } from "@/hooks/use-palette"
+import { useAccount } from "@/hooks/use-profile"
+import { formatMoney } from "@/lib/currency"
 import { resolveTagColor, type ColorToken } from "@/lib/color-utils"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import SearchToolbar from "@/components/manage/search-toolbar"
@@ -43,6 +45,7 @@ export default function TagsListPage() {
 
   const { data: tags = [], isPending, isError, refetch } = useTags()
   const { data: palette } = usePalette()
+  const { data: account } = useAccount()
   const deleteTag = useDeleteTag()
 
   const filtered = useMemo(() => {
@@ -94,7 +97,7 @@ export default function TagsListPage() {
       header: "Rate",
       render: (t) =>
         t.defaultRate != null
-          ? `${t.defaultRate}${t.rateCurrency ? ` ${t.rateCurrency}` : ""}`
+          ? formatMoney(t.defaultRate, t.rateCurrency ?? account?.currency ?? "USD")
           : "—",
     },
     {

@@ -1,25 +1,14 @@
 import { useFinancialReport } from "@/hooks/use-reports"
+import { BillablePill } from "@/components/reports/billable-pill"
+import { formatMoney } from "@/lib/currency"
 
 export interface FinancialPanelProps {
   from: string
   to: string
   projectId?: string
-  projects: Array<{ id: string; name: string }>
+  projects: Array<{ id: string; name: string; isBillable?: boolean }>
   selectedProjectId?: string
   onProjectChange: (id: string | undefined) => void
-}
-
-function formatMoney(value: number, currencyCode: string): string {
-  try {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: currencyCode,
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(value)
-  } catch {
-    return `${currencyCode} ${value.toFixed(2)}`
-  }
 }
 
 function formatHours(consumed: number, budget?: number | null): string {
@@ -33,6 +22,21 @@ function formatHours(consumed: number, budget?: number | null): string {
 function formatMargin(margin: number, billable: number, currencyCode: string): string {
   const pct = billable > 0 ? Math.round((margin / billable) * 100) : 0
   return `${formatMoney(margin, currencyCode)} (${pct}%)`
+}
+
+// Shared column widths so every project table (and the grand total) line up
+// identically. Without a fixed layout, each table sizes columns to its own
+// content and the columns drift between projects.
+function FinancialColumns() {
+  return (
+    <colgroup>
+      <col className="w-[28%]" />
+      <col className="w-[18%]" />
+      <col className="w-[18%]" />
+      <col className="w-[18%]" />
+      <col className="w-[18%]" />
+    </colgroup>
+  )
 }
 
 export function FinancialPanel({ from, to, projectId, projects: projectList, selectedProjectId, onProjectChange }: FinancialPanelProps) {
@@ -67,10 +71,13 @@ export function FinancialPanel({ from, to, projectId, projects: projectList, sel
 
   const currency = data?.currency || "USD"
   const projects = data?.projects ?? []
+  const billableIds = new Set(projectList.filter((p) => p.isBillable).map((p) => p.id))
 
+  const grandConsumed = projects.reduce((sum, p) => sum + p.consumedHours, 0)
+  const grandBillable = projects.reduce((sum, p) => sum + p.billableTotal, 0)
+  const grandCost = projects.reduce((sum, p) => sum + p.costTotal, 0)
   const totalMargin = projects.reduce((sum, p) => sum + p.margin, 0)
-  const totalBillable = projects.reduce((sum, p) => sum + p.billableTotal, 0)
-  const marginPct = totalBillable > 0 ? Math.round((totalMargin / totalBillable) * 100) : 0
+  const marginPct = grandBillable > 0 ? Math.round((totalMargin / grandBillable) * 100) : 0
 
   return (
     <div className="space-y-4">
@@ -99,11 +106,42 @@ export function FinancialPanel({ from, to, projectId, projects: projectList, sel
         </div>
       ) : (
         <div className="space-y-6">
+          {projects.length > 1 && (
+            <div className="rounded-xl bg-surface-muted p-4">
+              <div className="overflow-x-auto">
+                <table className="w-full table-fixed text-sm">
+                  <FinancialColumns />
+                  <thead>
+                    <tr className="border-b text-left text-text-muted">
+                      <th className="pb-2 font-bold">Grand Total</th>
+                      <th className="pb-2 font-medium text-right">Hours</th>
+                      <th className="pb-2 font-medium text-right">Billing</th>
+                      <th className="pb-2 font-medium text-right">Cost</th>
+                      <th className="pb-2 font-medium text-right">Margin</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="font-semibold">
+                      <td className="py-2">All Projects</td>
+                      <td className="py-2 text-right">{grandConsumed.toFixed(1)}</td>
+                      <td className="py-2 text-right">{formatMoney(grandBillable, currency)}</td>
+                      <td className="py-2 text-right">{formatMoney(grandCost, currency)}</td>
+                      <td className="py-2 text-right">{formatMargin(totalMargin, grandBillable, currency)}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
           {projects.map((project) => (
             <div key={project.projectId} className="space-y-2">
-              <h3 className="text-base font-bold">{project.projectName}</h3>
+              <h3 className="flex items-center gap-2 text-base font-bold">
+                {project.projectName}
+                {billableIds.has(project.projectId) && <BillablePill />}
+              </h3>
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="w-full table-fixed text-sm">
+                  <FinancialColumns />
                   <thead>
                     <tr className="border-b text-left text-text-muted">
                       <th className="pb-2 font-medium">Tag</th>
@@ -131,6 +169,15 @@ export function FinancialPanel({ from, to, projectId, projects: projectList, sel
                       </tr>
                     ))}
                   </tbody>
+                  <tfoot>
+                    <tr className="border-t-2 font-semibold">
+                      <td className="py-2">Total</td>
+                      <td className="py-2 text-right">{formatHours(project.consumedHours, project.budgetHours)}</td>
+                      <td className="py-2 text-right">{formatMoney(project.billableTotal, currency)}</td>
+                      <td className="py-2 text-right">{formatMoney(project.costTotal, currency)}</td>
+                      <td className="py-2 text-right">{formatMargin(project.margin, project.billableTotal, currency)}</td>
+                    </tr>
+                  </tfoot>
                 </table>
               </div>
             </div>

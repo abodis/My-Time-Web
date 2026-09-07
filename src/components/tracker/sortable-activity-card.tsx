@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { X } from 'lucide-react'
 import { useSortable } from '@dnd-kit/react/sortable'
 import { ActivityBlock } from '@/components/tracker/activity-block'
 import { FlipCard } from '@/components/tracker/flip-card'
@@ -15,6 +16,8 @@ type EnrichedActivityItem = components["schemas"]["EnrichedActivityItem"]
 export interface SortableActivityCardProps {
   activity: EnrichedActivityItem
   color: ResolvedColor
+  /** Effective selected color token (activity override if set, else tag color). */
+  selectedColor: ColorToken | null
   elapsed: number
   isRunning: boolean
   isLoading: boolean
@@ -26,6 +29,7 @@ export interface SortableActivityCardProps {
 export function SortableActivityCard({
   activity,
   color,
+  selectedColor,
   elapsed,
   isRunning,
   isLoading,
@@ -41,7 +45,7 @@ export function SortableActivityCard({
   const {
     isFlipped,
     isAnimating,
-    pendingColor: _pendingColor,
+    pendingColor,
     flip,
     handleColorSelect,
     handleFlipComplete,
@@ -145,13 +149,26 @@ export function SortableActivityCard({
 
   const backFace = (
     <div
-      className="flex h-full w-full items-center justify-center rounded-2xl p-4"
+      className="flex h-full w-full flex-col items-center justify-center gap-3 rounded-2xl p-4"
       style={{ backgroundColor: color.light }}
     >
+      <p className="-mt-2.5 text-center text-sm font-medium" style={{ color: color.dark }}>
+        Pick a color
+      </p>
       <ColorPicker
-        value={activity.tagColor as ColorToken | null}
+        value={pendingColor ?? selectedColor}
         onChange={handleColorSelect}
+        columns={4}
+        className="mt-2.5"
       />
+      <button
+        type="button"
+        onClick={handleEscapeOrOutside}
+        className="mt-[30px] inline-flex cursor-pointer items-center gap-1 rounded-full bg-[hsl(var(--destructive))] px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[hsl(var(--destructive))]/90"
+      >
+        <X className="h-3.5 w-3.5" />
+        Cancel
+      </button>
     </div>
   )
 

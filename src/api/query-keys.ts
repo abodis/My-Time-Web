@@ -54,6 +54,9 @@ export const queryKeys = {
   profile: {
     all: () => ["profile"] as const,
   },
+  account: {
+    all: () => ["account"] as const,
+  },
   budgets: {
     all: () => ["budgets"] as const,
     list: () => ["budgets", "list"] as const,

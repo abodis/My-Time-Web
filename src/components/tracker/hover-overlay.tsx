@@ -42,13 +42,10 @@ export function HoverOverlay({
         style={{ backgroundColor: stripBg }}
         aria-label="Drag to reorder"
       >
-        {/* 2x3 dot grid pattern repeated vertically */}
-        <div className="flex flex-col gap-1.5">
-          {[0, 1, 2].map((row) => (
-            <div key={row} className="flex gap-1">
-              <div className="h-1 w-1 rounded-full" style={{ backgroundColor: dotColor }} />
-              <div className="h-1 w-1 rounded-full" style={{ backgroundColor: dotColor }} />
-            </div>
+        {/* Single column of dots running down the full height of the strip */}
+        <div className="flex h-full flex-col items-center justify-between py-4">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <div key={i} className="h-1 w-1 rounded-full" style={{ backgroundColor: dotColor }} />
           ))}
         </div>
       </div>
@@ -71,7 +68,7 @@ export function HoverOverlay({
             onDoneClick()
           }}
           className={cn(
-            'flex h-6 w-6 items-center justify-center rounded-full',
+            'flex h-6 w-6 cursor-pointer items-center justify-center rounded-full',
             'bg-white/80 backdrop-blur-sm shadow-sm',
             'hover:bg-white transition-colors',
             isTimerRunning && 'opacity-40 pointer-events-none',
@@ -88,7 +85,7 @@ export function HoverOverlay({
             onColorClick()
           }}
           className={cn(
-            'flex h-6 w-6 items-center justify-center rounded-full',
+            'flex h-6 w-6 cursor-pointer items-center justify-center rounded-full',
             'bg-white/80 backdrop-blur-sm shadow-sm',
             'hover:bg-white transition-colors',
           )}

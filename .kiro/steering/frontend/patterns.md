@@ -28,9 +28,16 @@ description: "React and component patterns for the frontend"
 - All API calls via generated `openapi-fetch` client in `src/api/client.ts`.
 - Never hand-write fetch calls or type API responses.
 - Query keys: `[resource, ...params]` — e.g., `['entries', { from, to }]`.
-- Mutations invalidate relevant query keys on success.
+- Mutations invalidate relevant query keys on success. The invalidated key must match (or be a prefix of) the list query key — verify against `queryKeys`, since a mismatch leaves the list stale until a full reload.
+- List + modal flows: the modal closes on mutation success (`onSuccess` or after `await mutateAsync`) and the list updates via invalidation. Never keep a local copy of list data in the modal/page — always read from the query so invalidation refreshes it.
 - For optional boolean query params (like `includeArchived`): pass `true` when on, `undefined` when off. Don't send `false` — let the API use its default.
 - Use `placeholderData: (prev) => prev` when query keys change to avoid flash of empty state.
+
+## Money Formatting
+- Render ALL monetary amounts via `formatMoney(value, currency)` from `src/lib/currency.ts` — symbol + formatted number (e.g. `$65.00`), never a trailing currency code (no `65 USD`).
+- Account currency comes from `useAccount()` (`AccountResponse.currency`), NOT `useProfile()`/`/account/me` (which lacks it). Reports use the currency in their own response.
+- Supported currencies (backend-limited): USD, EUR, GBP, PLN — see `SUPPORTED_CURRENCIES` in `src/lib/currency.ts`. Currency pickers must be a dropdown of this set showing `symbol name` (e.g. `€ Euro`), value = 3-char code. Never a free-text input.
+- Not for display: a rate/currency entry field is not display formatting.
 
 ## CSS Variable Colors (Tailwind 4)
 - NEVER use bare `bg-primary`, `text-primary`, `ring-primary` etc. — they don't resolve to `:root` CSS variables in this Tailwind 4 setup.

@@ -7,7 +7,7 @@ import { useMarkActivityDone } from '@/hooks/use-mark-activity-done'
 import { useActivityColors } from '@/hooks/use-activity-colors'
 import { ActivityBlock } from '@/components/tracker/activity-block'
 import { SortableActivityCard } from '@/components/tracker/sortable-activity-card'
-import { resolveColor } from '@/lib/color-utils'
+import { resolveColor, type ColorToken } from '@/lib/color-utils'
 import { computeReorderPayload } from '@/lib/sort-order-utils'
 import { Button } from '@/components/ui/button'
 import type { Palette } from '@/hooks/use-palette'
@@ -151,11 +151,13 @@ export function ActivityGrid({
             const elapsed = isRunning ? timerElapsed + accumulated : accumulated
             const tagColor = tagColorMap.get(activity.tagId) ?? null
             const colorOverride = activityColorOverrides?.[activity.id] ?? undefined
+            const selectedColor = (colorOverride ?? activity.tagColor ?? null) as ColorToken | null
             return (
               <SortableActivityCard
                 key={activity.id}
                 activity={activity}
                 color={resolveColor(palette, colorOverride, tagColor)}
+                selectedColor={selectedColor}
                 elapsed={elapsed}
                 isRunning={isRunning}
                 isLoading={loadingActivityId === activity.id}
