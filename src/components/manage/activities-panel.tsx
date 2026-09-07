@@ -3,7 +3,8 @@ import { useActivities } from "@/hooks/use-projects"
 import { useCreateActivity, useUpdateActivity, useDeleteActivity } from "@/hooks/use-activities"
 import { useTags } from "@/hooks/use-tags"
 import { usePalette } from "@/hooks/use-palette"
-import { useProfile } from "@/hooks/use-profile"
+import { useProfile, useAccount } from "@/hooks/use-profile"
+import { formatMoney } from "@/lib/currency"
 import { resolveTagColor } from "@/lib/color-utils"
 import { Input } from "@/components/ui/input"
 import { AssignmentIndicator } from "@/components/manage/assignment-indicator"
@@ -18,6 +19,8 @@ export function ActivitiesPanel({ projectId }: ActivitiesPanelProps) {
   const { data: tags } = useTags()
   const { data: palette } = usePalette()
   const { data: profile, isLoading: profileLoading } = useProfile()
+  const { data: account } = useAccount()
+  const currency = account?.currency ?? "USD"
   const createActivity = useCreateActivity()
   const updateActivity = useUpdateActivity()
   const deleteActivity = useDeleteActivity()
@@ -336,7 +339,7 @@ export function ActivitiesPanel({ projectId }: ActivitiesPanelProps) {
                     </span>
                   </td>
                   <td className="px-3 py-3">
-                    {activity.rateOverride != null ? `$${activity.rateOverride}` : "—"}
+                    {activity.rateOverride != null ? formatMoney(activity.rateOverride, currency) : "—"}
                   </td>
                   {showAssignedColumn && (
                     <td className="px-3 py-3">

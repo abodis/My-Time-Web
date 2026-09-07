@@ -21,6 +21,23 @@ const pristineRequests = new WeakMap<Request, Request>()
 // triggering multiple redirects to /select-account.
 let isHandlingAccountError = false
 
+// The API base URL may include a path prefix (e.g. "/api" in dev via the Vite
+// proxy), so request pathnames look like "/api/auth/login". Match on the API
+// route segments regardless of that prefix.
+function isAuthPath(pathname: string): boolean {
+  return /(^|\/)auth\//.test(pathname)
+}
+
+// Endpoints that are not scoped to an account: they must not receive an
+// X-Account-Id header and must not trigger the account-error redirect. These
+// run before/without an active account (auth, account listing, palette).
+function isAccountAgnosticPath(pathname: string, method: string): boolean {
+  if (isAuthPath(pathname)) return true
+  if (/(^|\/)accounts$/.test(pathname) && method === "GET") return true
+  if (/(^|\/)palette$/.test(pathname)) return true
+  return false
+}
+
 client.use({
   async onRequest({ request }) {
     const token = getAccessToken()
@@ -28,11 +45,10 @@ client.use({
       request.headers.set("Authorization", `Bearer ${token}`)
     }
 
-    // Inject X-Account-Id for all requests except auth and account-listing endpoints.
+    // Inject X-Account-Id for all requests except account-agnostic endpoints
+    // (auth, account listing, and the global color palette).
     const url = new URL(request.url)
-    const isAuthPath = url.pathname.startsWith("/auth/")
-    const isAccountsList = url.pathname === "/accounts" && request.method === "GET"
-    if (!isAuthPath && !isAccountsList) {
+    if (!isAccountAgnosticPath(url.pathname, request.method)) {
       const accountId = useAccountStore.getState().activeAccountId
       if (accountId) {
         request.headers.set("X-Account-Id", accountId)
@@ -44,7 +60,11 @@ client.use({
     return request
   },
   async onResponse({ response, request }) {
-    if (response.status === 401) {
+    // A 401 from an auth endpoint (e.g. bad login credentials) is not an expired
+    // session — let it pass through so the caller can surface the error. The
+    // refresh-then-logout path below is only for authenticated endpoints.
+    const isAuthEndpoint = isAuthPath(new URL(request.url).pathname)
+    if (response.status === 401 && !isAuthEndpoint) {
       const refreshed = await refreshAccessToken()
       if (refreshed) {
         // Retry using the pristine clone (original body is already consumed).
@@ -60,8 +80,14 @@ client.use({
       clearAuth()
       window.location.href = "/login"
     }
-    // Account error interceptor
-    if (response.status === 400 || response.status === 403) {
+    // Account error interceptor — skip for account-agnostic paths (e.g. /palette,
+    // which is mounted globally above the router and runs before an account is
+    // selected). Redirecting on those would kick the user off the login page.
+    const url = new URL(request.url)
+    if (
+      !isAccountAgnosticPath(url.pathname, request.method) &&
+      (response.status === 400 || response.status === 403)
+    ) {
       try {
         const body = await response.clone().json()
         const accountErrors = ["missing_account_id", "invalid_account_id", "not_a_member"]

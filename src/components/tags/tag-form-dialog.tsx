@@ -15,7 +15,11 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { ColorPicker } from "@/components/tags/color-picker"
 import { SELECTABLE_COLORS, type ColorToken } from "@/lib/color-utils"
+import { SUPPORTED_CURRENCIES } from "@/lib/currency"
 import { useCreateTag, useUpdateTag } from "@/hooks/use-tags"
+import { useAccount } from "@/hooks/use-profile"
+
+const CURRENCY_CODES: readonly string[] = SUPPORTED_CURRENCIES.map((c) => c.code)
 
 const tagSchema = z.object({
   name: z.string().min(1, "Name is required").max(100, "Name must be 100 characters or fewer"),
@@ -25,8 +29,8 @@ const tagSchema = z.object({
   defaultRate: z.string().refine((v) => v === "" || (Number(v) >= 0 && !isNaN(Number(v))), {
     message: "Must be 0 or greater",
   }),
-  rateCurrency: z.string().max(3).refine((v) => v === "" || v.length === 3, {
-    message: "Currency must be 3 characters (e.g., USD)",
+  rateCurrency: z.string().refine((v) => v === "" || CURRENCY_CODES.includes(v), {
+    message: "Please select a supported currency",
   }),
 })
 
@@ -48,6 +52,7 @@ export function TagFormDialog({ open, onOpenChange, editTag }: TagFormDialogProp
   const isEdit = Boolean(editTag)
   const createTag = useCreateTag()
   const updateTag = useUpdateTag()
+  const { data: account } = useAccount()
 
   const {
     register,
@@ -79,10 +84,10 @@ export function TagFormDialog({ open, onOpenChange, editTag }: TagFormDialogProp
         name: "",
         color: "" as unknown as ColorToken,
         defaultRate: "",
-        rateCurrency: "",
+        rateCurrency: account?.currency ?? "USD",
       })
     }
-  }, [open, editTag, reset])
+  }, [open, editTag, reset, account?.currency])
 
   const selectedColor = watch("color") as ColorToken | ""
 
@@ -174,12 +179,17 @@ export function TagFormDialog({ open, onOpenChange, editTag }: TagFormDialogProp
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="tag-currency">Currency</Label>
-              <Input
+              <select
                 id="tag-currency"
                 {...register("rateCurrency")}
-                placeholder="USD"
-                maxLength={3}
-              />
+                className="flex h-9 w-full rounded-md border border-[hsl(var(--input))] bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[hsl(var(--ring))] disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {SUPPORTED_CURRENCIES.map((c) => (
+                  <option key={c.code} value={c.code}>
+                    {c.symbol} {c.name}
+                  </option>
+                ))}
+              </select>
               {errors.rateCurrency && (
                 <p className="text-xs text-[hsl(var(--destructive))]">
                   {errors.rateCurrency.message}

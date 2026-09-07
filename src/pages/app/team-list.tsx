@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react"
 import { Pencil, Trash2 } from "lucide-react"
 import { useMembers } from "@/hooks/use-members"
-import { useProfile } from "@/hooks/use-profile"
+import { useProfile, useAccount } from "@/hooks/use-profile"
+import { formatMoney } from "@/lib/currency"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import SearchToolbar from "@/components/manage/search-toolbar"
 import DataTable from "@/components/manage/data-table"
@@ -16,6 +17,8 @@ type MemberResponse = components["schemas"]["MemberResponse"]
 export default function TeamListPage() {
   const { data: members = [], isPending, isError } = useMembers()
   const { data: profile } = useProfile()
+  const { data: account } = useAccount()
+  const currency = account?.currency ?? "USD"
 
   const [search, setSearch] = useState("")
   const [inviteOpen, setInviteOpen] = useState(false)
@@ -67,7 +70,7 @@ export default function TeamListPage() {
         {
           key: "costRate",
           header: "Cost Rate",
-          render: (m) => (m.costRate != null ? `$${m.costRate}` : "—"),
+          render: (m) => (m.costRate != null ? formatMoney(m.costRate, currency) : "—"),
         },
         {
           key: "utilizationTarget",
@@ -109,7 +112,7 @@ export default function TeamListPage() {
     }
 
     return cols
-  }, [isAdmin, profile])
+  }, [isAdmin, profile, currency])
 
   return (
     <div className="flex flex-col gap-6 p-6 wide:pt-0">

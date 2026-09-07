@@ -20,12 +20,16 @@ export function useCreateTag() {
     mutationFn: async ({
       name,
       color,
+      defaultRate,
+      rateCurrency,
     }: {
       name: string
       color?: ColorToken | null
+      defaultRate?: number | null
+      rateCurrency?: string | null
     }) => {
       const { data, error } = await client.POST("/tags", {
-        body: { name, color },
+        body: { name, color, defaultRate, rateCurrency },
       })
       if (error) throw error
       return data
@@ -43,14 +47,18 @@ export function useUpdateTag() {
       id,
       name,
       color,
+      defaultRate,
+      rateCurrency,
     }: {
       id: string
       name?: string | null
       color?: ColorToken | null
+      defaultRate?: number | null
+      rateCurrency?: string | null
     }) => {
       const { data, error } = await client.PUT("/tags/{id}", {
         params: { path: { id } },
-        body: { name, color },
+        body: { name, color, defaultRate, rateCurrency },
       })
       if (error) throw error
       return data

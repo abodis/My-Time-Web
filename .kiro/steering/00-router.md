@@ -23,6 +23,7 @@ description: "Steering file index and router"
 - **frontend/testing.md** (fileMatch: `**/*.test.*`, `**/*.spec.*`) — test conventions
 - **frontend/dnd-kit.md** (fileMatch: `src/**/*dnd*,*sortable*,*drag*`) — @dnd-kit/react patterns
 - **frontend/management-pages.md** (fileMatch: `src/pages/app/**,src/components/manage/**`) — CRUD page patterns
+- **frontend/reports.md** (fileMatch: `src/components/reports/**,src/pages/app/reports.tsx`) — report totals, column alignment, billable pill
 
 ## Infrastructure
 - **aws-management.md** (always) — AWS profiles, deployment, tagging

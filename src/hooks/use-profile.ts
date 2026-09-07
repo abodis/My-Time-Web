@@ -12,3 +12,17 @@ export function useProfile() {
     },
   })
 }
+
+// Account-level info (name, currency). Separate from /account/me, which is the
+// current user's profile and does not carry the account currency.
+export function useAccount() {
+  return useQuery({
+    queryKey: queryKeys.account.all(),
+    queryFn: async () => {
+      const { data, error } = await client.GET("/account")
+      if (error) throw error
+      return data
+    },
+    staleTime: 5 * 60 * 1000,
+  })
+}

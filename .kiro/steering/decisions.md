@@ -8,6 +8,24 @@ description: "Project decision log — architectural choices, gotchas, resolved 
 <!-- Append new entries at the top. Format: ## [YYYY-MM-DD] Title -->
 <!-- Fields: Problem, Decision, Rationale -->
 
+## [2026-09-07] Tag mutations silently dropped defaultRate/rateCurrency
+
+**Problem:** Editing a tag's rate/currency never persisted. The dialog built a payload with `defaultRate`/`rateCurrency`, but `useCreateTag`/`useUpdateTag` destructured only `name`/`color` in their `mutationFn`, so those fields were discarded before the request body was built — no error, just a silent no-op.
+**Decision:** Widened both mutations to accept and forward `defaultRate` and `rateCurrency` (both supported by `TagCreateRequest`/`TagUpdateRequest`). Also converted the tag currency field from a free-text input to a dropdown of `SUPPORTED_CURRENCIES` (USD/EUR/GBP/PLN), defaulting new tags to the account currency.
+**Rationale:** A mutation's `mutationFn` param destructuring is the real contract — if a field isn't destructured and placed in the body, passing it from the caller does nothing. When adding a form field, verify the mutation actually forwards it.
+
+## [2026-09-07] Single money formatter; account currency from useAccount, not profile
+
+**Problem:** Monetary amounts rendered inconsistently — Team cost rate as `$65` (no decimals, hardcoded `$`), Tags rate as `0 USD` (trailing code), while Financial used proper `Intl` currency formatting.
+**Decision:** Added `formatMoney(value, currency)` in `src/lib/currency.ts` (symbol + 2-decimal number, no trailing code) and routed Team, Tags, Activities rate-override, and Financial through it. Currency for management pages comes from a new `useAccount()` hook (`GET /account`).
+**Rationale:** `AccountResponse.currency` is the single source of truth (one currency per account). `/account/me` (`ProfileResponse`) does NOT carry `currency`, so profile can't supply it. The currency symbol already identifies the currency, so a trailing `USD`/`EUR` is redundant.
+
+## [2026-09-07] API client path checks must be prefix-agnostic (VITE_API_BASE_URL=/api)
+
+**Problem:** Post-refactor, a failed login (401 on bad credentials) flashed "Invalid credentials" then did a full page reload, wiping the form and the error. The client's 401 handler treated it as an expired session: `refreshAccessToken()` (no token) → fail → `window.location.href = "/login"`. The intended guard to skip auth endpoints failed because in dev `VITE_API_BASE_URL=/api`, so request pathnames are `/api/auth/login` — root-anchored checks (`startsWith("/auth/")`, `pathname === "/palette"`, `=== "/accounts"`) never matched.
+**Decision:** In `src/api/client.ts`, match API routes with segment-aware regexes that ignore the base prefix: `isAuthPath` = `/(^|\/)auth\//`; `isAccountAgnosticPath` uses `/(^|\/)accounts$/` and `/(^|\/)palette$/`. 401s from auth endpoints pass through to the caller (`useLogin`) instead of triggering refresh/logout. react-hook-form retains field values by default, so email/password persist.
+**Rationale:** `VITE_API_BASE_URL` carries a path prefix in some environments, so pathname is not root-anchored to the API route. Any pathname-based routing logic in the client must match by segment, not from the string start. A failed login is a surfaced error, not an expired session — never hard-redirect on it.
+
 ## [2026-06-20] Brainstorm never creates specs
 
 **Problem:** Brainstorm sessions sometimes drifted into creating `.kiro/specs/` folders with requirements/design/tasks, duplicating Kiro's built-in spec workflow.
