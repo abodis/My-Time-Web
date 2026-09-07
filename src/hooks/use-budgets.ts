@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { client } from "@/api/client"
+import { queryKeys } from "@/api/query-keys"
 import type { components } from "@/api/schema"
 
 type BudgetCreateRequest = components["schemas"]["BudgetCreateRequest"]
@@ -7,7 +8,7 @@ type BudgetUpdateRequest = components["schemas"]["BudgetUpdateRequest"]
 
 export function useBudgets(projectId: string) {
   return useQuery({
-    queryKey: ["budgets", projectId],
+    queryKey: queryKeys.budgets.byProject(projectId),
     queryFn: async () => {
       const { data, error } = await client.GET("/projects/{id}/budgets", {
         params: { path: { id: projectId } },
@@ -30,8 +31,8 @@ export function useCreateBudget() {
       if (error) throw error
       return data
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["budgets", variables.projectId] })
+    onSuccess: (_data, _variables) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.budgets.all() })
     },
   })
 }
@@ -47,8 +48,8 @@ export function useUpdateBudget() {
       if (error) throw error
       return data
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["budgets", variables.projectId] })
+    onSuccess: (_data, _variables) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.budgets.all() })
     },
   })
 }
@@ -62,8 +63,8 @@ export function useDeleteBudget() {
       })
       if (error) throw error
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["budgets", variables.projectId] })
+    onSuccess: (_data, _variables) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.budgets.all() })
     },
   })
 }

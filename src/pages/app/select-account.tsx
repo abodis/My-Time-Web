@@ -5,6 +5,7 @@ import { clearAuth } from "@/lib/auth"
 import { resolveAccount } from "@/lib/resolve-account"
 import { useAccountStore } from "@/stores/account-store"
 import { AccountPicker } from "@/components/account/account-picker"
+import { paths } from "@/routes"
 import type { AccountItem } from "@/stores/account-store"
 
 export default function SelectAccountPage() {
@@ -18,7 +19,7 @@ export default function SelectAccountPage() {
 
       if (error || !data || data.length === 0) {
         clearAuth()
-        navigate("/login", { replace: true })
+        navigate(paths.login, { replace: true })
         return
       }
 
@@ -27,7 +28,7 @@ export default function SelectAccountPage() {
       if (result.action === "autoSelect") {
         useAccountStore.getState().setActiveAccount(result.accountId)
         useAccountStore.getState().setAccounts(data)
-        navigate("/", { replace: true })
+        navigate(paths.tracker, { replace: true })
       } else {
         setAccountsList(data)
         setShowPicker(true)
@@ -41,7 +42,7 @@ export default function SelectAccountPage() {
     if (!accounts) return
     useAccountStore.getState().setActiveAccount(accountId)
     useAccountStore.getState().setAccounts(accounts)
-    navigate("/", { replace: true })
+    navigate(paths.tracker, { replace: true })
   }
 
   if (showPicker && accounts) {

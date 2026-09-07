@@ -25,6 +25,28 @@ const TeamListPage = lazyWithRetry(() => import("@/pages/app/team-list"))
 const ReportsPage = lazyWithRetry(() => import("@/pages/app/reports"))
 const TagsListPage = lazyWithRetry(() => import("@/pages/app/tags-list"))
 
+export const paths = {
+  // Auth routes
+  login: "/login",
+  register: "/register",
+  confirm: "/confirm",
+  forgotPassword: "/forgot-password",
+  resetPassword: "/reset-password",
+
+  // App routes
+  selectAccount: "/select-account",
+  tracker: "/",
+  entries: "/entries",
+  projects: {
+    list: "/projects",
+    new: "/projects/new",
+    edit: (id: string) => `/projects/${id}/edit` as const,
+  },
+  team: "/team",
+  reports: "/reports",
+  tags: "/tags",
+} as const
+
 export const router = createBrowserRouter([
   {
     element: <PublicOnlyRoute />,

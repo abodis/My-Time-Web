@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { useEffect, useRef, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod/v4"
+import { paths } from "@/routes"
 import FormPageHeader from "@/components/manage/form-page-header"
 import { FormCard } from "@/components/manage/form-card"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
@@ -148,7 +149,7 @@ export default function ProjectFormPage() {
         {
           onSuccess: (result) => {
             setToast("Project created successfully.")
-            navigate(`/projects/${result?.id}/edit`, { replace: true })
+            navigate(paths.projects.edit(result?.id ?? ""), { replace: true })
           },
         },
       )
@@ -164,7 +165,7 @@ export default function ProjectFormPage() {
       <div className="space-y-6 p-6 wide:pt-0">
         <FormPageHeader
           backLabel="Back to Projects"
-          backTo="/projects"
+          backTo={paths.projects.list}
           title="Project Not Found"
           subtitle="The project you're looking for doesn't exist or has been removed."
           mode="Edit"
@@ -175,7 +176,7 @@ export default function ProjectFormPage() {
               Could not find a project with the given ID.
             </p>
             <Button variant="ghost" asChild>
-              <Link to="/projects">← Back to Projects</Link>
+              <Link to={paths.projects.list}>← Back to Projects</Link>
             </Button>
           </div>
         </FormCard>
@@ -189,7 +190,7 @@ export default function ProjectFormPage() {
       <div className="space-y-6 p-6 wide:pt-0">
         <FormPageHeader
           backLabel="Back to Projects"
-          backTo="/projects"
+          backTo={paths.projects.list}
           title="Edit Project"
           subtitle="Loading project..."
           mode="Edit"
@@ -205,7 +206,7 @@ export default function ProjectFormPage() {
     <div className="space-y-6 p-6 wide:pt-0">
       <FormPageHeader
         backLabel="Back to Projects"
-        backTo="/projects"
+        backTo={paths.projects.list}
         title={isEdit ? "Edit Project" : "Create New Project"}
         subtitle={
           isEdit
@@ -298,7 +299,7 @@ export default function ProjectFormPage() {
                 )}
                 <div className="flex items-center justify-end gap-3 border-t pt-4">
                   <Button variant="ghost" asChild>
-                    <Link to="/projects">Cancel</Link>
+                    <Link to={paths.projects.list}>Cancel</Link>
                   </Button>
                   <Button type="submit" disabled={isPending || (isEdit && projectsLoading)}>
                     {isPending
@@ -397,7 +398,7 @@ export default function ProjectFormPage() {
             )}
             <div className="flex items-center justify-end gap-3 border-t pt-4">
               <Button variant="ghost" asChild>
-                <Link to="/projects">Cancel</Link>
+                <Link to={paths.projects.list}>Cancel</Link>
               </Button>
               <Button type="submit" disabled={isPending || (isEdit && projectsLoading)}>
                 {isPending

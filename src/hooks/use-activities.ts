@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { client } from "@/api/client"
+import { queryKeys } from "@/api/query-keys"
 import type { components } from "@/api/schema"
 
 type ActivityCreateRequest = components["schemas"]["ActivityCreateRequest"]
@@ -7,7 +8,7 @@ type ActivityUpdateRequest = components["schemas"]["ActivityUpdateRequest"]
 
 export function useActivities({ includeDone }: { includeDone?: boolean } = {}) {
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ["activities", { includeDone }],
+    queryKey: queryKeys.activities.list({ includeDone }),
     queryFn: async () => {
       const { data, error } = await client.GET("/activities", {
         params: {
@@ -40,8 +41,8 @@ export function useCreateActivity() {
       if (error) throw error
       return data
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["activities", variables.projectId] })
+    onSuccess: (_data, _variables) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.activities.all() })
     },
   })
 }
@@ -57,8 +58,8 @@ export function useUpdateActivity() {
       if (error) throw error
       return data
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["activities", variables.projectId] })
+    onSuccess: (_data, _variables) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.activities.all() })
     },
   })
 }
@@ -72,8 +73,8 @@ export function useDeleteActivity() {
       })
       if (error) throw error
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["activities", variables.projectId] })
+    onSuccess: (_data, _variables) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.activities.all() })
     },
   })
 }

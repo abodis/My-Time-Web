@@ -31,3 +31,6 @@ test-screenshots/
 
 # Playwright MCP artifacts
 .playwright-mcp/
+
+# Bundle analysis reports
+bundle-report/

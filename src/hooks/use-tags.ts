@@ -1,10 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { client } from "@/api/client"
+import { queryKeys } from "@/api/query-keys"
 import type { ColorToken } from "@/lib/color-utils"
 
 export function useTags() {
   return useQuery({
-    queryKey: ["tags"],
+    queryKey: queryKeys.tags.all(),
     queryFn: async () => {
       const { data, error } = await client.GET("/tags")
       if (error) throw error
@@ -30,7 +31,7 @@ export function useCreateTag() {
       return data
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tags"] })
+      queryClient.invalidateQueries({ queryKey: queryKeys.tags.all() })
     },
   })
 }
@@ -55,7 +56,7 @@ export function useUpdateTag() {
       return data
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tags"] })
+      queryClient.invalidateQueries({ queryKey: queryKeys.tags.all() })
     },
   })
 }

@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod/v4"
 import { Link, useNavigate } from "react-router-dom"
+import { paths } from "@/routes"
 import { AuthLayout } from "@/components/auth/auth-layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -31,7 +32,7 @@ export default function LoginPage() {
   })
 
   function onSubmit(data: LoginFormValues) {
-    login.mutate(data, { onSuccess: () => navigate("/select-account") })
+    login.mutate(data, { onSuccess: () => navigate(paths.selectAccount) })
   }
 
   return (
@@ -78,13 +79,13 @@ export default function LoginPage() {
         )}
         <div className="text-sm text-center space-y-1">
           <p>
-            <Link to="/forgot-password" className="text-[hsl(var(--primary))] hover:underline">
+            <Link to={paths.forgotPassword} className="text-[hsl(var(--primary))] hover:underline">
               Forgot password?
             </Link>
           </p>
           <p>
             Don&apos;t have an account?{" "}
-            <Link to="/register" className="text-[hsl(var(--primary))] hover:underline">
+            <Link to={paths.register} className="text-[hsl(var(--primary))] hover:underline">
               Register
             </Link>
           </p>

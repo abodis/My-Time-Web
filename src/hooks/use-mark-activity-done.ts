@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { client } from "@/api/client"
+import { queryKeys } from "@/api/query-keys"
 import type { components } from "@/api/schema"
 
 export function useMarkActivityDone() {
@@ -29,11 +30,11 @@ export function useMarkActivityDone() {
       return data
     },
     onMutate: async ({ id, isDone }) => {
-      await queryClient.cancelQueries({ queryKey: ["activities"] })
+      await queryClient.cancelQueries({ queryKey: queryKeys.activities.all() })
 
       const previousQueries = queryClient.getQueriesData<
         components["schemas"]["EnrichedActivitiesResponse"]
-      >({ queryKey: ["activities"], exact: false })
+      >({ queryKey: queryKeys.activities.all(), exact: false })
 
       if (isDone) {
         // Optimistically remove from cached activities arrays
@@ -59,7 +60,7 @@ export function useMarkActivityDone() {
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["activities"] })
+      queryClient.invalidateQueries({ queryKey: queryKeys.activities.all() })
     },
   })
 }

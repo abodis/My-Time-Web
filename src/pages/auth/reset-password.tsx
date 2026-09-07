@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod/v4"
 import { Link, useNavigate } from "react-router-dom"
+import { paths } from "@/routes"
 import { AuthLayout } from "@/components/auth/auth-layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -32,7 +33,7 @@ export default function ResetPasswordPage() {
   })
 
   function onSubmit(data: ResetPasswordFormValues) {
-    resetPassword.mutate(data, { onSuccess: () => navigate("/login") })
+    resetPassword.mutate(data, { onSuccess: () => navigate(paths.login) })
   }
 
   return (
@@ -94,7 +95,7 @@ export default function ResetPasswordPage() {
           </p>
         )}
         <p className="text-sm text-center">
-          <Link to="/login" className="text-[hsl(var(--primary))] hover:underline">
+          <Link to={paths.login} className="text-[hsl(var(--primary))] hover:underline">
             Back to login
           </Link>
         </p>

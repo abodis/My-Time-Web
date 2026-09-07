@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom"
 import { GridContainer } from "./grid-container"
 import { PillNav } from "./pill-nav"
+import { RouteErrorBoundary } from "./route-error-boundary"
 
 export default function AppShell() {
   return (
@@ -11,7 +12,9 @@ export default function AppShell() {
 
       <GridContainer>
         <main className="col-span-12 wide:col-start-4 wide:col-span-9 pt-4 wide:pt-6">
-          <Outlet />
+          <RouteErrorBoundary>
+            <Outlet />
+          </RouteErrorBoundary>
         </main>
       </GridContainer>
     </div>

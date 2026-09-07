@@ -1,11 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { client } from "@/api/client"
+import { queryKeys } from "@/api/query-keys"
 import type { components } from "@/api/schema"
 
 export function useProjects(options?: { includeArchived?: boolean }) {
   const includeArchived = options?.includeArchived ?? false
   return useQuery({
-    queryKey: ["projects", { includeArchived }],
+    queryKey: queryKeys.projects.list({ includeArchived }),
     queryFn: async () => {
       const { data, error } = await client.GET("/projects", {
         params: { query: { includeArchived: includeArchived || undefined } },
@@ -19,7 +20,7 @@ export function useProjects(options?: { includeArchived?: boolean }) {
 
 export function useActivities(projectId: string) {
   return useQuery({
-    queryKey: ["activities", projectId],
+    queryKey: queryKeys.activities.byProject(projectId),
     queryFn: async () => {
       const { data, error } = await client.GET("/projects/{id}/activities", {
         params: { path: { id: projectId } },
@@ -42,7 +43,7 @@ export function useCreateProject() {
       return data
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["projects"] })
+      queryClient.invalidateQueries({ queryKey: queryKeys.projects.all() })
     },
   })
 }
@@ -61,7 +62,7 @@ export function useUpdateProject() {
       return data
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["projects"] })
+      queryClient.invalidateQueries({ queryKey: queryKeys.projects.all() })
     },
   })
 }

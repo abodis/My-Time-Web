@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { client } from "@/api/client"
+import { queryKeys } from "@/api/query-keys"
 import type { components } from "@/api/schema"
 
 type ReorderItem = components["schemas"]["ReorderItem"]
@@ -16,11 +17,11 @@ export function useReorderActivities() {
       return data
     },
     onMutate: async (order) => {
-      await queryClient.cancelQueries({ queryKey: ["activities"] })
+      await queryClient.cancelQueries({ queryKey: queryKeys.activities.all() })
 
       const previousQueries = queryClient.getQueriesData<
         components["schemas"]["EnrichedActivitiesResponse"]
-      >({ queryKey: ["activities"] })
+      >({ queryKey: queryKeys.activities.all() })
 
       // Build a map of activityId → new sortOrder from the payload
       const sortOrderMap = new Map(
@@ -56,7 +57,7 @@ export function useReorderActivities() {
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["activities"] })
+      queryClient.invalidateQueries({ queryKey: queryKeys.activities.all() })
     },
   })
 }

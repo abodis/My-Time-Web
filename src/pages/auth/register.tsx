@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod/v4"
 import { Link, useNavigate } from "react-router-dom"
+import { paths } from "@/routes"
 import { AuthLayout } from "@/components/auth/auth-layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -31,7 +32,7 @@ export default function RegisterPage() {
   })
 
   function onSubmit(data: RegisterFormValues) {
-    register.mutate(data, { onSuccess: () => navigate("/confirm") })
+    register.mutate(data, { onSuccess: () => navigate(paths.confirm) })
   }
 
   return (
@@ -78,7 +79,7 @@ export default function RegisterPage() {
         )}
         <p className="text-sm text-center">
           Already have an account?{" "}
-          <Link to="/login" className="text-[hsl(var(--primary))] hover:underline">
+          <Link to={paths.login} className="text-[hsl(var(--primary))] hover:underline">
             Sign in
           </Link>
         </p>

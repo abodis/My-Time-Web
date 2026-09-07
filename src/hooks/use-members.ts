@@ -1,8 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { client } from "@/api/client"
+import { queryKeys } from "@/api/query-keys"
 import type { components } from "@/api/schema"
 
-const MEMBERS_KEY = ["members"] as const
+const MEMBERS_KEY = queryKeys.members.all()
 
 export function useMembers() {
   return useQuery({

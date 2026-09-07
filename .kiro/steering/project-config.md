@@ -13,6 +13,10 @@ description: "Project-specific configuration"
 - CDK: `infra/` directory (Python, single stack per env)
 - Python env: pyenv-virtualenv (auto-activates via .python-version, never use `source .venv/bin/activate`)
 
+## Node
+- Version: 22 (pinned via `.nvmrc` + `engines.node >=22` in package.json)
+- Run `nvm use` before install/dev to match; `nvm install` if missing
+
 ## Build
 - Dev: `npm run dev`
 - Build: `npm run build` (tsc + vite build)

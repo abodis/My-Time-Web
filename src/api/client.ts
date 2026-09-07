@@ -83,4 +83,26 @@ client.use({
   },
 })
 
+// Envelope unwrap middleware — extracts `{ data: X }` responses so callers
+// receive the inner payload directly.
+client.use({
+  async onResponse({ response }) {
+    if (!response.ok) return response
+    const contentType = response.headers.get("content-type")
+    if (!contentType?.includes("application/json")) return response
+
+    const body = await response.clone().json()
+
+    if (body && typeof body === "object" && "data" in body && Object.keys(body).length <= 2) {
+      return new Response(JSON.stringify(body.data), {
+        status: response.status,
+        statusText: response.statusText,
+        headers: response.headers,
+      })
+    }
+
+    return response
+  },
+})
+
 export { client }

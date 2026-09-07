@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Navigate, Outlet, useLocation } from "react-router-dom"
 import { hasStoredSession, refreshAccessToken, clearAuth } from "@/lib/auth"
 import { useAccountStore } from "@/stores/account-store"
+import { paths } from "@/routes"
 
 export default function ProtectedRoute() {
   const [status, setStatus] = useState<"loading" | "authenticated" | "unauthenticated">(
@@ -35,11 +36,11 @@ export default function ProtectedRoute() {
   }
 
   if (status === "unauthenticated") {
-    return <Navigate to="/login" replace />
+    return <Navigate to={paths.login} replace />
   }
 
-  if (!activeAccountId && pathname !== "/select-account") {
-    return <Navigate to="/select-account" replace />
+  if (!activeAccountId && pathname !== paths.selectAccount) {
+    return <Navigate to={paths.selectAccount} replace />
   }
 
   return <Outlet />

@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { client } from "@/api/client"
+import { queryKeys } from "@/api/query-keys"
 
 export type ColorShades = { dark: string; normal: string; light: string }
 export type GreyShades = {
@@ -14,7 +15,7 @@ export type Palette = Record<string, ColorShades> & { grey: GreyShades }
 
 export function usePalette() {
   return useQuery({
-    queryKey: ["palette"],
+    queryKey: queryKeys.palette.all(),
     queryFn: async () => {
       const { data, error } = await client.GET("/palette")
       if (error) throw error

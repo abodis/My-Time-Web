@@ -1,0 +1,285 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Create `src/api/query-keys.ts` with hierarchical key builders": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578844988
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578864567
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787579201150
+      }
+    ],
+    "1.3 Migrate hook files to use QueryKeyFactory keys": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578845055
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787588268145
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787589454525
+      }
+    ],
+    "2.1 Create `src/lib/optimistic.ts` with listAppend, listRemove, listReorder helpers": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578845105
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578865741
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787579202106
+      }
+    ],
+    "2.2 Write tests for optimistic helpers (`src/lib/optimistic.test.ts`)": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578845144
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787579216338
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787588258049
+      }
+    ],
+    "2.3 Migrate `use-reorder-activities.ts` and `use-assignments.ts` to use centralized helpers": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578845186
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787588269259
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787589455462
+      }
+    ],
+    "3.1 Create `src/components/layout/route-error-boundary.tsx`": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578845232
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578867564
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787579202955
+      }
+    ],
+    "3.2 Integrate RouteErrorBoundary into AppShell": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578845280
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787579217356
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787588258964
+      }
+    ],
+    "4.1 Add `paths` const object to `src/routes.tsx`": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578845339
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578868474
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787579203944
+      }
+    ],
+    "4.3 Migrate string-literal route references to use `paths` object": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578845388
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787579218284
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787588259872
+      }
+    ],
+    "5.1 Add envelope unwrap middleware to `src/api/client.ts`": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578845435
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578869761
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787579204833
+      }
+    ],
+    "6. Checkpoint — Verify core modules": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578845479
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787589459398
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787589519579
+      }
+    ],
+    "7.1 Add rollup-plugin-visualizer to Vite config": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578845554
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578870211
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787579205731
+      }
+    ],
+    "7.2 Configure manual chunks in `vite.config.ts`": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578845599
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787579219106
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787588260809
+      }
+    ],
+    "8. Final checkpoint — Ensure all tests pass": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787578845637
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787589523516
+      },
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787589636777
+      }
+    ],
+    "5. API Response Envelope Adapter": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787579204875
+      }
+    ],
+    "3. Per-Route Error Boundary": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787588259018
+      }
+    ],
+    "4. Type-Safe Route Paths": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787588259915
+      }
+    ],
+    "7. Bundle Analysis and Manual Chunking": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787588260873
+      }
+    ],
+    "1. Query Key Factory": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787589454590
+      }
+    ],
+    "2. Optimistic Update Helpers": [
+      {
+        "executionId": "a16ed3bb-74e6-47ce-947d-2e7428edf424",
+        "chatSessionId": "sess_1acb61f3-6d68-4d25-bf5d-aa1a58f0393b",
+        "timestamp": 1787589455505
+      }
+    ]
+  }
+}

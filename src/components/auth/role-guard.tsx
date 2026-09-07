@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom"
 import { useProfile } from "@/hooks/use-profile"
+import { paths } from "@/routes"
 
 interface RoleGuardProps {
   allowedRoles: string[]
@@ -14,7 +15,7 @@ export function RoleGuard({ allowedRoles, children }: RoleGuardProps) {
 
   // Redirect unauthorized roles
   if (!allowedRoles.includes(profile.role)) {
-    return <Navigate to="/" replace />
+    return <Navigate to={paths.tracker} replace />
   }
 
   return <>{children}</>

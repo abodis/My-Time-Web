@@ -1,6 +1,7 @@
 import React, { useMemo, useRef, useState } from "react"
 import { Link } from "react-router-dom"
 import { Archive, ArchiveRestore, CircleDollarSign, Pencil, SlidersHorizontal } from "lucide-react"
+import { paths } from "@/routes"
 import { useProjects, useUpdateProject } from "@/hooks/use-projects"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import SearchToolbar from "@/components/manage/search-toolbar"
@@ -16,7 +17,7 @@ function ProjectActions({ project }: { project: Project }) {
   return (
     <div className="flex items-center gap-1">
       <Link
-        to={`/projects/${project.id}/edit`}
+        to={paths.projects.edit(project.id)}
         className="p-1 rounded hover:bg-gray-100"
         aria-label={`Edit ${project.name}`}
       >
@@ -145,7 +146,7 @@ export default function ProjectsListPage() {
         }
         actionSlot={
           <Link
-            to="/projects/new"
+            to={paths.projects.new}
             className="rounded-full bg-[hsl(var(--primary))] px-4 py-2 text-sm font-medium text-white hover:bg-[hsl(var(--primary))]/90"
           >
             + New Project

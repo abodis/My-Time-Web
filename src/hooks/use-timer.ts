@@ -1,9 +1,10 @@
 import { useQuery, useMutation } from "@tanstack/react-query"
 import { client } from "@/api/client"
+import { queryKeys } from "@/api/query-keys"
 
 export function useCurrentTimer() {
   return useQuery({
-    queryKey: ["timer", "current"],
+    queryKey: queryKeys.timer.current(),
     queryFn: async () => {
       const { data, error } = await client.GET("/timer/current")
       if (error) throw error

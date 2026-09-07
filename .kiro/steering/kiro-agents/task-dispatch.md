@@ -3,7 +3,7 @@
 ## Bash Commands in Sub-Agents
 When dispatching tasks to sub-agents, always include this instruction:
 
-"CRITICAL BASH RULE: When running bash commands, ALWAYS use the `cwd` parameter set to `/Users/abodis/Projects/My-Time-Web`. Do NOT use `cd /path && command` — command chaining (&&, ||, ;) is NOT supported by the bash tool. Use the `cwd` parameter for working directory."
+"CRITICAL BASH RULE: When running bash commands, ALWAYS use the `cwd` parameter set to `/Users/abodis/Projects/My-Time-Web`. Do NOT use `cd /path && command` — command chaining (&&, ||, ;) is NOT supported by the bash tool. Do NOT use pipes (|) — they trigger separate approval prompts in the IDE. If you need to limit output, use the `timeout` parameter or read only the relevant portion of output. Use the `cwd` parameter for working directory."
 
 This prevents sub-agents from using unsupported command chaining syntax.
 

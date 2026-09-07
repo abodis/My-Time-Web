@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { client } from "@/api/client"
+import { listAppend, listRemove } from "@/lib/optimistic"
 import type { components } from "@/api/schema"
 
 type AssignmentResponse = components["schemas"]["AssignmentResponse"]
@@ -29,18 +30,15 @@ export function useAssignActivity(activityId: string) {
       return data
     },
     onMutate: async (userId) => {
-      await queryClient.cancelQueries({ queryKey: ["assignments", activityId] })
-      const previous = queryClient.getQueryData<AssignmentResponse[]>(["assignments", activityId])
-      queryClient.setQueryData<AssignmentResponse[]>(
+      const { previousData, rollback } = await listAppend<AssignmentResponse>(
+        queryClient,
         ["assignments", activityId],
-        (old) => [...(old ?? []), { activityId, userId, assignedAt: new Date().toISOString() }]
+        { activityId, userId, assignedAt: new Date().toISOString() },
       )
-      return { previous }
+      return { previousData, rollback }
     },
     onError: (_err, _userId, context) => {
-      if (context?.previous) {
-        queryClient.setQueryData(["assignments", activityId], context.previous)
-      }
+      context?.rollback()
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["assignments", activityId] })
@@ -58,18 +56,15 @@ export function useUnassignActivity(activityId: string) {
       if (error) throw error
     },
     onMutate: async (userId) => {
-      await queryClient.cancelQueries({ queryKey: ["assignments", activityId] })
-      const previous = queryClient.getQueryData<AssignmentResponse[]>(["assignments", activityId])
-      queryClient.setQueryData<AssignmentResponse[]>(
+      const { previousData, rollback } = await listRemove<AssignmentResponse>(
+        queryClient,
         ["assignments", activityId],
-        (old) => (old ?? []).filter((a) => a.userId !== userId)
+        (a) => a.userId === userId,
       )
-      return { previous }
+      return { previousData, rollback }
     },
     onError: (_err, _userId, context) => {
-      if (context?.previous) {
-        queryClient.setQueryData(["assignments", activityId], context.previous)
-      }
+      context?.rollback()
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["assignments", activityId] })

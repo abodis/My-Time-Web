@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { client } from "@/api/client"
+import { queryKeys } from "@/api/query-keys"
 import type { components } from "@/api/schema"
 
 type EntryCreateRequest = components["schemas"]["EntryCreateRequest"]
@@ -7,7 +8,7 @@ type EntryUpdateRequest = components["schemas"]["EntryUpdateRequest"]
 
 export function useEntries({ from, to }: { from: string; to: string }) {
   return useQuery({
-    queryKey: ["entries", { from, to }],
+    queryKey: queryKeys.entries.list({ from, to }),
     queryFn: async () => {
       const { data, error } = await client.GET("/entries", {
         params: { query: { from, to } },
@@ -29,7 +30,7 @@ export function useCreateEntry() {
       return data
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["entries"] })
+      queryClient.invalidateQueries({ queryKey: queryKeys.entries.all() })
     },
   })
 }
@@ -46,7 +47,7 @@ export function useUpdateEntry() {
       return data
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["entries"] })
+      queryClient.invalidateQueries({ queryKey: queryKeys.entries.all() })
     },
   })
 }
@@ -62,7 +63,7 @@ export function useDeleteEntry() {
       return data
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["entries"] })
+      queryClient.invalidateQueries({ queryKey: queryKeys.entries.all() })
     },
   })
 }

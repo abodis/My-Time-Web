@@ -2,6 +2,7 @@ import { useState, useCallback } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { useStartTimer, useStopTimer } from "@/hooks/use-timer"
 import { useTimerStore } from "@/stores/timer-store"
+import { queryKeys } from "@/api/query-keys"
 import type { TimerTickControls } from "@/hooks/use-timer-tick"
 
 export interface BlockClickResult {
@@ -30,8 +31,8 @@ export function useBlockClick(controls: TimerTickControls): BlockClickResult {
           onSuccess: () => {
             useTimerStore.getState().stop()
             controls.stopTicking()
-            queryClient.invalidateQueries({ queryKey: ["timer", "current"] })
-            queryClient.invalidateQueries({ queryKey: ["entries"] })
+            queryClient.invalidateQueries({ queryKey: queryKeys.timer.current() })
+            queryClient.invalidateQueries({ queryKey: queryKeys.entries.all() })
           },
           onSettled: () => setLoadingActivityId(null),
         })
@@ -44,8 +45,8 @@ export function useBlockClick(controls: TimerTickControls): BlockClickResult {
               useTimerStore.getState().start(data.id, data.activityId, data.startTime)
               controls.startTicking()
             }
-            queryClient.invalidateQueries({ queryKey: ["timer", "current"] })
-            queryClient.invalidateQueries({ queryKey: ["entries"] })
+            queryClient.invalidateQueries({ queryKey: queryKeys.timer.current() })
+            queryClient.invalidateQueries({ queryKey: queryKeys.entries.all() })
           },
           onSettled: () => setLoadingActivityId(null),
         })
