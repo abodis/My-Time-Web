@@ -8,6 +8,12 @@ description: "Project decision log — architectural choices, gotchas, resolved 
 <!-- Append new entries at the top. Format: ## [YYYY-MM-DD] Title -->
 <!-- Fields: Problem, Decision, Rationale -->
 
+## [2026-09-10] Site fully unreachable: registrar clientHold, not a deploy failure
+
+**Problem:** After a routine `./deploy.sh prod`, `app.mytimeblocks.app` returned `DNS_PROBE_POSSIBLE` — the entire domain was unresolvable (no NS for the apex from any public resolver). Deploy was healthy: CloudFront `Deployed`, latest build in S3, cache invalidated, alias record present, origin resolved.
+**Decision:** Root cause was Amazon Registrar placing `clientHold` on the domain because the ICANN registrant email was never verified. `clientHold` makes the `.app` registry pull the domain from DNS entirely (TLD returns SOA only, no delegation), so every subdomain goes dark. Fix is registrar-side only: verify the registrant email in Route 53 Registered Domains. No DNS change or redeploy needed — the zone and delegation were already correct.
+**Rationale:** A clean deploy + healthy CloudFront + correct Route 53 zone/delegation can still be 100% dark if the registrar has a hold. When DNS fails wholesale (apex has no NS), check `aws route53domains get-domain-detail --query StatusList` early. Gotchas: registry republishes NS within minutes of clearing the hold, but NS TTL is 172800s (2 days) so cached negatives linger; `get-domain-detail` StatusList lags and may still show `clientHold` after it clears — trust public `dig` over the status field. `mcp` profile can't read Route 53 (AccessDenied) — use `andras` for zone and `route53domains` queries.
+
 ## [2026-09-07] Tag mutations silently dropped defaultRate/rateCurrency
 
 **Problem:** Editing a tag's rate/currency never persisted. The dialog built a payload with `defaultRate`/`rateCurrency`, but `useCreateTag`/`useUpdateTag` destructured only `name`/`color` in their `mutationFn`, so those fields were discarded before the request body was built — no error, just a silent no-op.
