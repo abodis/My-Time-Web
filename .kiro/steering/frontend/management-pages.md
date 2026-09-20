@@ -8,7 +8,7 @@ description: "Management page patterns - lists, forms, tables for CRUD screens"
 
 ## Responsive Philosophy
 
-Management pages (Projects, Tags, Team, Account) are **desktop-only** (≥1024px).
+Management pages (Projects, Tags, Team, Account) are **desktop-only** (≥1024px):
 - Mobile + tablet-portrait: show only Timer, Entries, simple Reports. No management nav items.
 - Tablet-landscape (≥1024px) and above: full management UI available.
 - Gate management routes with a breakpoint check or hide nav items below `desktop:`.

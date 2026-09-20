@@ -1,54 +1,31 @@
----
-inclusion: auto
----
 # Color Palette
 
-The API returns a color **name** (e.g., "blue", "teal", "purple"). The web app maps names to hex values. These are the only colors used for activity blocks/time blocks.
+The application uses a fixed color palette for tags and UI elements. Colors are provided as hex values without the `#` prefix in this reference; the API stores them with the `#` prefix (e.g., `#12AAFF`).
 
-## Block Colors (tag colors from API)
+## Chromatic Colors
 
-| Name | Default | Light | Dark |
-|---|---|---|---|
-| blue | #12aaff | #88d4ff | #0b6699 |
-| green | #89e02d | #c4ef96 | #52861b |
-| red | #ff0000 | #ff7f7f | #990000 |
-| yellow | #fbd31f | #fde98f | #977f13 |
-| orange | #ff9000 | #ffc77f | #995600 |
-| teal | #2cdba5 | #95edd2 | #1a8363 |
-| purple | #8358ed | #c1abf6 | #4f358e |
-| lavender | #f75aff | #fbacff | #943699 |
+| Color  | Dark   | Normal | Light  |
+|--------|--------|--------|--------|
+| Blue   | 0B6699 | 12AAFF | 88D4FF |
+| Green  | 52861B | 89E02D | C4EF96 |
+| Red    | 990000 | FF0000 | FF7F7F |
+| Yellow | 977F13 | FBD31F | FDE98F |
+| Orange | 995600 | FF9000 | FFC77F |
+| Teal   | 1A8363 | 2CDBA5 | 95EDD2 |
+| Purple | 4F358E | 8358ED | C1ABF6 |
 
-## Neutral Colors
+## Grey Scale
 
-| Name | Hex |
-|---|---|
-| black | #000000 |
-| white | #ffffff |
-| grey | #b2b2b2 |
-| grey-dark | #747474 |
-| grey-darker | #4d4d4d |
-| grey-light | #e2e2e2 |
-| grey-lighter | #efefef |
-| grey-lightest | #f6f6f6 |
+| Darkest | Dark   | Normal | Light  | Lighter | Lightest |
+|---------|--------|--------|--------|---------|----------|
+| 4D4D4D  | 747474 | B2B2B2 | E2E2E2 | EFEFEF  | F6F6F6   |
 
-## Priority Colors
+## Usage
 
-| Priority | On (active) | Off (muted) |
-|---|---|---|
-| critical | #ff4000 | #ffc5b2 |
-| high | #ff9900 | #ffe0b2 |
-| medium | #ffdd00 | #fff5b2 |
-| low | #5195ce | #cadff0 |
-
-## Usage Rules
-
-- Activity blocks use the **light** variant as background, **dark** variant for text/badge, **default** for accents
-- Colors resolved at runtime via `resolveColor(palette, override, tagColor)` from `src/lib/color-utils.ts`
-- Override source: `GET /settings/activity-colors` (per-activity user preference)
-- Tag color source: `tagColor` field on `EnrichedActivityItem` response
-- Priority: override → tagColor → "grey" fallback
-- Runtime source of truth: `GET /palette` (cached with `staleTime: Infinity`)
-- If palette unavailable, all shades fall back to `#B2B2B2`
-- If color is null/unknown, fall back to grey
-- Never use arbitrary colors outside this palette for time blocks
-- The hex values in this file are reference only — the app fetches them from the API at runtime
+- **Tags:** Store a color name token (e.g., `"blue"`, `"teal"`) — NOT hex values. If no color is set, the tag has `null` which represents the grey default.
+- **Activity colors:** Per-user overrides in settings also store color name tokens (not hex).
+- **Grey is reserved:** Signals "unset/default". Users cannot intentionally select grey.
+- **Selectable palette:** 7 chromatic names only (blue, green, red, yellow, orange, teal, purple).
+- **Inheritance chain:** Activity color = user override > tag color > grey (default).
+- **Palette endpoint:** `GET /palette` returns the full name-to-hex mapping so frontends resolve tokens at runtime.
+- The frontend presents the 7 chromatic colors as selectable swatches and uses shade variants (dark/normal/light) contextually for rendering.

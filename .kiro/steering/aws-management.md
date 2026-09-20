@@ -16,13 +16,10 @@ Account: 390503782314 | Region: eu-south-2 | Identity Center region: eu-central-
 
 ## Session Management
 
-- Sessions expire after 4 hours
-- Re-auth: `aws sso login --profile mcp`
-- Verify: `aws sts get-caller-identity --profile mcp`
-- Cache: `~/.aws/sso/cache/` — never delete `kiro-auth-token.json`
-
-**On expired session:** Stop, tell user to run `aws sso login --profile mcp`.
-**On AccessDenied:** Stop, detail required IAM policies, wait for user to apply via `--profile andras`.
+- Sessions expire after 4h. Re-auth: `aws sso login --profile mcp`. Verify: `aws sts get-caller-identity --profile mcp`.
+- Cache: `~/.aws/sso/cache/` — never delete `kiro-auth-token.json`.
+- Expired session: stop, tell user to run `aws sso login --profile mcp`.
+- AccessDenied: stop, list required IAM policies, wait for user to apply via `--profile andras`.
 
 ## Environments
 
@@ -67,9 +64,9 @@ CDK applies via Aspects: `Environment=prod, Project=my-time, ManagedBy=cdk, Crea
 
 ## Cost Governance
 
-- Budget: `novare-monthly-total` — $715/month, alerts at 80%/100%
-- Frontend hosting cost is negligible (S3 + CloudFront free tier covers most SPA traffic)
-- **< €200/month**: proceed | **≥ €200/month**: require approval
+- Budget: `novare-monthly-total` — $715/month, alerts at 80%/100%.
+- Frontend hosting cost negligible (S3 + CloudFront free tier).
+- **< €200/month**: proceed. **≥ €200/month**: require approval.
 
 ## Security Defaults
 

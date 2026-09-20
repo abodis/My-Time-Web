@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "No cd in shell commands",
+      "description": "Intercepts shell tool usage to ensure agents use the cwd parameter instead of cd or && chains, which trigger unnecessary approval prompts\n\nMigration note: Tool categories were converted to the tool-name matcher `^(execute_bash|execute_pwsh|control_bash_process|control_pwsh_process|list_processes|get_process_output)$`, reconstructed from the built-in tool list. Confirm it covers the tools you meant, then enable the hook.",
+      "trigger": "PreToolUse",
+      "matcher": "^(execute_bash|execute_pwsh|control_bash_process|control_pwsh_process|list_processes|get_process_output)$",
+      "action": {
+        "type": "agent",
+        "prompt": "Check if the command about to be executed contains \"cd \" at the start or uses \"&&\", \"||\", or \";\" to chain commands. If it does, STOP and rewrite the command to use the cwd parameter instead. The workspace root is /Users/abodis/Projects/My-Time-Web. For example, instead of \"cd /Users/abodis/Projects/My-Time-Web/infra && cdk synth\", use command=\"cdk synth\" with cwd=\"/Users/abodis/Projects/My-Time-Web/infra\"."
+      },
+      "enabled": true
+    }
+  ]
+}

@@ -64,9 +64,9 @@ description: "React and component patterns for the frontend"
 
 ## Routing
 - React Router v7, library mode (not framework mode).
-- Route definitions in `src/routes.tsx`.
+- Route definitions in `src/routes.tsx` (see `paths` export).
 - Lazy load page components for code splitting.
-- Auth pages under `/auth/*`, app pages under `/app/*`.
+- Routes are FLAT, no prefix: auth = `/login` `/register` `/confirm` `/forgot-password` `/reset-password`; app = `/` (tracker) `/entries` `/projects` `/team` `/reports` `/tags` `/select-account` `/onboarding`.
 
 ## Error Handling
 - TanStack Query `onError` for API errors.
@@ -102,7 +102,7 @@ description: "React and component patterns for the frontend"
 ## Visual Verification
 - For any UI styling change, verify with a Playwright screenshot before claiming it's done — do not edit CSS blind.
 - Local auth: the dev backend uses a default user; the SPA uses real register/login. For a fresh authed session, register a UNIQUE valid-format email (needs a TLD — not `dev@localhost`) → confirm (any code) → login. Full recipe + gotchas in `.kiro/steering/decisions.md` → "Local dev auth model". (UAT demo logins are `Password123!` — alex@/dana@/evan@/faye@/gus@ demo.test — but those are UAT, not local.)
-- Playwright MCP writes screenshots only to /tmp/.playwright-mcp; copy into `test-screenshots/` (gitignored) to view.
+- Playwright MCP writes screenshots to `/tmp/.playwright-mcp` (repo copies land in `.playwright-mcp/`); copy into `test-screenshots/` (gitignored) to view.
 - Dev server may run on 5174 if 5173 is taken — check process output for the actual port.
 - When matching a reference mockup, compare side by side: tag shape, text sizes, spacing, and that nothing overflows the container.
 
