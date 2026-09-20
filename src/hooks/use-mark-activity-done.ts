@@ -9,7 +9,7 @@ export function useMarkActivityDone() {
   return useMutation({
     mutationFn: async ({ id, isDone }: { id: string; isDone: boolean }) => {
       const { data, error, response } = await client.PATCH(
-        "/activities/{id}/done",
+        "/activities/{id}",
         {
           params: { path: { id } },
           body: { isDone },

@@ -14,7 +14,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Register a new user */
-        post: operations["auth_register_auth_register_post"];
+        post: operations["auth_post__auth_register"];
         delete?: never;
         options?: never;
         head?: never;
@@ -31,7 +31,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Confirm user registration */
-        post: operations["auth_confirm_auth_confirm_post"];
+        post: operations["auth_post__auth_confirm"];
         delete?: never;
         options?: never;
         head?: never;
@@ -48,7 +48,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Login with email and password */
-        post: operations["auth_login_auth_login_post"];
+        post: operations["auth_post__auth_login"];
         delete?: never;
         options?: never;
         head?: never;
@@ -65,7 +65,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Refresh access token */
-        post: operations["auth_refresh_auth_refresh_post"];
+        post: operations["auth_post__auth_refresh"];
         delete?: never;
         options?: never;
         head?: never;
@@ -82,7 +82,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Request password reset code */
-        post: operations["auth_forgot_password_auth_forgot_password_post"];
+        post: operations["auth_post__auth_forgot-password"];
         delete?: never;
         options?: never;
         head?: never;
@@ -99,7 +99,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Reset password with code */
-        post: operations["auth_reset_password_auth_reset_password_post"];
+        post: operations["auth_post__auth_reset-password"];
         delete?: never;
         options?: never;
         head?: never;
@@ -116,7 +116,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Start a new timer */
-        post: operations["timer_start_timer_start_post"];
+        post: operations["timer_post__timer_start"];
         delete?: never;
         options?: never;
         head?: never;
@@ -133,7 +133,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Stop the running timer */
-        post: operations["timer_stop_timer_stop_post"];
+        post: operations["timer_post__timer_stop"];
         delete?: never;
         options?: never;
         head?: never;
@@ -148,7 +148,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get the currently running timer */
-        get: operations["timer_current_timer_current_get"];
+        get: operations["timer_get__timer_current"];
         put?: never;
         post?: never;
         delete?: never;
@@ -165,10 +165,10 @@ export interface paths {
             cookie?: never;
         };
         /** List time entries */
-        get: operations["entries_list_entries_get"];
+        get: operations["entries_get__entries"];
         put?: never;
         /** Create a time entry */
-        post: operations["entries_create_entries_post"];
+        post: operations["entries_post__entries"];
         delete?: never;
         options?: never;
         head?: never;
@@ -184,10 +184,10 @@ export interface paths {
         };
         get?: never;
         /** Update a time entry */
-        put: operations["entries_update_entries__id__put"];
+        put: operations["entries_put__entries_id"];
         post?: never;
         /** Delete a time entry */
-        delete: operations["entries_delete_entries__id__delete"];
+        delete: operations["entries_delete__entries_id"];
         options?: never;
         head?: never;
         patch?: never;
@@ -201,10 +201,10 @@ export interface paths {
             cookie?: never;
         };
         /** List notes for a time entry */
-        get: operations["entries_notes_list_entries__id__notes_get"];
+        get: operations["entries_get__entries_id_notes"];
         put?: never;
         /** Add a note to a time entry */
-        post: operations["entries_notes_create_entries__id__notes_post"];
+        post: operations["entries_post__entries_id_notes"];
         delete?: never;
         options?: never;
         head?: never;
@@ -221,7 +221,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Batch sync offline operations */
-        post: operations["sync_route_sync_post"];
+        post: operations["sync_post__sync"];
         delete?: never;
         options?: never;
         head?: never;
@@ -236,10 +236,10 @@ export interface paths {
             cookie?: never;
         };
         /** List projects */
-        get: operations["projects_list_projects_get"];
+        get: operations["projects_get__projects"];
         put?: never;
         /** Create a project */
-        post: operations["projects_create_projects_post"];
+        post: operations["projects_post__projects"];
         delete?: never;
         options?: never;
         head?: never;
@@ -255,10 +255,10 @@ export interface paths {
         };
         get?: never;
         /** Update a project */
-        put: operations["projects_update_projects__id__put"];
+        put: operations["projects_put__projects_id"];
         post?: never;
         /** Delete a project */
-        delete: operations["projects_delete_projects__id__delete"];
+        delete: operations["projects_delete__projects_id"];
         options?: never;
         head?: never;
         patch?: never;
@@ -272,17 +272,38 @@ export interface paths {
             cookie?: never;
         };
         /** List activities for a project */
-        get: operations["activities_list_projects__id__activities_get"];
+        get: operations["activities_get__projects_id_activities"];
         put?: never;
-        /** Create an activity */
-        post: operations["activities_create_projects__id__activities_post"];
+        /**
+         * Create an activity
+         * @description Creates an activity in the project. If the request sets `assignCreator: true`, the creating user is also assigned to the new activity in the same transaction, so it is immediately visible to them without a separate call to POST /activities/{id}/assignments. Defaults to false, so a manager creating activities for others is not auto-assigned. The onboarding guided chain sends `assignCreator: true`.
+         */
+        post: operations["activities_post__projects_id_activities"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/activities/{id}": {
+    "/projects/{id}/budgets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List budgets for a project */
+        get: operations["budgets_get__projects_id_budgets"];
+        put?: never;
+        /** Create a budget for a project */
+        post: operations["budgets_post__projects_id_budgets"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{id}/budgets/{budgetId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -290,11 +311,11 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        /** Update an activity */
-        put: operations["activities_update_activities__id__put"];
+        /** Update a budget */
+        put: operations["budgets_put__projects_id_budgets_budgetId"];
         post?: never;
-        /** Delete an activity */
-        delete: operations["activities_delete_activities__id__delete"];
+        /** Delete a budget */
+        delete: operations["budgets_delete__projects_id_budgets_budgetId"];
         options?: never;
         head?: never;
         patch?: never;
@@ -308,7 +329,7 @@ export interface paths {
             cookie?: never;
         };
         /** List all assigned activities with enrichment */
-        get: operations["activities_list_all_activities_get"];
+        get: operations["activities_get__activities"];
         put?: never;
         post?: never;
         delete?: never;
@@ -331,10 +352,10 @@ export interface paths {
         options?: never;
         head?: never;
         /** Batch update sort order of activities */
-        patch: operations["activities_reorder_activities_reorder_patch"];
+        patch: operations["activities_patch__activities_reorder"];
         trace?: never;
     };
-    "/activities/{id}/done": {
+    "/activities/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -342,49 +363,15 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put?: never;
+        /** Update an activity */
+        put: operations["activities_put__activities_id"];
         post?: never;
-        delete?: never;
+        /** Delete an activity */
+        delete: operations["activities_delete__activities_id"];
         options?: never;
         head?: never;
         /** Mark or unmark an activity as done */
-        patch: operations["activities_toggle_done_activities__id__done_patch"];
-        trace?: never;
-    };
-    "/projects/{id}/budgets": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List budgets for a project */
-        get: operations["budgets_list_projects__id__budgets_get"];
-        put?: never;
-        /** Create a budget for a project */
-        post: operations["budgets_create_projects__id__budgets_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/projects/{id}/budgets/{budgetId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Update a budget */
-        put: operations["budgets_update_projects__id__budgets__budgetId__put"];
-        post?: never;
-        /** Delete a budget */
-        delete: operations["budgets_delete_projects__id__budgets__budgetId__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
+        patch: operations["activities_patch__activities_id"];
         trace?: never;
     };
     "/activities/{id}/assignments": {
@@ -395,10 +382,10 @@ export interface paths {
             cookie?: never;
         };
         /** List assignments for an activity */
-        get: operations["assignments_list_activities__id__assignments_get"];
+        get: operations["assignments_get__activities_id_assignments"];
         put?: never;
         /** Assign a user to an activity */
-        post: operations["assignments_create_activities__id__assignments_post"];
+        post: operations["assignments_post__activities_id_assignments"];
         delete?: never;
         options?: never;
         head?: never;
@@ -415,8 +402,8 @@ export interface paths {
         get?: never;
         put?: never;
         post?: never;
-        /** Remove a user assignment from an activity */
-        delete: operations["assignments_delete_activities__id__assignments__userId__delete"];
+        /** Remove a user assignment */
+        delete: operations["assignments_delete__activities_id_assignments_userId"];
         options?: never;
         head?: never;
         patch?: never;
@@ -430,10 +417,10 @@ export interface paths {
             cookie?: never;
         };
         /** List tags */
-        get: operations["tags_list_tags_get"];
+        get: operations["tags_get__tags"];
         put?: never;
         /** Create a tag */
-        post: operations["tags_create_tags_post"];
+        post: operations["tags_post__tags"];
         delete?: never;
         options?: never;
         head?: never;
@@ -449,10 +436,27 @@ export interface paths {
         };
         get?: never;
         /** Update a tag */
-        put: operations["tags_update_tags__id__put"];
+        put: operations["tags_put__tags_id"];
         post?: never;
         /** Delete a tag */
-        delete: operations["tags_delete_tags__id__delete"];
+        delete: operations["tags_delete__tags_id"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/accounts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List accounts user belongs to */
+        get: operations["accounts_get__accounts"];
+        put?: never;
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -466,9 +470,9 @@ export interface paths {
             cookie?: never;
         };
         /** Get account details */
-        get: operations["account_get_account_get"];
+        get: operations["account_get__account"];
         /** Update account settings */
-        put: operations["account_update_account_put"];
+        put: operations["account_put__account"];
         post?: never;
         delete?: never;
         options?: never;
@@ -484,10 +488,10 @@ export interface paths {
             cookie?: never;
         };
         /** List account members */
-        get: operations["account_members_list_account_members_get"];
+        get: operations["account_get__account_members"];
         put?: never;
         /** Invite a member to the account */
-        post: operations["account_members_invite_account_members_post"];
+        post: operations["account_post__account_members"];
         delete?: never;
         options?: never;
         head?: never;
@@ -503,10 +507,10 @@ export interface paths {
         };
         get?: never;
         /** Update a member */
-        put: operations["account_members_update_account_members__userId__put"];
+        put: operations["account_put__account_members_userId"];
         post?: never;
         /** Remove a member from the account */
-        delete: operations["account_members_delete_account_members__userId__delete"];
+        delete: operations["account_delete__account_members_userId"];
         options?: never;
         head?: never;
         patch?: never;
@@ -520,9 +524,9 @@ export interface paths {
             cookie?: never;
         };
         /** Get my profile */
-        get: operations["account_me_get_account_me_get"];
+        get: operations["account_get__account_me"];
         /** Update my profile */
-        put: operations["account_me_update_account_me_put"];
+        put: operations["account_put__account_me"];
         post?: never;
         delete?: never;
         options?: never;
@@ -537,8 +541,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List pending invitations (admin only) */
-        get: operations["account_invitations_list_account_invitations_get"];
+        /** List pending invitations */
+        get: operations["account_get__account_invitations"];
         put?: never;
         post?: never;
         delete?: never;
@@ -557,8 +561,8 @@ export interface paths {
         get?: never;
         put?: never;
         post?: never;
-        /** Revoke an invitation (admin only) */
-        delete: operations["account_invitations_revoke_account_invitations__invitationId__delete"];
+        /** Revoke an invitation */
+        delete: operations["account_delete__account_invitations_invitationId"];
         options?: never;
         head?: never;
         patch?: never;
@@ -573,25 +577,76 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Resend invitation email (admin only) */
-        post: operations["account_invitations_resend_account_invitations__invitationId__resend_post"];
+        /** Resend invitation email */
+        post: operations["account_post__account_invitations_invitationId_resend"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/accounts": {
+    "/me": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** List accounts user belongs to */
-        get: operations["accounts_list_accounts_get"];
+        /** Aggregate identity: profile, accounts, onboarding status */
+        get: operations["onboarding_get__me"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/onboarding": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Complete first-run onboarding */
+        post: operations["onboarding_post__onboarding"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/onboarding/light": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Complete light first-run onboarding (non-owner) */
+        post: operations["onboarding_post__onboarding_light"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/onboarding/example-project": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Seed the example project (opt-in, once) */
+        post: operations["onboarding_post__onboarding_example-project"];
         delete?: never;
         options?: never;
         head?: never;
@@ -606,7 +661,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get color palette */
-        get: operations["palette_get_palette_get"];
+        get: operations["palette_get__palette"];
         put?: never;
         post?: never;
         delete?: never;
@@ -623,14 +678,14 @@ export interface paths {
             cookie?: never;
         };
         /** Get all settings */
-        get: operations["settings_get_settings_get"];
+        get: operations["settings_get__settings"];
         put?: never;
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
         /** Update settings (shallow merge) */
-        patch: operations["settings_patch_settings_patch"];
+        patch: operations["settings_patch__settings"];
         trace?: never;
     };
     "/settings/activity-colors": {
@@ -641,14 +696,14 @@ export interface paths {
             cookie?: never;
         };
         /** Get activity colors */
-        get: operations["settings_colors_get_settings_activity_colors_get"];
+        get: operations["settings_get__settings_activity-colors"];
         put?: never;
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
         /** Update activity colors (deep merge) */
-        patch: operations["settings_colors_patch_settings_activity_colors_patch"];
+        patch: operations["settings_patch__settings_activity-colors"];
         trace?: never;
     };
     "/settings/activity-colors/{activityId}": {
@@ -662,7 +717,7 @@ export interface paths {
         put?: never;
         post?: never;
         /** Delete one activity color */
-        delete: operations["settings_colors_delete_settings_activity_colors__activityId__delete"];
+        delete: operations["settings_delete__settings_activity-colors_activityId"];
         options?: never;
         head?: never;
         patch?: never;
@@ -678,7 +733,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Get presigned URL for avatar upload */
-        post: operations["settings_avatar_upload_settings_avatar_upload_post"];
+        post: operations["settings_post__settings_avatar_upload"];
         delete?: never;
         options?: never;
         head?: never;
@@ -692,8 +747,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Project budget vs consumed hours report (manager+) */
-        get: operations["reports_project_budget_reports_project_budget_get"];
+        /** Project budget vs consumed hours report */
+        get: operations["reports_get__reports_project-budget"];
         put?: never;
         post?: never;
         delete?: never;
@@ -709,8 +764,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Financial report with billable/cost/margin (admin only) */
-        get: operations["reports_financial_reports_financial_get"];
+        /** Financial report with billable/cost/margin */
+        get: operations["reports_get__reports_financial"];
         put?: never;
         post?: never;
         delete?: never;
@@ -727,7 +782,7 @@ export interface paths {
             cookie?: never;
         };
         /** Personal time grouped by tag or activity */
-        get: operations["reports_personal_time_reports_personal_time_get"];
+        get: operations["reports_get__reports_personal-time"];
         put?: never;
         post?: never;
         delete?: never;
@@ -765,18 +820,27 @@ export interface components {
             name: string;
             /** Currency */
             currency: string;
-            /** Createdat */
-            createdAt?: string | null;
+            /**
+             * Createdat
+             * @default null
+             */
+            createdAt: string | null;
         };
         /**
          * AccountUpdateRequest
          * @description PUT /account request body.
          */
         AccountUpdateRequest: {
-            /** Name */
-            name?: string | null;
-            /** Currency */
-            currency?: string | null;
+            /**
+             * Name
+             * @default null
+             */
+            name: string | null;
+            /**
+             * Currency
+             * @default null
+             */
+            currency: string | null;
         };
         /**
          * ActivityColorsPatchRequest
@@ -800,8 +864,17 @@ export interface components {
              * Format: uuid
              */
             tagId: string;
-            /** Rateoverride */
-            rateOverride?: number | null;
+            /**
+             * Rateoverride
+             * @default null
+             */
+            rateOverride: number | null;
+            /**
+             * Assigncreator
+             * @description If true, assign the creating user to the new activity. Used by the onboarding guided chain and any 'create and assign to me' UI. Default false so managers creating activities for others are not auto-assigned.
+             * @default false
+             */
+            assignCreator: boolean;
         };
         /**
          * ActivityDoneRequest
@@ -820,8 +893,11 @@ export interface components {
             activityId: string;
             /** Isdone */
             isDone: boolean;
-            /** Doneat */
-            doneAt?: string | null;
+            /**
+             * Doneat
+             * @default null
+             */
+            doneAt: string | null;
         };
         /**
          * ActivityResponse
@@ -836,22 +912,37 @@ export interface components {
             tagId: string;
             /** Name */
             name: string;
-            /** Rateoverride */
-            rateOverride?: number | null;
-            /** Createdat */
-            createdAt?: string | null;
+            /**
+             * Rateoverride
+             * @default null
+             */
+            rateOverride: number | null;
+            /**
+             * Createdat
+             * @default null
+             */
+            createdAt: string | null;
         };
         /**
          * ActivityUpdateRequest
          * @description PUT /projects/{id}/activities/{id} request body.
          */
         ActivityUpdateRequest: {
-            /** Name */
-            name?: string | null;
-            /** Tagid */
-            tagId?: string | null;
-            /** Rateoverride */
-            rateOverride?: number | null;
+            /**
+             * Name
+             * @default null
+             */
+            name: string | null;
+            /**
+             * Tagid
+             * @default null
+             */
+            tagId: string | null;
+            /**
+             * Rateoverride
+             * @default null
+             */
+            rateOverride: number | null;
         };
         /**
          * AssignmentCreateRequest
@@ -873,8 +964,42 @@ export interface components {
             activityId: string;
             /** Userid */
             userId: string;
-            /** Assignedat */
-            assignedAt?: string | null;
+            /**
+             * Assignedat
+             * @default null
+             */
+            assignedAt: string | null;
+        };
+        /**
+         * AvatarUploadRequest
+         * @description POST /settings/avatar/upload request body.
+         */
+        AvatarUploadRequest: {
+            /**
+             * Contenttype
+             * @default null
+             */
+            contentType: string | null;
+        };
+        /**
+         * AvatarUploadResponse
+         * @description POST /settings/avatar/upload — presigned POST upload target.
+         */
+        AvatarUploadResponse: {
+            /** Url */
+            url: string;
+            /** Fields */
+            fields: {
+                [key: string]: string;
+            };
+            /** Key */
+            key: string;
+            /** Maxsizebytes */
+            maxSizeBytes: number;
+            /** Allowedcontenttypes */
+            allowedContentTypes: string[];
+            /** Expiresin */
+            expiresIn: number;
         };
         /**
          * BudgetCreateRequest
@@ -902,8 +1027,11 @@ export interface components {
             tagId: string;
             /** Budgethours */
             budgetHours: number;
-            /** Createdat */
-            createdAt?: string | null;
+            /**
+             * Createdat
+             * @default null
+             */
+            createdAt: string | null;
         };
         /**
          * BudgetUpdateRequest
@@ -949,12 +1077,21 @@ export interface components {
             tagId: string;
             /** Tagname */
             tagName: string;
-            /** Tagcolor */
-            tagColor?: string | null;
-            /** Rateoverride */
-            rateOverride?: number | null;
-            /** Runningentry */
-            runningEntry?: {
+            /**
+             * Tagcolor
+             * @default null
+             */
+            tagColor: string | null;
+            /**
+             * Rateoverride
+             * @default null
+             */
+            rateOverride: number | null;
+            /**
+             * Runningentry
+             * @default null
+             */
+            runningEntry: {
                 [key: string]: unknown;
             } | null;
             /**
@@ -962,10 +1099,16 @@ export interface components {
              * @default false
              */
             isDone: boolean;
-            /** Sortorder */
-            sortOrder?: number | null;
-            /** Doneat */
-            doneAt?: string | null;
+            /**
+             * Sortorder
+             * @default null
+             */
+            sortOrder: number | null;
+            /**
+             * Doneat
+             * @default null
+             */
+            doneAt: string | null;
         };
         /**
          * EnrichedActivityMeta
@@ -989,8 +1132,11 @@ export interface components {
             startTime: string;
             /** Endtime */
             endTime: string;
-            /** Notes */
-            notes?: string | null;
+            /**
+             * Notes
+             * @default null
+             */
+            notes: string | null;
         };
         /**
          * EntryNoteCreateRequest
@@ -1013,42 +1159,87 @@ export interface components {
             activityId: string;
             /** Starttime */
             startTime: string;
-            /** Endtime */
-            endTime?: string | null;
-            /** Notes */
-            notes?: string | null;
-            /** Createdat */
-            createdAt?: string | null;
-            /** Updatedat */
-            updatedAt?: string | null;
-            /** Durationseconds */
-            durationSeconds?: number | null;
-            /** Billablerate */
-            billableRate?: number | null;
-            /** Costrate */
-            costRate?: number | null;
-            /** Ratecurrency */
-            rateCurrency?: string | null;
-            /** Tagname */
-            tagName?: string | null;
-            /** Projectname */
-            projectName?: string | null;
-            /** Activityname */
-            activityName?: string | null;
+            /**
+             * Endtime
+             * @default null
+             */
+            endTime: string | null;
+            /**
+             * Notes
+             * @default null
+             */
+            notes: string | null;
+            /**
+             * Createdat
+             * @default null
+             */
+            createdAt: string | null;
+            /**
+             * Updatedat
+             * @default null
+             */
+            updatedAt: string | null;
+            /**
+             * Durationseconds
+             * @default null
+             */
+            durationSeconds: number | null;
+            /**
+             * Billablerate
+             * @default null
+             */
+            billableRate: number | null;
+            /**
+             * Costrate
+             * @default null
+             */
+            costRate: number | null;
+            /**
+             * Ratecurrency
+             * @default null
+             */
+            rateCurrency: string | null;
+            /**
+             * Tagname
+             * @default null
+             */
+            tagName: string | null;
+            /**
+             * Projectname
+             * @default null
+             */
+            projectName: string | null;
+            /**
+             * Activityname
+             * @default null
+             */
+            activityName: string | null;
         };
         /**
          * EntryUpdateRequest
          * @description PUT /entries/{id} request body.
          */
         EntryUpdateRequest: {
-            /** Starttime */
-            startTime?: string | null;
-            /** Endtime */
-            endTime?: string | null;
-            /** Notes */
-            notes?: string | null;
-            /** Activityid */
-            activityId?: string | null;
+            /**
+             * Starttime
+             * @default null
+             */
+            startTime: string | null;
+            /**
+             * Endtime
+             * @default null
+             */
+            endTime: string | null;
+            /**
+             * Notes
+             * @default null
+             */
+            notes: string | null;
+            /**
+             * Activityid
+             * @default null
+             */
+            activityId: string | null;
         };
         /**
          * ErrorResponse
@@ -1059,8 +1250,25 @@ export interface components {
             type: string;
             /** Message */
             message: string;
-            /** Fields */
-            fields?: string[] | null;
+            /**
+             * Fields
+             * @default null
+             */
+            fields: string[] | null;
+        };
+        /**
+         * ExampleProjectResponse
+         * @description POST /onboarding/example-project response.
+         */
+        ExampleProjectResponse: {
+            /** Message */
+            message: string;
+            /** Projectid */
+            projectId: string;
+            /** Tagid */
+            tagId: string;
+            /** Activityid */
+            activityId: string;
         };
         /**
          * FinancialProjectItem
@@ -1071,8 +1279,11 @@ export interface components {
             projectId: string;
             /** Projectname */
             projectName: string;
-            /** Budgethours */
-            budgetHours?: number | null;
+            /**
+             * Budgethours
+             * @default null
+             */
+            budgetHours: number | null;
             /** Consumedhours */
             consumedHours: number;
             /** Billabletotal */
@@ -1089,8 +1300,11 @@ export interface components {
          * @description GET /reports/financial response.
          */
         FinancialResponse: {
-            /** Currency */
-            currency?: string | null;
+            /**
+             * Currency
+             * @default null
+             */
+            currency: string | null;
             /** Projects */
             projects: components["schemas"]["FinancialProjectItem"][];
         };
@@ -1103,10 +1317,16 @@ export interface components {
             tagId: string;
             /** Tagname */
             tagName: string;
-            /** Tagcolor */
-            tagColor?: string | null;
-            /** Budgethours */
-            budgetHours?: number | null;
+            /**
+             * Tagcolor
+             * @default null
+             */
+            tagColor: string | null;
+            /**
+             * Budgethours
+             * @default null
+             */
+            budgetHours: number | null;
             /** Consumedhours */
             consumedHours: number;
             /** Billabletotal */
@@ -1124,11 +1344,6 @@ export interface components {
             /** Email */
             email: string;
         };
-        /** HTTPValidationError */
-        HTTPValidationError: {
-            /** Detail */
-            detail?: components["schemas"]["ValidationError"][];
-        };
         /**
          * InvitationResponse
          * @description GET /account/invitations list item.
@@ -1142,10 +1357,42 @@ export interface components {
             role: string;
             /** Invitedby */
             invitedBy: string;
-            /** Createdat */
-            createdAt?: string | null;
-            /** Expiresat */
-            expiresAt?: string | null;
+            /**
+             * Createdat
+             * @default null
+             */
+            createdAt: string | null;
+            /**
+             * Expiresat
+             * @default null
+             */
+            expiresAt: string | null;
+        };
+        /**
+         * LightOnboardingRequest
+         * @description POST /onboarding/light request body — non-owner first-run setup.
+         *
+         *     Sets the user's display name and timezone and an optional avatar, then
+         *     stamps onboarding complete. No currency: non-owners have no owned account.
+         */
+        LightOnboardingRequest: {
+            /** Displayname */
+            displayName: string;
+            /** Timezone */
+            timezone: string;
+            /**
+             * Avatar
+             * @default null
+             */
+            avatar: string | null;
+        };
+        /**
+         * LightOnboardingResponse
+         * @description POST /onboarding/light response.
+         */
+        LightOnboardingResponse: {
+            /** Message */
+            message: string;
         };
         /**
          * LoginRequest
@@ -1170,6 +1417,68 @@ export interface components {
             refreshToken: string;
         };
         /**
+         * MeAccount
+         * @description Account membership item in GET /me.
+         */
+        MeAccount: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /** Role */
+            role: string;
+            /** Isowner */
+            isOwner: boolean;
+        };
+        /**
+         * MeOnboarding
+         * @description Onboarding-status block of GET /me.
+         */
+        MeOnboarding: {
+            /** Completed */
+            completed: boolean;
+            /**
+             * Completedat
+             * @default null
+             */
+            completedAt: string | null;
+        };
+        /**
+         * MeResponse
+         * @description GET /me — aggregate identity for app entry.
+         */
+        MeResponse: {
+            user: components["schemas"]["MeUser"];
+            /** Accounts */
+            accounts: components["schemas"]["MeAccount"][];
+            onboarding: components["schemas"]["MeOnboarding"];
+        };
+        /**
+         * MeUser
+         * @description User block of GET /me.
+         */
+        MeUser: {
+            /** Id */
+            id: string;
+            /** Email */
+            email: string;
+            /**
+             * Displayname
+             * @default null
+             */
+            displayName: string | null;
+            /**
+             * Timezone
+             * @default null
+             */
+            timezone: string | null;
+            /**
+             * Avatar
+             * @default null
+             */
+            avatar: string | null;
+        };
+        /**
          * MemberInviteRequest
          * @description POST /account/members request body.
          */
@@ -1191,34 +1500,64 @@ export interface components {
             id: string;
             /** Email */
             email: string;
-            /** Displayname */
-            displayName?: string | null;
-            /** Timezone */
-            timezone?: string | null;
+            /**
+             * Displayname
+             * @default null
+             */
+            displayName: string | null;
+            /**
+             * Timezone
+             * @default null
+             */
+            timezone: string | null;
             /** Role */
             role: string;
-            /** Joinedat */
-            joinedAt?: string | null;
-            /** Costrate */
-            costRate?: number | null;
-            /** Utilizationtarget */
-            utilizationTarget?: number | null;
-            /** Weeklycapacityhours */
-            weeklyCapacityHours?: number | null;
+            /**
+             * Joinedat
+             * @default null
+             */
+            joinedAt: string | null;
+            /**
+             * Costrate
+             * @default null
+             */
+            costRate: number | null;
+            /**
+             * Utilizationtarget
+             * @default null
+             */
+            utilizationTarget: number | null;
+            /**
+             * Weeklycapacityhours
+             * @default null
+             */
+            weeklyCapacityHours: number | null;
         };
         /**
          * MemberUpdateRequest
          * @description PUT /account/members/{id} request body.
          */
         MemberUpdateRequest: {
-            /** Role */
-            role?: string | null;
-            /** Costrate */
-            costRate?: number | null;
-            /** Utilizationtarget */
-            utilizationTarget?: number | null;
-            /** Weeklycapacityhours */
-            weeklyCapacityHours?: number | null;
+            /**
+             * Role
+             * @default null
+             */
+            role: string | null;
+            /**
+             * Costrate
+             * @default null
+             */
+            costRate: number | null;
+            /**
+             * Utilizationtarget
+             * @default null
+             */
+            utilizationTarget: number | null;
+            /**
+             * Weeklycapacityhours
+             * @default null
+             */
+            weeklyCapacityHours: number | null;
         };
         /**
          * MessageResponse
@@ -1227,8 +1566,11 @@ export interface components {
         MessageResponse: {
             /** Message */
             message: string;
-            /** Status */
-            status?: string | null;
+            /**
+             * Status
+             * @default null
+             */
+            status: string | null;
         };
         /**
          * NoteResponse
@@ -1241,8 +1583,43 @@ export interface components {
             entryId: string;
             /** Content */
             content: string;
-            /** Createdat */
-            createdAt?: string | null;
+            /**
+             * Createdat
+             * @default null
+             */
+            createdAt: string | null;
+        };
+        /**
+         * OnboardingRequest
+         * @description POST /onboarding request body — atomic first-run setup.
+         *
+         *     Sets the user's display name and timezone, the owned account's currency,
+         *     an optional avatar, and stamps onboarding complete.
+         */
+        OnboardingRequest: {
+            /** Displayname */
+            displayName: string;
+            /** Timezone */
+            timezone: string;
+            /** Currency */
+            currency: string;
+            /**
+             * Avatar
+             * @default null
+             */
+            avatar: string | null;
+        };
+        /**
+         * OnboardingResponse
+         * @description POST /onboarding response.
+         */
+        OnboardingResponse: {
+            /** Message */
+            message: string;
+            /** Accountid */
+            accountId: string;
+            /** Currency */
+            currency: string;
         };
         /**
          * PersonalTimeGroupItem
@@ -1253,8 +1630,11 @@ export interface components {
             id: string;
             /** Name */
             name: string;
-            /** Color */
-            color?: string | null;
+            /**
+             * Color
+             * @default null
+             */
+            color: string | null;
             /** Hours */
             hours: number;
             /** Entrycount */
@@ -1279,30 +1659,54 @@ export interface components {
             id: string;
             /** Email */
             email: string;
-            /** Displayname */
-            displayName?: string | null;
-            /** Timezone */
-            timezone?: string | null;
+            /**
+             * Displayname
+             * @default null
+             */
+            displayName: string | null;
+            /**
+             * Timezone
+             * @default null
+             */
+            timezone: string | null;
             /** Role */
             role: string;
-            /** Costrate */
-            costRate?: number | null;
-            /** Utilizationtarget */
-            utilizationTarget?: number | null;
-            /** Weeklycapacityhours */
-            weeklyCapacityHours?: number | null;
-            /** Joinedat */
-            joinedAt?: string | null;
+            /**
+             * Costrate
+             * @default null
+             */
+            costRate: number | null;
+            /**
+             * Utilizationtarget
+             * @default null
+             */
+            utilizationTarget: number | null;
+            /**
+             * Weeklycapacityhours
+             * @default null
+             */
+            weeklyCapacityHours: number | null;
+            /**
+             * Joinedat
+             * @default null
+             */
+            joinedAt: string | null;
         };
         /**
          * ProfileUpdateRequest
          * @description PUT /account/profile request body.
          */
         ProfileUpdateRequest: {
-            /** Displayname */
-            displayName?: string | null;
-            /** Timezone */
-            timezone?: string | null;
+            /**
+             * Displayname
+             * @default null
+             */
+            displayName: string | null;
+            /**
+             * Timezone
+             * @default null
+             */
+            timezone: string | null;
         };
         /**
          * ProjectBudgetItem
@@ -1313,8 +1717,11 @@ export interface components {
             projectId: string;
             /** Projectname */
             projectName: string;
-            /** Budgethours */
-            budgetHours?: number | null;
+            /**
+             * Budgethours
+             * @default null
+             */
+            budgetHours: number | null;
             /** Consumedhours */
             consumedHours: number;
             /** Tags */
@@ -1337,10 +1744,16 @@ export interface components {
             tagId: string;
             /** Tagname */
             tagName: string;
-            /** Tagcolor */
-            tagColor?: string | null;
-            /** Budgethours */
-            budgetHours?: number | null;
+            /**
+             * Tagcolor
+             * @default null
+             */
+            tagColor: string | null;
+            /**
+             * Budgethours
+             * @default null
+             */
+            budgetHours: number | null;
             /** Consumedhours */
             consumedHours: number;
         };
@@ -1351,19 +1764,31 @@ export interface components {
         ProjectCreateRequest: {
             /** Name */
             name: string;
-            /** Clientname */
-            clientName?: string | null;
+            /**
+             * Clientname
+             * @default null
+             */
+            clientName: string | null;
             /**
              * Isbillable
              * @default true
              */
             isBillable: boolean | null;
-            /** Startdate */
-            startDate?: string | null;
-            /** Enddate */
-            endDate?: string | null;
-            /** Budgethours */
-            budgetHours?: number | null;
+            /**
+             * Startdate
+             * @default null
+             */
+            startDate: string | null;
+            /**
+             * Enddate
+             * @default null
+             */
+            endDate: string | null;
+            /**
+             * Budgethours
+             * @default null
+             */
+            budgetHours: number | null;
         };
         /**
          * ProjectResponse
@@ -1376,40 +1801,76 @@ export interface components {
             accountId: string;
             /** Name */
             name: string;
-            /** Clientname */
-            clientName?: string | null;
+            /**
+             * Clientname
+             * @default null
+             */
+            clientName: string | null;
             /** Isarchived */
             isArchived: boolean;
             /** Isbillable */
             isBillable: boolean;
-            /** Startdate */
-            startDate?: string | null;
-            /** Enddate */
-            endDate?: string | null;
-            /** Budgethours */
-            budgetHours?: number | null;
-            /** Createdat */
-            createdAt?: string | null;
+            /**
+             * Startdate
+             * @default null
+             */
+            startDate: string | null;
+            /**
+             * Enddate
+             * @default null
+             */
+            endDate: string | null;
+            /**
+             * Budgethours
+             * @default null
+             */
+            budgetHours: number | null;
+            /**
+             * Createdat
+             * @default null
+             */
+            createdAt: string | null;
         };
         /**
          * ProjectUpdateRequest
          * @description PUT /projects/{id} request body.
          */
         ProjectUpdateRequest: {
-            /** Name */
-            name?: string | null;
-            /** Clientname */
-            clientName?: string | null;
-            /** Isarchived */
-            isArchived?: boolean | null;
-            /** Isbillable */
-            isBillable?: boolean | null;
-            /** Startdate */
-            startDate?: string | null;
-            /** Enddate */
-            endDate?: string | null;
-            /** Budgethours */
-            budgetHours?: number | null;
+            /**
+             * Name
+             * @default null
+             */
+            name: string | null;
+            /**
+             * Clientname
+             * @default null
+             */
+            clientName: string | null;
+            /**
+             * Isarchived
+             * @default null
+             */
+            isArchived: boolean | null;
+            /**
+             * Isbillable
+             * @default null
+             */
+            isBillable: boolean | null;
+            /**
+             * Startdate
+             * @default null
+             */
+            startDate: string | null;
+            /**
+             * Enddate
+             * @default null
+             */
+            endDate: string | null;
+            /**
+             * Budgethours
+             * @default null
+             */
+            budgetHours: number | null;
         };
         /**
          * RefreshRequest
@@ -1485,12 +1946,18 @@ export interface components {
          * @description PATCH /settings request body — shallow merge at top level.
          */
         SettingsPatchRequest: {
-            /** Activitycolors */
-            activityColors?: {
+            /**
+             * Activitycolors
+             * @default null
+             */
+            activityColors: {
                 [key: string]: string;
             } | null;
-            /** Avatar */
-            avatar?: string | null;
+            /**
+             * Avatar
+             * @default null
+             */
+            avatar: string | null;
         };
         /**
          * SyncAppliedItem
@@ -1511,8 +1978,11 @@ export interface components {
         SyncRejectedItem: {
             /** Localid */
             localId: string;
-            /** Op */
-            op?: string | null;
+            /**
+             * Op
+             * @default null
+             */
+            op: string | null;
             /** Reason */
             reason: string;
         };
@@ -1521,12 +1991,18 @@ export interface components {
          * @description POST /sync request body.
          */
         SyncRequest: {
-            /** Lastsyncedat */
-            lastSyncedAt?: string | null;
+            /**
+             * Lastsyncedat
+             * @default null
+             */
+            lastSyncedAt: string | null;
             /** Operations */
             operations?: unknown[];
-            /** Clientid */
-            clientId?: string | null;
+            /**
+             * Clientid
+             * @default null
+             */
+            clientId: string | null;
         };
         /**
          * SyncResponse
@@ -1547,12 +2023,21 @@ export interface components {
         TagCreateRequest: {
             /** Name */
             name: string;
-            /** Color */
-            color?: string | null;
-            /** Defaultrate */
-            defaultRate?: number | null;
-            /** Ratecurrency */
-            rateCurrency?: string | null;
+            /**
+             * Color
+             * @default null
+             */
+            color: string | null;
+            /**
+             * Defaultrate
+             * @default null
+             */
+            defaultRate: number | null;
+            /**
+             * Ratecurrency
+             * @default null
+             */
+            rateCurrency: string | null;
         };
         /**
          * TagResponse
@@ -1565,30 +2050,54 @@ export interface components {
             accountId: string;
             /** Name */
             name: string;
-            /** Color */
-            color?: string | null;
-            /** Defaultrate */
-            defaultRate?: number | null;
-            /** Ratecurrency */
-            rateCurrency?: string | null;
+            /**
+             * Color
+             * @default null
+             */
+            color: string | null;
+            /**
+             * Defaultrate
+             * @default null
+             */
+            defaultRate: number | null;
+            /**
+             * Ratecurrency
+             * @default null
+             */
+            rateCurrency: string | null;
             /** Isarchived */
             isArchived: boolean;
-            /** Createdat */
-            createdAt?: string | null;
+            /**
+             * Createdat
+             * @default null
+             */
+            createdAt: string | null;
         };
         /**
          * TagUpdateRequest
          * @description PUT /tags/{id} request body.
          */
         TagUpdateRequest: {
-            /** Name */
-            name?: string | null;
-            /** Color */
-            color?: string | null;
-            /** Defaultrate */
-            defaultRate?: number | null;
-            /** Ratecurrency */
-            rateCurrency?: string | null;
+            /**
+             * Name
+             * @default null
+             */
+            name: string | null;
+            /**
+             * Color
+             * @default null
+             */
+            color: string | null;
+            /**
+             * Defaultrate
+             * @default null
+             */
+            defaultRate: number | null;
+            /**
+             * Ratecurrency
+             * @default null
+             */
+            rateCurrency: string | null;
         };
         /**
          * TimerStartRequest
@@ -1600,32 +2109,24 @@ export interface components {
              * Format: uuid
              */
             activityId: string;
-            /** Notes */
-            notes?: string | null;
-        };
-        /** ValidationError */
-        ValidationError: {
-            /** Location */
-            loc: (string | number)[];
-            /** Message */
-            msg: string;
-            /** Error Type */
-            type: string;
-            /** Input */
-            input?: unknown;
-            /** Context */
-            ctx?: Record<string, never>;
+            /**
+             * Notes
+             * @default null
+             */
+            notes: string | null;
         };
     };
     responses: never;
-    parameters: never;
+    parameters: {
+        XAccountId: string;
+    };
     requestBodies: never;
     headers: never;
     pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    auth_register_auth_register_post: {
+    auth_post__auth_register: {
         parameters: {
             query?: never;
             header?: never;
@@ -1638,7 +2139,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1647,18 +2148,18 @@ export interface operations {
                     "application/json": components["schemas"]["MessageResponse"];
                 };
             };
-            /** @description Validation Error */
-            422: {
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
+            400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
     };
-    auth_confirm_auth_confirm_post: {
+    auth_post__auth_confirm: {
         parameters: {
             query?: never;
             header?: never;
@@ -1671,7 +2172,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1680,18 +2181,18 @@ export interface operations {
                     "application/json": components["schemas"]["MessageResponse"];
                 };
             };
-            /** @description Validation Error */
-            422: {
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
+            400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
     };
-    auth_login_auth_login_post: {
+    auth_post__auth_login: {
         parameters: {
             query?: never;
             header?: never;
@@ -1704,7 +2205,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1713,18 +2214,18 @@ export interface operations {
                     "application/json": components["schemas"]["LoginResponse"];
                 };
             };
-            /** @description Validation Error */
-            422: {
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
+            400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
     };
-    auth_refresh_auth_refresh_post: {
+    auth_post__auth_refresh: {
         parameters: {
             query?: never;
             header?: never;
@@ -1737,7 +2238,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1746,18 +2247,18 @@ export interface operations {
                     "application/json": components["schemas"]["RefreshResponse"];
                 };
             };
-            /** @description Validation Error */
-            422: {
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
+            400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
     };
-    auth_forgot_password_auth_forgot_password_post: {
+    "auth_post__auth_forgot-password": {
         parameters: {
             query?: never;
             header?: never;
@@ -1770,7 +2271,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1779,18 +2280,18 @@ export interface operations {
                     "application/json": components["schemas"]["MessageResponse"];
                 };
             };
-            /** @description Validation Error */
-            422: {
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
+            400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
     };
-    auth_reset_password_auth_reset_password_post: {
+    "auth_post__auth_reset-password": {
         parameters: {
             query?: never;
             header?: never;
@@ -1803,7 +2304,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1812,21 +2313,23 @@ export interface operations {
                     "application/json": components["schemas"]["MessageResponse"];
                 };
             };
-            /** @description Validation Error */
-            422: {
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
+            400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
     };
-    timer_start_timer_start_post: {
+    timer_post__timer_start: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
@@ -1836,7 +2339,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -1845,7 +2348,7 @@ export interface operations {
                     "application/json": components["schemas"]["EntryResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -1863,54 +2366,20 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    timer_stop_timer_stop_post: {
+    timer_post__timer_stop: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1919,7 +2388,7 @@ export interface operations {
                     "application/json": components["schemas"]["EntryResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -1937,45 +2406,20 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
         };
     };
-    timer_current_timer_current_get: {
+    timer_get__timer_current: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1984,7 +2428,7 @@ export interface operations {
                     "application/json": components["schemas"]["EntryResponse"] | null;
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -2002,56 +2446,31 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
         };
     };
-    entries_list_entries_get: {
+    entries_get__entries: {
         parameters: {
             query?: {
-                /** @description ISO 8601 timestamp — filter entries starting from this time */
-                from?: string | null;
-                /** @description ISO 8601 timestamp — filter entries up to this time */
-                to?: string | null;
+                /** @description ISO 8601 start timestamp */
+                from?: string;
+                /** @description ISO 8601 end timestamp */
+                to?: string;
                 /** @description Filter by project UUID */
-                projectId?: string | null;
+                projectId?: string;
                 /** @description Filter by tag UUID */
-                tagId?: string | null;
+                tagId?: string;
                 /** @description View another user's entries (manager/admin only) */
-                userId?: string | null;
+                userId?: string;
             };
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2060,7 +2479,7 @@ export interface operations {
                     "application/json": components["schemas"]["EntryResponse"][];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -2078,48 +2497,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    entries_create_entries_post: {
+    entries_post__entries: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
@@ -2129,7 +2514,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -2138,7 +2523,7 @@ export interface operations {
                     "application/json": components["schemas"]["EntryResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -2156,48 +2541,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    entries_update_entries__id__put: {
+    entries_put__entries_id: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path: {
                 id: string;
             };
@@ -2209,7 +2560,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2218,7 +2569,7 @@ export interface operations {
                     "application/json": components["schemas"]["EntryResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -2236,48 +2587,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    entries_delete_entries__id__delete: {
+    entries_delete__entries_id: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path: {
                 id: string;
             };
@@ -2285,7 +2602,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2294,7 +2611,7 @@ export interface operations {
                     "application/json": components["schemas"]["MessageResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -2312,48 +2629,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    entries_notes_list_entries__id__notes_get: {
+    entries_get__entries_id_notes: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path: {
                 id: string;
             };
@@ -2361,7 +2644,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2370,7 +2653,7 @@ export interface operations {
                     "application/json": components["schemas"]["NoteResponse"][];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -2388,48 +2671,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    entries_notes_create_entries__id__notes_post: {
+    entries_post__entries_id_notes: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path: {
                 id: string;
             };
@@ -2441,7 +2690,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -2450,7 +2699,7 @@ export interface operations {
                     "application/json": components["schemas"]["NoteResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -2468,48 +2717,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    sync_route_sync_post: {
+    sync_post__sync: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
@@ -2519,7 +2734,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2528,7 +2743,7 @@ export interface operations {
                     "application/json": components["schemas"]["SyncResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -2546,57 +2761,23 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    projects_list_projects_get: {
+    projects_get__projects: {
         parameters: {
             query?: {
                 /** @description Include archived projects */
-                includeArchived?: boolean | null;
+                includeArchived?: boolean;
             };
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2605,7 +2786,7 @@ export interface operations {
                     "application/json": components["schemas"]["ProjectResponse"][];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -2623,48 +2804,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    projects_create_projects_post: {
+    projects_post__projects: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
@@ -2674,7 +2821,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -2683,7 +2830,7 @@ export interface operations {
                     "application/json": components["schemas"]["ProjectResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -2701,48 +2848,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    projects_update_projects__id__put: {
+    projects_put__projects_id: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path: {
                 id: string;
             };
@@ -2754,7 +2867,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2763,7 +2876,7 @@ export interface operations {
                     "application/json": components["schemas"]["ProjectResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -2781,48 +2894,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    projects_delete_projects__id__delete: {
+    projects_delete__projects_id: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path: {
                 id: string;
             };
@@ -2830,7 +2909,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2839,7 +2918,7 @@ export interface operations {
                     "application/json": components["schemas"]["MessageResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -2857,48 +2936,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    activities_list_projects__id__activities_get: {
+    activities_get__projects_id_activities: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path: {
                 id: string;
             };
@@ -2906,7 +2951,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2915,7 +2960,7 @@ export interface operations {
                     "application/json": components["schemas"]["ActivityResponse"][];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -2933,48 +2978,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    activities_create_projects__id__activities_post: {
+    activities_post__projects_id_activities: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path: {
                 id: string;
             };
@@ -2986,7 +2997,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -2995,7 +3006,7 @@ export interface operations {
                     "application/json": components["schemas"]["ActivityResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -3013,128 +3024,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    activities_update_activities__id__put: {
+    budgets_get__projects_id_budgets: {
         parameters: {
             query?: never;
-            header?: never;
-            path: {
-                id: string;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
             };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ActivityUpdateRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ActivityResponse"];
-                };
-            };
-            /** @description Validation error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    activities_delete_activities__id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
             path: {
                 id: string;
             };
@@ -3142,318 +3039,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MessageResponse"];
-                };
-            };
-            /** @description Validation error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    activities_list_all_activities_get: {
-        parameters: {
-            query?: {
-                /** @description Include done activities (default false) */
-                includeDone?: boolean | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["EnrichedActivitiesResponse"];
-                };
-            };
-            /** @description Validation error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    activities_reorder_activities_reorder_patch: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ReorderRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ReorderResponse"];
-                };
-            };
-            /** @description Validation error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    activities_toggle_done_activities__id__done_patch: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ActivityDoneRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ActivityDoneResponse"];
-                };
-            };
-            /** @description Validation error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Timer running or conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    budgets_list_projects__id__budgets_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -3462,7 +3048,7 @@ export interface operations {
                     "application/json": components["schemas"]["BudgetResponse"][];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -3480,48 +3066,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    budgets_create_projects__id__budgets_post: {
+    budgets_post__projects_id_budgets: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path: {
                 id: string;
             };
@@ -3533,7 +3085,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -3542,7 +3094,7 @@ export interface operations {
                     "application/json": components["schemas"]["BudgetResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -3560,48 +3112,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    budgets_update_projects__id__budgets__budgetId__put: {
+    budgets_put__projects_id_budgets_budgetId: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path: {
                 id: string;
                 budgetId: string;
@@ -3614,7 +3132,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -3623,7 +3141,7 @@ export interface operations {
                     "application/json": components["schemas"]["BudgetResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -3641,48 +3159,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    budgets_delete_projects__id__budgets__budgetId__delete: {
+    budgets_delete__projects_id_budgets_budgetId: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path: {
                 id: string;
                 budgetId: string;
@@ -3691,7 +3175,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -3700,7 +3184,7 @@ export interface operations {
                     "application/json": components["schemas"]["MessageResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -3718,8 +3202,33 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
+        };
+    };
+    activities_get__activities: {
+        parameters: {
+            query?: {
+                /** @description Include done activities */
+                includeDone?: boolean;
+            };
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnrichedActivitiesResponse"];
+                };
+            };
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
+            400: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -3727,39 +3236,113 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Not found */
-            404: {
+            /** @description Unauthorized */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
     };
-    assignments_list_activities__id__assignments_get: {
+    activities_patch__activities_reorder: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReorderRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReorderResponse"];
+                };
+            };
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    activities_put__activities_id: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ActivityUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActivityResponse"];
+                };
+            };
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    activities_delete__activities_id: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path: {
                 id: string;
             };
@@ -3767,7 +3350,95 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MessageResponse"];
+                };
+            };
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    activities_patch__activities_id: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ActivityDoneRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActivityDoneResponse"];
+                };
+            };
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    assignments_get__activities_id_assignments: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -3776,7 +3447,7 @@ export interface operations {
                     "application/json": components["schemas"]["AssignmentResponse"][];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -3794,48 +3465,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    assignments_create_activities__id__assignments_post: {
+    assignments_post__activities_id_assignments: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path: {
                 id: string;
             };
@@ -3847,7 +3484,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -3856,7 +3493,7 @@ export interface operations {
                     "application/json": components["schemas"]["AssignmentResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -3874,48 +3511,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    assignments_delete_activities__id__assignments__userId__delete: {
+    assignments_delete__activities_id_assignments_userId: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path: {
                 id: string;
                 userId: string;
@@ -3924,7 +3527,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -3933,7 +3536,7 @@ export interface operations {
                     "application/json": components["schemas"]["MessageResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -3951,54 +3554,20 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    tags_list_tags_get: {
+    tags_get__tags: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -4007,7 +3576,7 @@ export interface operations {
                     "application/json": components["schemas"]["TagResponse"][];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -4025,39 +3594,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
         };
     };
-    tags_create_tags_post: {
+    tags_post__tags: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
@@ -4067,7 +3611,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -4076,7 +3620,7 @@ export interface operations {
                     "application/json": components["schemas"]["TagResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -4094,48 +3638,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    tags_update_tags__id__put: {
+    tags_put__tags_id: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path: {
                 id: string;
             };
@@ -4147,7 +3657,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -4156,7 +3666,7 @@ export interface operations {
                     "application/json": components["schemas"]["TagResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -4174,48 +3684,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    tags_delete_tags__id__delete: {
+    tags_delete__tags_id: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path: {
                 id: string;
             };
@@ -4223,7 +3699,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -4232,7 +3708,7 @@ export interface operations {
                     "application/json": components["schemas"]["MessageResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -4250,45 +3726,9 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    account_get_account_get: {
+    accounts_get__accounts: {
         parameters: {
             query?: never;
             header?: never;
@@ -4297,22 +3737,13 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AccountResponse"];
-                };
-            };
-            /** @description Validation error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
+                    "application/json": components["schemas"]["AccountListItem"][];
                 };
             };
             /** @description Unauthorized */
@@ -4324,26 +3755,28 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
+        };
+    };
+    account_get__account: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
+                    "application/json": components["schemas"]["AccountResponse"];
                 };
             };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
+            /** @description Unauthorized */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -4353,7 +3786,7 @@ export interface operations {
             };
         };
     };
-    account_update_account_put: {
+    account_put__account: {
         parameters: {
             query?: never;
             header?: never;
@@ -4366,7 +3799,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -4375,7 +3808,7 @@ export interface operations {
                     "application/json": components["schemas"]["AccountResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -4393,45 +3826,9 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    account_members_list_account_members_get: {
+    account_get__account_members: {
         parameters: {
             query?: never;
             header?: never;
@@ -4440,22 +3837,13 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["MemberResponse"][];
-                };
-            };
-            /** @description Validation error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Unauthorized */
@@ -4467,36 +3855,9 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
         };
     };
-    account_members_invite_account_members_post: {
+    account_post__account_members: {
         parameters: {
             query?: never;
             header?: never;
@@ -4509,7 +3870,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -4518,7 +3879,7 @@ export interface operations {
                     "application/json": components["schemas"]["MessageResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -4536,45 +3897,9 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    account_members_update_account_members__userId__put: {
+    account_put__account_members_userId: {
         parameters: {
             query?: never;
             header?: never;
@@ -4589,7 +3914,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -4598,7 +3923,7 @@ export interface operations {
                     "application/json": components["schemas"]["MessageResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -4616,45 +3941,9 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    account_members_delete_account_members__userId__delete: {
+    account_delete__account_members_userId: {
         parameters: {
             query?: never;
             header?: never;
@@ -4665,7 +3954,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -4674,15 +3963,6 @@ export interface operations {
                     "application/json": components["schemas"]["MessageResponse"];
                 };
             };
-            /** @description Validation error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
             /** @description Unauthorized */
             401: {
                 headers: {
@@ -4692,45 +3972,9 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    account_me_get_account_me_get: {
+    account_get__account_me: {
         parameters: {
             query?: never;
             header?: never;
@@ -4739,22 +3983,13 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["ProfileResponse"];
-                };
-            };
-            /** @description Validation error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Unauthorized */
@@ -4766,36 +4001,9 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
         };
     };
-    account_me_update_account_me_put: {
+    account_put__account_me: {
         parameters: {
             query?: never;
             header?: never;
@@ -4808,7 +4016,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -4817,7 +4025,7 @@ export interface operations {
                     "application/json": components["schemas"]["ProfileResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -4835,45 +4043,9 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    account_invitations_list_account_invitations_get: {
+    account_get__account_invitations: {
         parameters: {
             query?: never;
             header?: never;
@@ -4882,7 +4054,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -4891,15 +4063,6 @@ export interface operations {
                     "application/json": components["schemas"]["InvitationResponse"][];
                 };
             };
-            /** @description Validation error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
             /** @description Unauthorized */
             401: {
                 headers: {
@@ -4909,36 +4072,9 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
         };
     };
-    account_invitations_revoke_account_invitations__invitationId__delete: {
+    account_delete__account_invitations_invitationId: {
         parameters: {
             query?: never;
             header?: never;
@@ -4949,22 +4085,13 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["MessageResponse"];
-                };
-            };
-            /** @description Validation error */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Unauthorized */
@@ -4976,45 +4103,9 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    account_invitations_resend_account_invitations__invitationId__resend_post: {
+    account_post__account_invitations_invitationId_resend: {
         parameters: {
             query?: never;
             header?: never;
@@ -5025,7 +4116,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -5034,7 +4125,69 @@ export interface operations {
                     "application/json": components["schemas"]["MessageResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    onboarding_get__me: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    onboarding_post__onboarding: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OnboardingRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OnboardingResponse"];
+                };
+            };
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -5052,63 +4205,31 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    accounts_list_accounts_get: {
+    onboarding_post__onboarding_light: {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LightOnboardingRequest"];
+            };
+        };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AccountListItem"][];
+                    "application/json": components["schemas"]["LightOnboardingResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -5126,26 +4247,28 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
+        };
+    };
+    "onboarding_post__onboarding_example-project": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
+                    "application/json": components["schemas"]["ExampleProjectResponse"];
                 };
             };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
+            /** @description Unauthorized */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -5155,7 +4278,7 @@ export interface operations {
             };
         };
     };
-    palette_get_palette_get: {
+    palette_get__palette: {
         parameters: {
             query?: never;
             header?: never;
@@ -5164,36 +4287,38 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": Record<string, never>;
                 };
             };
         };
     };
-    settings_get_settings_get: {
+    settings_get__settings: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": Record<string, never>;
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -5211,39 +4336,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
         };
     };
-    settings_patch_settings_patch: {
+    settings_patch__settings: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
@@ -5253,16 +4353,16 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": Record<string, never>;
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -5280,63 +4380,29 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    settings_colors_get_settings_activity_colors_get: {
+    "settings_get__settings_activity-colors": {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": Record<string, never>;
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -5354,39 +4420,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
         };
     };
-    settings_colors_patch_settings_activity_colors_patch: {
+    "settings_patch__settings_activity-colors": {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
@@ -5396,16 +4437,16 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": Record<string, never>;
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -5423,48 +4464,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    settings_colors_delete_settings_activity_colors__activityId__delete: {
+    "settings_delete__settings_activity-colors_activityId": {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path: {
                 activityId: string;
             };
@@ -5472,16 +4479,16 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["MessageResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -5499,63 +4506,33 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    settings_avatar_upload_settings_avatar_upload_post: {
+    settings_post__settings_avatar_upload: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AvatarUploadRequest"];
+            };
+        };
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["AvatarUploadResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -5573,36 +4550,9 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
         };
     };
-    reports_project_budget_reports_project_budget_get: {
+    "reports_get__reports_project-budget": {
         parameters: {
             query: {
                 /** @description ISO 8601 start date */
@@ -5610,15 +4560,17 @@ export interface operations {
                 /** @description ISO 8601 end date */
                 to: string;
                 /** @description Filter by project UUID */
-                projectId?: string | null;
+                projectId?: string;
             };
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -5627,7 +4579,7 @@ export interface operations {
                     "application/json": components["schemas"]["ProjectBudgetResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -5645,45 +4597,9 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    reports_financial_reports_financial_get: {
+    reports_get__reports_financial: {
         parameters: {
             query: {
                 /** @description ISO 8601 start date */
@@ -5691,15 +4607,17 @@ export interface operations {
                 /** @description ISO 8601 end date */
                 to: string;
                 /** @description Filter by project UUID */
-                projectId?: string | null;
+                projectId?: string;
             };
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -5708,7 +4626,7 @@ export interface operations {
                     "application/json": components["schemas"]["FinancialResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -5726,45 +4644,9 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
         };
     };
-    reports_personal_time_reports_personal_time_get: {
+    "reports_get__reports_personal-time": {
         parameters: {
             query: {
                 /** @description ISO 8601 start date */
@@ -5774,15 +4656,17 @@ export interface operations {
                 /** @description Group by 'tag' or 'activity' */
                 groupBy: string;
                 /** @description View another user's data (manager+ only) */
-                userId?: string | null;
+                userId?: string;
             };
-            header?: never;
+            header: {
+                "X-Account-Id": components["parameters"]["XAccountId"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -5791,7 +4675,7 @@ export interface operations {
                     "application/json": components["schemas"]["PersonalTimeResponse"];
                 };
             };
-            /** @description Validation error */
+            /** @description Bad Request — invalid JSON, missing fields, or invalid_format */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -5807,42 +4691,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

@@ -17,6 +17,7 @@ const ResetPasswordPage = lazyWithRetry(
   () => import("@/pages/auth/reset-password"),
 )
 const SelectAccountPage = lazyWithRetry(() => import("@/pages/app/select-account"))
+const OnboardingPage = lazyWithRetry(() => import("@/pages/app/onboarding"))
 const TrackerPage = lazyWithRetry(() => import("@/pages/app/tracker"))
 const EntriesPage = lazyWithRetry(() => import("@/pages/app/entries"))
 const ProjectsListPage = lazyWithRetry(() => import("@/pages/app/projects-list"))
@@ -35,6 +36,7 @@ export const paths = {
 
   // App routes
   selectAccount: "/select-account",
+  onboarding: "/onboarding",
   tracker: "/",
   entries: "/entries",
   projects: {
@@ -101,6 +103,14 @@ export const router = createBrowserRouter([
         element: (
           <Suspense fallback={<LoadingSpinner />}>
             <SelectAccountPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/onboarding",
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <OnboardingPage />
           </Suspense>
         ),
       },

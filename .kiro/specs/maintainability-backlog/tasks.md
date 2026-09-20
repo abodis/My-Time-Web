@@ -118,3 +118,18 @@ Six independent internal refactors improving query key management, optimistic up
   ]
 }
 ```
+
+## Follow-ups from onboarding verification (2026-09-20)
+
+Deferred items surfaced while live-testing the onboarding flows. None are blocking; the onboarding feature and its bug fixes are verified. Context in `.kiro/steering/decisions.md` (the 2026-09-20 entries).
+
+- [ ] 9. Positive isolation test — member sees an activity assigned to them
+  - Verified: an invited non-owner sees NO unassigned activities. NOT verified: that an activity EXPLICITLY assigned to a member DOES appear on their tracker.
+  - Assign an activity to a member (owner assigns via `POST /activities/{id}/assignments`), then confirm the member's `GET /activities` returns it and it renders on their tracker.
+
+- [ ] 10. Invite management from the UI — resend & revoke
+  - `POST /account/invitations/{invitationId}/resend` and `DELETE /account/invitations/{invitationId}` exist in the API but are untested from the UI. Verify the Team page pending-invitations UX (if present) or note the gap if there's no UI yet.
+
+- [ ] 11. Invited-user "create your own workspace" affordance (UX decision, then maybe build)
+  - Invited users now join ONLY the invited account (no auto personal account). If a user should be able to create their own workspace, that's a deliberate, net-new frontend flow — it does not happen automatically. Product decision first: is this wanted, and where does the entry point live? Then build if yes.
+  - Related open UX question: whether invite acceptance should route directly into the invited account vs. surface the account picker (currently the gate routes through `/select-account` but does not stop there when there's a single membership).

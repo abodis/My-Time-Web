@@ -8,6 +8,7 @@ import FormPageHeader from "@/components/manage/form-page-header"
 import { FormCard } from "@/components/manage/form-card"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import { useCreateProject, useProjects, useUpdateProject } from "@/hooks/use-projects"
+import type { components } from "@/api/schema"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
@@ -112,20 +113,17 @@ export default function ProjectFormPage() {
 
   function onSubmit(data: ProjectFormValues) {
     if (isEdit && id) {
-      // Compute changed fields only
-      const original = originalValues.current
-      const body: Record<string, unknown> = {}
-
-      if (!original || data.name !== original.name) body.name = data.name
-      if (!original || data.clientName !== original.clientName)
-        body.clientName = data.clientName || undefined
-      if (!original || data.isBillable !== original.isBillable) body.isBillable = data.isBillable
-      if (!original || data.isArchived !== original.isArchived) body.isArchived = data.isArchived
-      if (!original || data.startDate !== original.startDate)
-        body.startDate = data.startDate || undefined
-      if (!original || data.endDate !== original.endDate) body.endDate = data.endDate || undefined
-      if (!original || data.budgetHours !== original.budgetHours)
-        body.budgetHours = data.budgetHours ? Number(data.budgetHours) : undefined
+      // ProjectUpdateRequest requires all keys (each | null), so send a full body
+      // built from the current form values (empty string → null).
+      const body: components["schemas"]["ProjectUpdateRequest"] = {
+        name: data.name,
+        clientName: data.clientName || null,
+        isBillable: data.isBillable,
+        isArchived: data.isArchived,
+        startDate: data.startDate || null,
+        endDate: data.endDate || null,
+        budgetHours: data.budgetHours ? Number(data.budgetHours) : null,
+      }
 
       updateProject.mutate(
         { id, body },
@@ -140,11 +138,11 @@ export default function ProjectFormPage() {
       createProject.mutate(
         {
           name: data.name,
-          clientName: data.clientName || undefined,
+          clientName: data.clientName || null,
           isBillable: data.isBillable,
-          startDate: data.startDate || undefined,
-          endDate: data.endDate || undefined,
-          budgetHours: data.budgetHours ? Number(data.budgetHours) : undefined,
+          startDate: data.startDate || null,
+          endDate: data.endDate || null,
+          budgetHours: data.budgetHours ? Number(data.budgetHours) : null,
         },
         {
           onSuccess: (result) => {

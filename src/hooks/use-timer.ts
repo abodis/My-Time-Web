@@ -17,7 +17,7 @@ export function useStartTimer() {
   return useMutation({
     mutationFn: async (activityId: string) => {
       const attemptStart = () =>
-        client.POST("/timer/start", { body: { activityId } })
+        client.POST("/timer/start", { body: { activityId, notes: null } })
 
       const initial = await attemptStart()
       let { data, error } = initial

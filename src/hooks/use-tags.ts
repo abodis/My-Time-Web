@@ -29,7 +29,12 @@ export function useCreateTag() {
       rateCurrency?: string | null
     }) => {
       const { data, error } = await client.POST("/tags", {
-        body: { name, color, defaultRate, rateCurrency },
+        body: {
+          name,
+          color: color ?? null,
+          defaultRate: defaultRate ?? null,
+          rateCurrency: rateCurrency ?? null,
+        },
       })
       if (error) throw error
       return data
@@ -58,7 +63,12 @@ export function useUpdateTag() {
     }) => {
       const { data, error } = await client.PUT("/tags/{id}", {
         params: { path: { id } },
-        body: { name, color, defaultRate, rateCurrency },
+        body: {
+          name: name ?? null,
+          color: color ?? null,
+          defaultRate: defaultRate ?? null,
+          rateCurrency: rateCurrency ?? null,
+        },
       })
       if (error) throw error
       return data

@@ -22,6 +22,7 @@ export default function ProtectedRoute() {
         setStatus("authenticated")
       } else {
         clearAuth()
+        useAccountStore.getState().clearAccountState()
         setStatus("unauthenticated")
       }
     })

@@ -51,6 +51,9 @@ export const queryKeys = {
     all: () => ["timer"] as const,
     current: () => ["timer", "current"] as const,
   },
+  me: {
+    all: () => ["me"] as const,
+  },
   profile: {
     all: () => ["profile"] as const,
   },

@@ -94,13 +94,15 @@ export default function EntryModal({ mode, entry, open, onClose }: EntryModalPro
       await createEntry.mutateAsync(payload)
       onClose()
     } else if (entry) {
-      const changed: Record<string, string | null> = {}
-      if (payload.activityId !== entry.activityId) changed.activityId = payload.activityId
-      if (payload.startTime !== entry.startTime) changed.startTime = payload.startTime
-      if (payload.endTime !== entry.endTime) changed.endTime = payload.endTime
-      if (payload.notes !== (entry.notes ?? null)) changed.notes = payload.notes
-      if (Object.keys(changed).length > 0) {
-        await updateEntry.mutateAsync({ id: entry.id, body: changed })
+      // EntryUpdateRequest requires all keys (each | null); send the full payload
+      // when anything changed so unchanged fields are not nulled.
+      const changed =
+        payload.activityId !== entry.activityId ||
+        payload.startTime !== entry.startTime ||
+        payload.endTime !== entry.endTime ||
+        payload.notes !== (entry.notes ?? null)
+      if (changed) {
+        await updateEntry.mutateAsync({ id: entry.id, body: payload })
       }
       onClose()
     }

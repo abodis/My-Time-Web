@@ -10,7 +10,43 @@ import { useAccountStore } from "@/stores/account-store"
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL
 
-const client = createClient<paths>({ baseUrl })
+// The regenerated OpenAPI schema types `X-Account-Id` as a REQUIRED header on
+// every account-scoped operation. That header is injected centrally at runtime
+// by the onRequest middleware below, so call sites must not be forced to pass
+// it. These utility types relax the compile-time requirement in one place —
+// wherever an operation's `parameters.header` carries `"X-Account-Id"`, the
+// key becomes optional, and `header` itself becomes optional when it was the
+// only required member. All other params (path/query/body) are untouched.
+
+// Make the X-Account-Id key optional within a header object, preserving every
+// other header key exactly as declared.
+type OptionalAccountHeader<H> = "X-Account-Id" extends keyof H
+  ? Omit<H, "X-Account-Id"> & { "X-Account-Id"?: H["X-Account-Id"] }
+  : H
+
+// Transform an operation's `parameters` so `header` (and the X-Account-Id key
+// within it) is optional. If X-Account-Id was header's only key, the whole
+// `header` property becomes optional too.
+type RelaxParameters<P> = P extends { header: infer H }
+  ? Omit<P, "header"> & { header?: OptionalAccountHeader<H> }
+  : P
+
+// Transform a single operation type, relaxing its parameters if present.
+type RelaxOperation<O> = O extends { parameters: infer P }
+  ? Omit<O, "parameters"> & { parameters: RelaxParameters<P> }
+  : O
+
+// Transform a path item: relax every HTTP method operation it defines.
+type RelaxPathItem<PI> = {
+  [M in keyof PI]: RelaxOperation<PI[M]>
+}
+
+// Transform the full `paths` map so X-Account-Id is optional everywhere.
+type AccountHeaderOptional<P> = {
+  [Route in keyof P]: RelaxPathItem<P[Route]>
+}
+
+const client = createClient<AccountHeaderOptional<paths>>({ baseUrl })
 
 // Stash a pristine clone of each request keyed by the request sent to the
 // network. The body stream of the original is consumed by the first fetch, so
@@ -31,10 +67,18 @@ function isAuthPath(pathname: string): boolean {
 // Endpoints that are not scoped to an account: they must not receive an
 // X-Account-Id header and must not trigger the account-error redirect. These
 // run before/without an active account (auth, account listing, palette).
-function isAccountAgnosticPath(pathname: string, method: string): boolean {
+export function isAccountAgnosticPath(pathname: string, method: string): boolean {
   if (isAuthPath(pathname)) return true
   if (/(^|\/)accounts$/.test(pathname) && method === "GET") return true
   if (/(^|\/)palette$/.test(pathname)) return true
+  // Only the aggregate identity endpoint (bare "/me") is account-agnostic.
+  // Must NOT match "/account/me" (the account-scoped profile), which needs
+  // X-Account-Id — the "/account/" prefix distinguishes them.
+  if (/(^|\/)me$/.test(pathname) && !/account\/me$/.test(pathname) && method === "GET") return true
+  // /onboarding and /onboarding/light are account-agnostic;
+  // /onboarding/example-project is NOT (must keep X-Account-Id).
+  if (/(^|\/)onboarding$/.test(pathname) && method === "POST") return true
+  if (/(^|\/)onboarding\/light$/.test(pathname) && method === "POST") return true
   return false
 }
 
@@ -78,6 +122,9 @@ client.use({
         return fetch(retried)
       }
       clearAuth()
+      // Clear account state too, so a stale lastAccountId can't bleed into the
+      // next login (cross-account risk on multi-user backends).
+      useAccountStore.getState().clearAccountState()
       window.location.href = "/login"
     }
     // Account error interceptor — skip for account-agnostic paths (e.g. /palette,

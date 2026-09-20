@@ -28,7 +28,18 @@ function ProjectActions({ project }: { project: Project }) {
         className="p-1 rounded hover:bg-gray-100"
         aria-label={`${project.isArchived ? "Unarchive" : "Archive"} ${project.name}`}
         onClick={() =>
-          updateProject({ id: project.id, body: { isArchived: !project.isArchived } })
+          updateProject({
+            id: project.id,
+            body: {
+              name: project.name,
+              clientName: project.clientName,
+              isBillable: project.isBillable,
+              isArchived: !project.isArchived,
+              startDate: project.startDate,
+              endDate: project.endDate,
+              budgetHours: project.budgetHours,
+            },
+          })
         }
       >
         {project.isArchived ? (

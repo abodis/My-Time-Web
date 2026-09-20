@@ -1,0 +1,681 @@
+{
+  "pbtResults": {
+    "4.2 Write property test for `resolveEntryTarget` (fast-check, ≥100 iterations)": {
+      "status": "passed",
+      "lastRunTimestamp": 1789900792942
+    }
+  },
+  "executionHistory": {
+    "1.1 Regenerate the API schema": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900525656
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900534955
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900590386
+      }
+    ],
+    "2.1 Extend `isAccountAgnosticPath` in `src/api/client.ts`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900525744
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900593873
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900628241
+      }
+    ],
+    "2.2 Write unit tests for `isAccountAgnosticPath`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900525819
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900632892
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900720280
+      }
+    ],
+    "3.1 Add the `me` query key": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900525881
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900594690
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900628978
+      }
+    ],
+    "3.2 Implement `useMe` in `src/hooks/use-me.ts`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900525969
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900633823
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900721676
+      }
+    ],
+    "3.3 Implement completion/seed mutations in `src/hooks/use-onboarding.ts`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526019
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900635259
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900723094
+      }
+    ],
+    "3.4 Write unit tests for the hooks": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526069
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900728507
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900840287
+      }
+    ],
+    "4.1 Implement `resolveEntryTarget(me)` pure function": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526118
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900636666
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900724053
+      }
+    ],
+    "4.2 Write property test for `resolveEntryTarget` (fast-check, ≥100 iterations)": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526167
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900729442
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900839392
+      }
+    ],
+    "4.3 Add the `/onboarding` route and path": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526219
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900730460
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900841736
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901437563
+      }
+    ],
+    "4.4 Wire the gate into `SelectAccountPage`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526267
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901325743
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901420952
+      }
+    ],
+    "4.5 Write unit tests for the gate wiring": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526315
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901450179
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901633187
+      }
+    ],
+    "5.1 Implement `src/stores/onboarding-store.ts` (Zustand)": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526394
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900637383
+      },
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900725046
+      }
+    ],
+    "6.1 Implement `OnboardingPage` in `src/pages/app/onboarding.tsx`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526451
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901327119
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901419612
+      }
+    ],
+    "6.2 Write unit tests for `OnboardingPage`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526498
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901451126
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901636743
+      }
+    ],
+    "7.1 Implement `WizardStepper` in `src/components/onboarding/wizard-stepper.tsx`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526555
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901328523
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901418615
+      }
+    ],
+    "7.2 Implement `OwnerWizard` in `src/components/onboarding/owner-wizard.tsx`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526604
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901650099
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901743289
+      }
+    ],
+    "8.1 Implement `ProfileStep` + `profileSchema` in `src/components/onboarding/profile-step.tsx`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526654
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901446430
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901634594
+      }
+    ],
+    "8.2 Write integration tests for Profile step error branches": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526737
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901756076
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901937977
+      }
+    ],
+    "9.1 Implement `WorkspacePathStep` in `src/components/onboarding/workspace-path-step.tsx`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526786
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901447828
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901631840
+      }
+    ],
+    "10.1 Implement `FastPathSeeder` in `src/components/onboarding/fast-path-seeder.tsx`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526829
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901752313
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901934249
+      }
+    ],
+    "10.2 Write integration tests for `FastPathSeeder`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526897
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789902045031
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789902226090
+      }
+    ],
+    "11.1 Implement `InlineConcept` in `src/components/onboarding/inline-concept.tsx`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900526949
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901329467
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901421773
+      }
+    ],
+    "11.2 Implement `GuidedChain` in `src/components/onboarding/guided-chain.tsx`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900527004
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901753706
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901937100
+      }
+    ],
+    "12.1 Implement `InviteStep` in `src/components/onboarding/invite-step.tsx`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900527096
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901754672
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901935713
+      }
+    ],
+    "12.2 Write integration test for invite fan-out": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900527147
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789902046401
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789902227543
+      }
+    ],
+    "13.1 Implement `SummaryStep` in `src/components/onboarding/summary-step.tsx`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900527196
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901950678
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789902036041
+      }
+    ],
+    "14.1 Implement `TrackerPointer` in `src/components/tracker/tracker-pointer.tsx`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900527243
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789902047241
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789902228433
+      }
+    ],
+    "14.2 Wire arm + dismiss into the tracker": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900527293
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789902237353
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789902311563
+      }
+    ],
+    "15.1 Implement `NonOwnerWelcome` + `welcomeSchema` in `src/components/onboarding/non-owner-welcome.tsx`": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900527341
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901449228
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901636047
+      }
+    ],
+    "15.2 Write integration test for light-onboarding failure/success": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900527416
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901756881
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901933360
+      }
+    ],
+    "16. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900527480
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789902326795
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789902379754
+      }
+    ],
+    "17. Playwright owner happy-path smoke": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900527528
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789902389208
+      },
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789902863224
+      }
+    ],
+    "1. Generate API types for onboarding endpoints": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900590437
+      }
+    ],
+    "2. Scope the API client for onboarding endpoints": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900720354
+      }
+    ],
+    "5. Onboarding session UI store": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900725110
+      }
+    ],
+    "3. Add onboarding server-state hooks and query key": [
+      {
+        "executionId": "e2c0873b-3c03-4c33-9d30-952249634617",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789900840333
+      }
+    ],
+    "9. Workspace path step": [
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901631890
+      }
+    ],
+    "4. Entry gate: pure decision + routing wiring": [
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901633232
+      }
+    ],
+    "6. Onboarding page shell + owner/non-owner branch": [
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901636789
+      }
+    ],
+    "7. Owner wizard shell + stepper": [
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901743328
+      }
+    ],
+    "15. Non-owner lightweight welcome": [
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901933418
+      }
+    ],
+    "11. Guided path chain": [
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901937154
+      }
+    ],
+    "8. Profile step": [
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789901938047
+      }
+    ],
+    "13. Summary step and tracker hand-off": [
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789902036105
+      }
+    ],
+    "10. Fast path seeding": [
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789902226165
+      }
+    ],
+    "12. Optional team invites": [
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789902227598
+      }
+    ],
+    "14. Tracker pointer hand-off": [
+      {
+        "executionId": "b498beff-943d-4b61-a23b-1904579c815b",
+        "chatSessionId": "sess_c18ce64d-9a48-4912-bafd-ab441ff19fa3",
+        "timestamp": 1789902311685
+      }
+    ]
+  }
+}

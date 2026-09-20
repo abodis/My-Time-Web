@@ -103,7 +103,11 @@ export function ActivitiesPanel({ projectId }: ActivitiesPanelProps) {
         body: {
           name: newFields.name.trim(),
           tagId: newFields.tagId,
-          ...(rateOverride !== null ? { rateOverride } : {}),
+          rateOverride,
+          // Manage UI creates activities for the project/others, not self —
+          // don't auto-assign the creator (the API default; guided onboarding
+          // is the opt-in caller that sets this true).
+          assignCreator: false,
         },
       },
       {
@@ -152,27 +156,29 @@ export function ActivitiesPanel({ projectId }: ActivitiesPanelProps) {
     setValidationErrors({})
     setError(null)
 
-    // Build payload with only changed fields
-    const body: { name?: string | null; tagId?: string | null; rateOverride?: number | null } = {}
+    // ActivityUpdateRequest requires all keys (name/tagId/rateOverride, each | null).
+    // Seed with current values so unchanged fields are not nulled, then apply edits.
     const trimmedName = editFields.name.trim()
-    if (trimmedName !== activity.name) {
-      body.name = trimmedName
-    }
-    if (editFields.tagId !== activity.tagId) {
-      body.tagId = editFields.tagId
-    }
     const newRate = editFields.rateOverride.trim()
       ? parseFloat(editFields.rateOverride)
       : null
     const oldRate = activity.rateOverride ?? null
-    if (newRate !== oldRate) {
-      body.rateOverride = newRate
-    }
+
+    const changed =
+      trimmedName !== activity.name ||
+      editFields.tagId !== activity.tagId ||
+      newRate !== oldRate
 
     // If nothing changed, just close edit mode
-    if (Object.keys(body).length === 0) {
+    if (!changed) {
       setEditingId(null)
       return
+    }
+
+    const body = {
+      name: trimmedName,
+      tagId: editFields.tagId,
+      rateOverride: newRate,
     }
 
     setEditingId(null)
