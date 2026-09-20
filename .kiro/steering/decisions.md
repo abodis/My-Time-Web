@@ -8,6 +8,12 @@ description: "Project decision log — architectural choices, gotchas, resolved 
 <!-- Append new entries at the top. Format: ## [YYYY-MM-DD] Title -->
 <!-- Fields: Problem, Decision, Rationale. Keep entries tight. UI/DnD/CSS rules live in frontend/* steering, not here. -->
 
+## [2026-09-20] Logout landed on /onboarding instead of /login — SPA-navigate race
+
+**Problem:** After completing onboarding → tracker → clicking Logout, the app showed `/onboarding` (stale wizard), not `/login`. `handleLogout` (PillNav) SPA-navigated `navigate('/login')` while synchronously `clearAccountState()`. Clearing `activeAccountId` re-renders the still-mounted `ProtectedRoute` (status already `"authenticated"`) → it redirects to `/select-account`, winning the race. `/select-account` fetches `/accounts` + `/me`; locally these return the default dev user (no token, onboarding-incomplete) → routes to `/onboarding`.
+**Decision:** `handleLogout` keeps `clearAuth()` + `clearAccountState()` (they also purge localStorage: refresh token + `lastAccountId`, which a reload won't), then HARD-navigates `window.location.assign('/login')`. Removed now-orphaned `useNavigate`/`queryClient`. Full reload remounts the router so `ProtectedRoute` re-checks the cleared session and drops all in-memory state (query cache, account + onboarding stores).
+**Rationale:** In-app SPA-navigate on logout races the protected-subtree redirect that clearing account state triggers; a hard reload is the deterministic teardown. Prod would have surfaced this as `/select-account`→`/login` (401 without token) rather than `/onboarding` (local no-token → dev user), but the race is env-agnostic. Verified live (Playwright) + build + 143 tests.
+
 ## [2026-09-20] Duplicate-email identity + invited-user auto-account — fixed API-side
 
 **Problem:** (1) Registering an already-registered email silently created a SECOND user/account. (2) An invited email that registered got an auto-created personal account plus the invited membership, landing login on `/select-account`.

@@ -1,11 +1,10 @@
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { LogOut } from 'lucide-react'
 import { NAV_ITEMS, type NavItem } from '@/components/layout/nav-items'
 import { useProfile } from '@/hooks/use-profile'
 import { clearAuth } from '@/lib/auth'
 import { getGravatarUrl } from '@/lib/gravatar'
 import { useAccountStore } from '@/stores/account-store'
-import { queryClient } from '@/lib/query-client'
 import { AccountSwitcher } from '@/components/layout/account-switcher'
 
 const ROLE_HIERARCHY = ['user', 'manager', 'admin'] as const
@@ -25,16 +24,23 @@ function filterNavItems(items: NavItem[], userRole: string | undefined): NavItem
 }
 
 export function PillNav(): JSX.Element {
-  const navigate = useNavigate()
   const { data: profile } = useProfile()
 
   const visibleItems = filterNavItems(NAV_ITEMS, profile?.role)
 
   function handleLogout() {
+    // clearAuth + clearAccountState also purge localStorage (refresh token,
+    // lastAccountId), which a reload alone would not.
     clearAuth()
     useAccountStore.getState().clearAccountState()
-    queryClient.clear()
-    navigate('/login')
+    // Hard-navigate rather than SPA-navigate. Clearing account state re-renders
+    // the still-mounted ProtectedRoute (status is already "authenticated"),
+    // which redirects to /select-account and wins the race against a SPA
+    // navigate('/login'). Locally, /me with no token returns a dev user, so
+    // that chain lands on /onboarding. A full reload forces ProtectedRoute to
+    // re-check the now-cleared session and drops all in-memory state (query
+    // cache, account + onboarding stores).
+    window.location.assign('/login')
   }
 
   const gravatarUrl = profile?.email ? getGravatarUrl(profile.email) : null
