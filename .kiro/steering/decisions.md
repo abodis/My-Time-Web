@@ -8,6 +8,12 @@ description: "Project decision log — architectural choices, gotchas, resolved 
 <!-- Append new entries at the top. Format: ## [YYYY-MM-DD] Title -->
 <!-- Fields: Problem, Decision, Rationale. Keep entries tight. UI/DnD/CSS rules live in frontend/* steering, not here. -->
 
+## [2026-09-24] Raw execute-api URL locked — frontend must use api.mytimeblocks.app edge
+
+**Problem:** API team added Cloudflare edge protection. The raw API Gateway URL (`https://ioxrzx7f9h.execute-api.eu-south-2.amazonaws.com`) now returns `403 forbidden_origin`; all API traffic must route through the edge.
+**Decision:** Changed `.env.production` → `VITE_API_BASE_URL=https://api.mytimeblocks.app` (was the raw execute-api URL), rebuilt, redeployed frontend (`./deploy.sh prod`: build + cdk no-change + S3 sync + CF invalidation `I1H69ECGZH2CUUXG67YMMKDLK0`). Verified new URL baked into `dist/assets`, old URL gone. Browser origin (`app.mytimeblocks.app`) unchanged → CORS untouched. WebSocket (if separate) unaffected.
+**Rationale:** Edge lock-down is a backend/infra invariant confirmed by the API team; the only frontend action is the base-URL swap. The raw URL must not reappear in any env/config — it is now dead (403). project-config.md updated to mark the raw URL as locked.
+
 ## [2026-09-20] Logout landed on /onboarding instead of /login — SPA-navigate race
 
 **Problem:** After completing onboarding → tracker → clicking Logout, the app showed `/onboarding` (stale wizard), not `/login`. `handleLogout` (PillNav) SPA-navigated `navigate('/login')` while synchronously `clearAccountState()`. Clearing `activeAccountId` re-renders the still-mounted `ProtectedRoute` (status already `"authenticated"`) → it redirects to `/select-account`, winning the race. `/select-account` fetches `/accounts` + `/me`; locally these return the default dev user (no token, onboarding-incomplete) → routes to `/onboarding`.

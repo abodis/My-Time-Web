@@ -31,8 +31,8 @@ description: "Project-specific configuration"
 - Staging (future): `.env.staging` (will hit staging API)
 
 ## Backend (reference)
-- API: `https://api.mytimeblocks.app` (production)
-- Raw API: `https://ioxrzx7f9h.execute-api.eu-south-2.amazonaws.com`
+- API: `https://api.mytimeblocks.app` (production — all traffic MUST go through this edge)
+- Raw API: `https://ioxrzx7f9h.execute-api.eu-south-2.amazonaws.com` — LOCKED (Cloudflare edge, returns `403 forbidden_origin`). Do NOT use in any env/config.
 - Auth: Cognito (`my-time-user-pool`)
 - DB: PostgreSQL 15 (RDS, private subnet)
 - Backend repo deploys separately via its own CDK stack (`MyTimeStack`)
